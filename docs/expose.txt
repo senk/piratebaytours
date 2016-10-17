@@ -1,0 +1,34 @@
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             EXPOSE: PROJEKT VERTEILTE INFORMATIONSSYSTEME
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+
+
+
+1 Gruppenmitglieder:
+════════════════════
+
+  • Jonas Droste
+  • Frederik Broer
+  • Robin Naundorf
+  • Jesko Appelfeller
+
+
+2 Tools
+═══════
+
+  • PostgreSQL
+    • RESTful Interface mit PostgREST
+    • Cluster Postgres-XC
+  • Interface: Browserbasiert
+
+
+3 Schema
+════════
+
+  • Schiffe -> ID, Namen, Plätze
+  • Touren -> ID, Name, Beschreibung
+  • Agenten -> ID, Name, Score
+  • Kunde -> ID, Name, Telefonnummer, eMail, #Mitreisender
+  • Buchung -> ID, Kunde, Tour, Schiff, Agent
