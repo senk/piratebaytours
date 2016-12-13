@@ -160,7 +160,7 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		}
 	}
 	/**
-	 * Event wenn der Buttongedrückt wird.
+	 * Event wenn der Button gedrückt wird.
 	 */
 	private void handleEventButtonErstellenTour() {
 		// Variablen
