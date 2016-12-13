@@ -1,0 +1,56 @@
+                    Liste der Relationen
+ Schema |            Name            |   Typ   | Eigent³mer
+--------+----------------------------+---------+------------
+ public | buchungen                  | Tabelle | postgres
+ public | buchungen_buchungen_id_seq | Sequenz | postgres
+ public | routen                     | Tabelle | postgres
+ public | schiff                     | Tabelle | postgres
+ public | tour                       | Tabelle | postgres
+
+
+piratebaytours=# select * from routen;
+ route_id |        route_name         | route_dauer
+----------+---------------------------+-------------
+        0 | Kurz und Schmerzlos       |         3.5
+        1 | Die lange Tour            |           7
+        2 | Spannung put              |           4
+        3 | Ritt der Meere            |           6
+        4 | Höhen und Tiefen          |         2.5
+        5 | In die Einsamkeit         |         4.5
+        6 | Ein wahres Erlebnis       |           3
+        7 | Die schnelle Tour         |         1.5
+        8 | Die schöne Tour           |           4
+        9 | Ab ins Meer               |           8
+
+
+piratebaytours=# select * from schiff;
+ schiff_id |        schiff_name        | schiff_plaetze
+-----------+---------------------------+----------------
+         0 | King 1                    |            600
+         1 | king August               |            200
+         2 | Valentina                 |            100
+         3 | Wennenteiter              |            150
+         4 | Nordstern                 |            700
+         5 | Familienkutsche           |           1000
+
+
+             Tabelle +public.tour½
+      Spalte       |      Typ      | Attribute
+-------------------+---------------+-----------
+ schiff_id         | integer       | not null
+ route_id          | integer       | not null
+ tour_datum        | character(10) | not null
+ tour_startzeit    | character(5)  | not null
+ plaetze_vorhanden | integer       |
+
+
+                                      Tabelle +public.buchungen½
+     Spalte     |      Typ      |                              Attribute
+----------------+---------------+----------------------------------------------------------------------
+ buchungen_id   | integer       | not null Vorgabewert nextval('buchungen_buchungen_id_seq'::regclass)
+ plaetze        | integer       | not null
+ route_id       | integer       | not null
+ tour_datum     | character(10) | not null
+ tour_startzeit | character(5)  | not null
+ schiff_id      | integer       | not null
+
