@@ -72,7 +72,7 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		adminView.getListSchiffe().setListData(schiffName);
 		
 		// Tabelle Touren �bersicht
-		String[] spaltenNamen = {"Routen", "Schiff", "Datum", "Startzeit", "freie Pl�tze"};		
+		String[] spaltenNamen = {"Routen", "Schiff", "Datum", "Startzeit", "freie Plätze"};		
 		adminView.getTableVorhandeneTouren().setData(spaltenNamen, new Select().selectAllesFromTour());
 		
 		// Voreinstellungen
@@ -92,7 +92,8 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case GlobaleVariablen.EVENT_ENTERUHRZEIT:
-			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
+			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, 
+			// ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
 			handleEventAnklickbarButtonErstellenTour();
 			break;
 		case GlobaleVariablen.EVENT_BUTTONERSTELLENTOUR:
@@ -128,10 +129,12 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 				&& adminView.getTableVorhandeneTouren().getColumnSelectionAllowed()) {
 			handleSelectionEventTableVorhandeneTouren();
 		} else if(e.getSource() == adminView.getListRoute()) {
-			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
+			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden,
+			// ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
 			handleEventAnklickbarButtonErstellenTour();
 		} else if(e.getSource() == adminView.getListSchiffe()) {
-			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
+			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, 
+			// ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
 			handleEventAnklickbarButtonErstellenTour();
 		} 
 	}

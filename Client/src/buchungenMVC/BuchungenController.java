@@ -225,14 +225,16 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 				buchungenModel.getRoutenVO().getRouten_id()));
 		
 		// Die passenden RoutenDauern aus der tabelle Routen lesen und im Model speichern
-		buchungenModel.getRoutenVO().setRouten_dauer(new Select().selectFloatFromRouten(
-				buchungenModel.getRoutenVO().getRouten_id()));
+//		buchungenModel.getRoutenVO().setRouten_dauer(new Select().selectFloatFromRouten(
+//				buchungenModel.getRoutenVO().getRouten_id()));
+		// TODO umwandeln des Routentyps
 
 		// Die Werte an der Oberfl�che darstellen
 		buchungenView.getTextPlaetzeBestaetigung().setText("" + buchungenModel.getPlaetze());
 		buchungenView.getListRoute().setListData(this.buchungenModel.getRoutenVO().getRouten_name());
-		buchungenView.getListDauer().setListData(this.buchungenModel.getRoutenVO().getRouten_dauer());
-
+//		buchungenView.getListDauer().setListData(this.buchungenModel.getRoutenVO().getRouten_dauer());
+		// TODO umwandeln des Datentyps
+		
 //		// Die infrage kommenden Schiffs IDs eintragen TODO hier muss die Anzahl der Pl�tze �ber die Tabelle Buchungen errechnet werden
 //		buchungenModel.getSchiffVO().setSchiff_id(new Select().selectIDFromSchiffWHERE(buchungenModel.getPlaetze()));
 //		
