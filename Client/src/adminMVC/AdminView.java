@@ -97,8 +97,8 @@ public class AdminView extends JFrame {
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// Root Panel, welches am Ende �bergeben wird. Alles auf der Oberfl�che
-		// muss am Ende dem rootPanel �bergeben werden.
+		// Root Panel, welches am Ende übergeben wird. Alles auf der Oberfläche
+		// muss am Ende dem rootPanel übergeben werden.
 		{
 			rootPanel = new UPanel();
 			rootPanel.setTitledBorder("Administrator");
@@ -111,7 +111,7 @@ public class AdminView extends JFrame {
 			this.add(scrollRootPanel);
 		}
 
-		// Panel f�r die �berschrift
+		// Panel für die Überschrift
 		{
 			panelUeberschrift = new UPanel();
 			rootPanel.add(panelUeberschrift, new UConstraints(0, 0));
@@ -122,7 +122,7 @@ public class AdminView extends JFrame {
 			panelUeberschrift.add(labelUeberschrift, new UConstraints(0, 0));
 		}
 		
-		// Panel f�r die Erstellung einer Tour
+		// Panel für die Erstellung einer Tour
 		{
 			panelAuswahl = new UPanel();
 			panelAuswahl.setTitledBorder("Erstellung einer neuen Tour");
@@ -150,7 +150,7 @@ public class AdminView extends JFrame {
 			scrollListSchiffe.setViewportView(listSchiffe);
 			panelAuswahl.add(scrollListSchiffe, new UConstraints(1, 1));
 			
-			// Panel f�r das Datum und die Zeit
+			// Panel für das Datum und die Zeit
 			{
 				panelDatumZeit = new UPanel();
 				UConstraints gbc = new UConstraints(2, 0, 2, 0);
@@ -178,7 +178,7 @@ public class AdminView extends JFrame {
 				panelDatumZeit.add(jComboBoxEingabeUhrzeit, new UConstraints(0, 3));
 			}
 
-			// Panel f�r die Button zur Erstellung einer Tour
+			// Panel für die Button zur Erstellung einer Tour
 			{
 				panelButtonErstellenTour = new UPanel();
 				UConstraints uc = new UConstraints(2, 1, 0, 2);
@@ -199,7 +199,7 @@ public class AdminView extends JFrame {
 			}
 		}
 		
-		// Panel f�r die Auflistung der Touren
+		// Panel für die Auflistung der Touren
 		{
 			
 			panelvorhandeneTouren = new UPanel();
@@ -247,7 +247,7 @@ public class AdminView extends JFrame {
 			jComboBoxMitarbeiter = new JComboBox<String>();
 			panelvorhandeneTouren.add(jComboBoxMitarbeiter, new UConstraints(4, 3));
 			
-			// Panel f�r die Button zur Erstellung einer Tour
+			// Panel für die Button zur Erstellung einer Tour
 			{
 				panelButtonZuweisenPlaetze = new UPanel();
 				UConstraints uc = new UConstraints(3, 4, 0, 2);

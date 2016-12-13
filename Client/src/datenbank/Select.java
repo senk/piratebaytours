@@ -761,7 +761,7 @@ public class Select {
 	}
 
 	/**
-	 * Liefert eine Stringliste, die alle Datums enth�lt, in denen die �bergebenne
+	 * Liefert eine Stringliste, die alle Datums enthält, in denen die übergebenne
 	 * schiff_id enthalten ist.
 	 * @param schiff_id
 	 * @return

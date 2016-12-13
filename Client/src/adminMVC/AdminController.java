@@ -93,7 +93,7 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		switch (e.getActionCommand()) {
 		case GlobaleVariablen.EVENT_ENTERUHRZEIT:
 			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, 
-			// ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
+			// ob alle Bedingungen erfüllt sind (Route, Schiff, Datum, Zeit)
 			handleEventAnklickbarButtonErstellenTour();
 			break;
 		case GlobaleVariablen.EVENT_BUTTONERSTELLENTOUR:
@@ -130,11 +130,11 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 			handleSelectionEventTableVorhandeneTouren();
 		} else if(e.getSource() == adminView.getListRoute()) {
 			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden,
-			// ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
+			// ob alle Bedingungen erfüllt sind (Route, Schiff, Datum, Zeit)
 			handleEventAnklickbarButtonErstellenTour();
 		} else if(e.getSource() == adminView.getListSchiffe()) {
 			// Wenn ein Uhrzeit Selectiert wurde, muss abgefragt werden, 
-			// ob alle Bedingungen erf�llt sind (Route, Schiff, Datum, Zeit)
+			// ob alle Bedingungen erfüllt sind (Route, Schiff, Datum, Zeit)
 			handleEventAnklickbarButtonErstellenTour();
 		} 
 	}
@@ -147,8 +147,8 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		// TODO
 	}
 	/**
-	 * Der Button darf nur gedr�ckt werden, wenn eine Zeile 
-	 * in Schiffe und Route selektiert ist sowie ein Datum ausgew�hlt und eine Zeitausgesucht ist.
+	 * Der Button darf nur gedrückt werden, wenn eine Zeile 
+	 * in Schiffe und Route selektiert ist sowie ein Datum ausgewühlt und eine Zeitausgesucht ist.
 	 */
 	private void handleEventAnklickbarButtonErstellenTour() {
 		if(!adminView.getListRoute().isSelectionEmpty()
@@ -160,7 +160,7 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		}
 	}
 	/**
-	 * Event wenn der Buttongedr�ckt wird.
+	 * Event wenn der Buttongedrückt wird.
 	 */
 	private void handleEventButtonErstellenTour() {
 		// Variablen

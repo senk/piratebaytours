@@ -124,7 +124,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.getTourVO().setDatum(
 				new Select().selectRouteDatumFromTour(buchungenModel.getPlaetze(), buchungenModel.getRouteId()));
 		
-		// Datum in der Liste auf der Oberfl�che ausgeben
+		// Datum in der Liste auf der Oberfläche ausgeben
 		buchungenView.getListDatum().setListData(buchungenModel.getTourVO().getDatum());
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
@@ -132,12 +132,12 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	}
 
 	private void handleListSelectionEventListDatum() {
-		// �berpr�fung, ob ein Element selektiert ist.
+		// Überprüfung, ob ein Element selektiert ist.
 		if(buchungenView.getListDatum().isSelectionEmpty() == true) {
 			return;
 		}
 		
-		// l�schen der anderen Listen und Textfelder
+		// löschen der anderen Listen und Textfelder
 		buchungenView.getListUhrzeiten().setListData(new String[0]);
 		buchungenView.getTextUhrzeitBestaetigung().setText("");
 		buchungenView.getTextSchiffBestaetigung().setText("");
@@ -145,7 +145,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		// Datum aus der Liste in das entsprechende Textfeld schreiben
 		buchungenView.getTextDatumBestaetigung().setText(buchungenView.getListDatum().getSelectedValue());
 		
-		// Datum im Model �bernehmen.
+		// Datum im Model übernehmen.
 		buchungenModel.setDatum(buchungenView.getListDatum().getSelectedValue());
 		
 		// startzeiten aus Tabelle Tour laden und im Model speichern.
@@ -153,7 +153,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 				new Select().selectRoutenStartzeitFromTour(buchungenModel.getPlaetze(), buchungenModel.getRouteId(),
 						buchungenModel.getDatum()));
 		
-		// Startzeiten auf der Oberfl�che ausgeben.
+		// Startzeiten auf der Oberfläche ausgeben.
 		buchungenView.getListUhrzeiten().setListData(buchungenModel.getTourVO().getStartzeit());
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
@@ -161,7 +161,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	}
 
 	private void handleListSelectionEventListUhrzeit() {
-		// �berpr�fung, ob ein Element selektiert ist.
+		// Überprüfung, ob ein Element selektiert ist.
 		if(buchungenView.getListUhrzeiten().isSelectionEmpty() == true) {
 			return;
 		}
@@ -214,10 +214,10 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextRouteBestaetigung().setText("");
 		buchungenView.getTextPlaetzeBestaetigung().setText("");
 		
-		// Die Anzahl der gesuchten Pl�tze wird gespeichert
+		// Die Anzahl der gesuchten Plätze wird gespeichert
 		buchungenModel.setPlaetze(Integer.parseInt(buchungenView.getTextBenoetigtePlaete().getText()));
 		
-		// Die "verf�gbaren" Routen werden aus der "Touren"-Tabelle geladen  und im Model speichern
+		// Die "verfügbaren" Routen werden aus der "Touren"-Tabelle geladen  und im Model speichern
 		buchungenModel.getRoutenVO().setRouten_id(new Select().selectRouteIdFromTour(buchungenModel.getPlaetze()));
 		
 		// Die passenden RoutenNamen aus der Tabelle Routen lesen und im Model speichern
@@ -235,7 +235,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 //		buchungenView.getListDauer().setListData(this.buchungenModel.getRoutenVO().getRouten_dauer());
 		// TODO umwandeln des Datentyps
 		
-//		// Die infrage kommenden Schiffs IDs eintragen TODO hier muss die Anzahl der Pl�tze �ber die Tabelle Buchungen errechnet werden
+//		// Die infrage kommenden Schiffs IDs eintragen TODO hier muss die Anzahl der Plätze über die Tabelle Buchungen errechnet werden
 //		buchungenModel.getSchiffVO().setSchiff_id(new Select().selectIDFromSchiffWHERE(buchungenModel.getPlaetze()));
 //		
 		
@@ -263,11 +263,11 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	}
 	
 	/**
-	 * l�scht alles auf der Oberfl�che und setzt den Fokus
-	 * auf das Textfeld f�r die Eingabe der pl�tze
+	 * löscht alles auf der Oberfläche und setzt den Fokus
+	 * auf das Textfeld für die Eingabe der Plätze
 	 */
 	private void handleActionEventButtonAbbrechen() {
-		// Leerzeichen f�r die Textfelder
+		// Leerzeichen für die Textfelder
 		buchungenView.getTextBenoetigtePlaete().setText("");
 		buchungenView.getTextName().setText("");
 		buchungenView.getTextVorname().setText("");
@@ -279,7 +279,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextDatumBestaetigung().setText("");
 		buchungenView.getTextUhrzeitBestaetigung().setText("");
 		
-		// leere Listen f�r die Listen
+		// leere Listen für die Listen
 		buchungenView.getListUhrzeiten().setListData(new String[0]);
 		buchungenView.getListDatum().setListData(new String[0]);
 		buchungenView.getListDauer().setListData(new Float[0]);
@@ -288,13 +288,13 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		// "Buchen"-Button als nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
 		
-		// Fokus auf das Textfeld f�r die eingabe der Daten
+		// Fokus auf das Textfeld für die eingabe der Daten
 		buchungenView.getTextBenoetigtePlaete().requestFocus();
 	}
 
 	/**
-	 * Der Button ist f�r die Buchungsbest�tigung. Die Buchung wird in einer Datenbank 
-	 * gespeichert. Anschlie�end wird die Methode des Abbrechen-Button aufgerufen.
+	 * Der Button ist für die Buchungsbestätigung. Die Buchung wird in einer Datenbank 
+	 * gespeichert. Anschließend wird die Methode des Abbrechen-Button aufgerufen.
 	 */
 	private void handleActionEventButtonBestaetigung() {
 		int routenId = buchungenModel.getRouteId();
