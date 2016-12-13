@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Hier werden die Datens�tze in die Datenbanken hinzugef�gt.
+ * Hier werden die Datensätze in die Datenbanken hinzugefügt.
  * 
  * @author AgentFriz
  *
