@@ -41,6 +41,8 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		adminView.getButtonErstellenTour().addActionListener(this);
 		adminView.getButtonZuweisenPlaetze().addActionListener(this);
 		
+		
+		
 		adminView.getTextFieldSchiffAenern().addActionListener(this);
 		adminView.getTextFieldRouteAendern().addActionListener(this);
 		adminView.getTextFieldDatumAendern().addActionListener(this);
@@ -67,11 +69,11 @@ public class AdminController implements Observer, ActionListener, ListSelectionL
 		String[] schiffName = new Select().selectSchiffNameFromSchiff();
 		adminModel.getSchiffVO().setSchiff_name(schiffName);
 		
-		// Routen/Schiff Namen auf der Oberfl�che ausgaben
+		// Routen/Schiff Namen auf der Oberfläche ausgaben
 		adminView.getListRoute().setListData(routenName);
 		adminView.getListSchiffe().setListData(schiffName);
 		
-		// Tabelle Touren �bersicht
+		// Tabelle Touren Übersicht
 		String[] spaltenNamen = {"Routen", "Schiff", "Datum", "Startzeit", "freie Plätze"};		
 		adminView.getTableVorhandeneTouren().setData(spaltenNamen, new Select().selectAllesFromTour());
 		
