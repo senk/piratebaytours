@@ -111,3 +111,5 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
+# Java Class files
+*.class
