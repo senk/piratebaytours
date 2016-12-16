@@ -113,3 +113,6 @@ gradle-app.setting
 
 # Java Class files
 *.class
+
+# IML
+*.iml
