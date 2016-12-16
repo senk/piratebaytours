@@ -5,13 +5,13 @@ from .models import Ship, Tour, Quota, Agent, Customer, Reservation
 class ShipSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ship
-        fields = ('id', 'name', 'seats')
+        fields = ('id', 'name', 'seats', 'tours')
 
 
 class TourSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tour
-        fields = ('id', 'name', 'date', 'time', 'ship')
+        fields = ('id', 'name', 'date', 'time', 'ship', 'reservations', 'quotas')
 
 
 class QuotaSerializer(serializers.HyperlinkedModelSerializer):
@@ -23,13 +23,13 @@ class QuotaSerializer(serializers.HyperlinkedModelSerializer):
 class AgentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Agent
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'quotas')
 
 
 class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Customer
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'reservations')
 
 
 class ReservationSerializer(serializers.HyperlinkedModelSerializer):
