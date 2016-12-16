@@ -29,7 +29,7 @@ class AgentSerializer(serializers.HyperlinkedModelSerializer):
 class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Customer
-        fields = ('name')
+        fields = ('name',)
 
 
 class ReservationSerializer(serializers.HyperlinkedModelSerializer):
