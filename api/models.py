@@ -19,17 +19,17 @@ class Tour(models.Model):
         return self.name
 
 
-class Quota(models.Model):
-    count = models.IntegerField()
-    tour = models.ForeignKey(Tour)
-
-
 class Agent(models.Model):
     name = models.CharField(max_length=30)
-    quotas = models.ForeignKey(Quota)
 
     def __str__(self):
         return self.name
+
+
+class Quota(models.Model):
+    agent = models.ForeignKey(Agent)
+    count = models.IntegerField()
+    tour = models.ForeignKey(Tour)
 
 
 class Customer(models.Model):
