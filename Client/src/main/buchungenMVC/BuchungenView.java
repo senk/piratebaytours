@@ -77,15 +77,15 @@ public class BuchungenView extends JFrame{
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// Root Panel, welches am Ende �bergeben wird. Alles auf der Oberfl�che
-		// muss am Ende dem rootPanel �bergeben werden.
+		// Root Panel, welches am Ende übergeben wird. Alles auf der Oberfläche
+		// muss am Ende dem rootPanel übergeben werden.
 		{
 			rootPanel = new UPanel();
 			rootPanel.setTitledBorder("Buchungsauswahl");
 			this.add(rootPanel);
 		}
 		
-		// Panel f�r die �berschrift
+		// Panel für die Überschrift
 		{
 			panelUeberschrift = new UPanel();
 			rootPanel.add(panelUeberschrift, new UConstraints(0, 0));
@@ -102,7 +102,7 @@ public class BuchungenView extends JFrame{
 			panelKundenInfo.setTitledBorder("Kundeninformationen");
 			rootPanel.add(panelKundenInfo, new UConstraints(0, 1));
 			
-			labelBenoetigtePlaete = new ULabel("Ben�tigte Pl�tze *");
+			labelBenoetigtePlaete = new ULabel("Benötigte Plätze *");
 			panelKundenInfo.add(labelBenoetigtePlaete, new UConstraints(0, 0));
 			
 			labelName = new ULabel("Name");
@@ -138,7 +138,7 @@ public class BuchungenView extends JFrame{
 			panelKundenInfo.add(textTelefon, new UConstraints(1, 4));
 		}
 		
-		// Panel f�r die Buchungen
+		// Panel für die Buchungen
 		{
 			panelBuchungsauswahl = new UPanel();
 			panelBuchungsauswahl.setTitledBorder("Buchungsauswahl");
@@ -190,13 +190,13 @@ public class BuchungenView extends JFrame{
 			
 		}
 		
-		// Panel f�r die Buchungsbest�tigung
+		// Panel für die Buchungsbestätigung
 		{
 			panelBuchungsbestaetigung = new UPanel();
-			panelBuchungsbestaetigung.setTitledBorder("Buchungsbest�tigung");
+			panelBuchungsbestaetigung.setTitledBorder("Buchungsbestätigung");
 			rootPanel.add(panelBuchungsbestaetigung, new UConstraints(0, 3));
 			
-			labelPlaetzeBestaetigung = new ULabel("Pl�tze");
+			labelPlaetzeBestaetigung = new ULabel("Plätze");
 			panelBuchungsbestaetigung.add(labelPlaetzeBestaetigung, new UConstraints(0, 0));
 			
 			labelRouteBestaetigung = new ULabel("Route");
@@ -231,7 +231,7 @@ public class BuchungenView extends JFrame{
 			textSchiffBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textSchiffBestaetigung, new UConstraints(4, 1));
 			
-			//Panel f�r die Button
+			//Panel für die Button
 			{
 				panelButtonBestaetigung = new UPanel();
 				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(4, 2, 0, 2));
@@ -254,7 +254,7 @@ public class BuchungenView extends JFrame{
 		this.pack();
 	}
 
-	// Getter f�r die Wertebelegung
+	// Getter für die Wertebelegung
 	public JList<String> getListRoute() {
 		return listRoute;
 	}

@@ -1,5 +1,6 @@
 package adminMVC;
 
+
 public class AdminMain {
 	public static void main(String[] args) {
 		AdminModel modelGUI = new AdminModel();
