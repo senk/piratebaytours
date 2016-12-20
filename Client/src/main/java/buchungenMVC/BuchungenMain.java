@@ -6,7 +6,7 @@ public class BuchungenMain {
 		BuchungenView viewGUI = new BuchungenView();
 		
 		
-		@SuppressWarnings("unused")
+		@SuppressWarnings("unused") 
 		BuchungenController controllerGUI = new BuchungenController(modelGUI, viewGUI);
 	
 	}

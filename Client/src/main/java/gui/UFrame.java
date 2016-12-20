@@ -1,12 +1,12 @@
 package gui;
 
-import java.awt.Panel;
 
 import javax.swing.JFrame;
 
 public class UFrame extends JFrame {
-	
-	
+	private static final long serialVersionUID = 5224521595166131056L;
+
+
 	public UFrame() {
 		super();
 		setVisible(true);
