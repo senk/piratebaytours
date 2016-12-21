@@ -1,0 +1,72 @@
+         Table "public.agent"
+  Column   |     Type      | Modifiers 
+-----------+---------------+-----------
+ agentid   | integer       | not null
+ agentname | character(25) | not null
+Indexes:
+    "agent_pkey" PRIMARY KEY, btree (agentid)
+
+
+         Table "public.customer"
+    Column    |     Type      | Modifiers 
+--------------+---------------+-----------
+ customerid   | integer       | not null
+ customername | character(25) | not null
+ fonnr        | character(12) | 
+ email        | character(25) | 
+ hotelname    | character(25) | 
+ hotelroom    | character(10) | 
+Indexes:
+    "customer_pkey" PRIMARY KEY, btree (customerid)
+
+
+       Table "public.quota"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ tourid     | integer | not null
+ agentid    | integer | not null
+ countseats | integer | not null
+Indexes:
+    "quota_pkey" PRIMARY KEY, btree (tourid, agentid)
+
+
+    Table "public.reservation"
+   Column   |  Type   | Modifiers 
+------------+---------+-----------
+ tourid     | integer | not null
+ customerid | integer | not null
+ countseats | integer | not null
+Indexes:
+    "reservation_pkey" PRIMARY KEY, btree (tourid, customerid)
+
+
+          Table "public.route"
+   Column   |     Type      | Modifiers 
+------------+---------------+-----------
+ routeid    | integer       | not null
+ routenname | character(25) | 
+Indexes:
+    "route_pkey" PRIMARY KEY, btree (routeid)
+
+
+         Table "public.ship"
+  Column  |     Type      | Modifiers 
+----------+---------------+-----------
+ shipid   | integer       | not null
+ shipname | character(25) | not null
+ seats    | integer       | not null
+Indexes:
+    "ship_pkey" PRIMARY KEY, btree (shipid)
+
+
+         Table "public.tour"
+  Column  |     Type      | Modifiers 
+----------+---------------+-----------
+ tourid   | integer       | not null
+ tourdate | date          | not null
+ tourname | character(25) | not null
+ shipid   | integer       | not null
+ routeid  | integer       | not null
+Indexes:
+    "tour_pkey" PRIMARY KEY, btree (tourid)
+
