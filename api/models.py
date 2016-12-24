@@ -32,7 +32,8 @@ class Quota(models.Model):
     tour = models.ForeignKey(Tour, related_name='quotas')
 
     def __str__(self):
-        return self.agent.name
+        return self.agent.name + " - " + self.tour.name
+
 
 class Customer(models.Model):
     name = models.CharField(max_length=30)

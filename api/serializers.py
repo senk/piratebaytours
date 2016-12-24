@@ -11,7 +11,8 @@ class ShipSerializer(serializers.HyperlinkedModelSerializer):
 class TourSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tour
-        fields = ('id', 'name', 'date', 'time', 'ship', 'reservations', 'quotas')
+        fields = ('id', 'name', 'date', 'time', 'ship', 'reservations',
+                  'quotas')
 
 
 class QuotaSerializer(serializers.HyperlinkedModelSerializer):
