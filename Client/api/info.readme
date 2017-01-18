@@ -1,0 +1,5 @@
+zum kompilieren:
+javac api_client.java -classpath json-20160810.jar 
+
+zum ausführen:
+java -cp .:json-20160810.jar api_clientcat 
