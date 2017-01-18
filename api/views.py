@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Ship, Tour, Quota, Agent, Customer, Reservation
 from .serializers import (ShipSerializer, TourSerializer, QuotaSerializer,
                           AgentSerializer, CustomerSerializer,
@@ -27,6 +28,8 @@ class QuotaViewSet(viewsets.ModelViewSet):
     """
     queryset = Quota.objects.all()
     serializer_class = QuotaSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('agent',)
 
 
 class AgentViewSet(viewsets.ModelViewSet):
