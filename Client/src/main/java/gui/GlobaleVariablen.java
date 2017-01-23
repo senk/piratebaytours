@@ -10,6 +10,7 @@ public class GlobaleVariablen {
 	public static final String EVENT_ENTER_MAIL = "Event_Enter_Mail";
 	public static final String EVENT_ENTER_TELEFON = "Event_Enter_Telefon";
 	public static final String EVENT_BUTTONERSTELLEN = "Event_Button_Erstellen";
+	public static final String EVENT_BUTONSYNCHRONISIEREN = "Synchronisieren";
 	
 	
 	public static final String EVENT_BUTTONABBRECHENTOUR = "buttonAbbrechenTour";

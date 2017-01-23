@@ -28,23 +28,21 @@ public class BuchungenView extends JFrame{
 	private UTextField textPlaetzeBestaetigung;
 	private UTextField textRouteBestaetigung;
 	private UTextField textSchiffBestaetigung;
-	private UTextField textUhrzeitBestaetigung;
 	private UTextField textDatumBestaetigung;
 	
 	// Button
 	private UButton buttonBuchungBestaetigung;
 	private UButton buttonBuchungAbbrechen;
+	private UButton buttonSynchronisieren;
 	
 	// Listen
 	private JList<String> listRoute;
-	private JList<String> listUhrzeiten;
 	private JList<String> listDatum;
-	private JList<Float> listDauer;
+	private JList<String> listSchiff;
 	
 	private JScrollPane scrollListRoute;
-	private JScrollPane scrollListUhrzeiten;
 	private JScrollPane scrollListDatum;
-	private JScrollPane scrollListDauer;
+	private JScrollPane scrollListSchiff;
 
 	// Panel
 	private UPanel rootPanel;
@@ -67,9 +65,7 @@ public class BuchungenView extends JFrame{
 	private ULabel labelPlaetzeBestaetigung;
 	private ULabel labelRouteBestaetigung;
 	private ULabel labelSchiffBestaetigung;
-	private ULabel labelUhrzeitBestaetigung;
 	private ULabel labelDatumBestaetigung;
-	private ULabel labelDauer;
 	
 	public BuchungenView() {
 		// Definition des Frames
@@ -147,13 +143,10 @@ public class BuchungenView extends JFrame{
 			labelRoute = new ULabel("Routen");
 			panelBuchungsauswahl.add(labelRoute, new UConstraints(0, 0));
 			
-			labelDauer = new ULabel("Dauer");
-			panelBuchungsauswahl.add(labelDauer, new UConstraints(1, 0));
-			
 			labelDatum = new ULabel("Datum");
 			panelBuchungsauswahl.add(labelDatum, new UConstraints(2, 0));
 			
-			labelUhrzeiten = new ULabel("Uhrzeiten");
+			labelUhrzeiten = new ULabel("Schiffe");
 			panelBuchungsauswahl.add(labelUhrzeiten, new UConstraints(3, 0));
 			
 			listRoute = new JList<String>();
@@ -164,29 +157,21 @@ public class BuchungenView extends JFrame{
 			scrollListRoute.setViewportView(listRoute);
 			panelBuchungsauswahl.add(scrollListRoute, new UConstraints(0, 1));
 			
-			listDauer = new JList<Float>();
-			listDauer.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			listSchiff = new JList<String>();
+			listSchiff.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
-			scrollListDauer = new JScrollPane();
-			scrollListDauer.setPreferredSize(new Dimension(30, 200));
-			scrollListDauer.setViewportView(listDauer);
-			panelBuchungsauswahl.add(scrollListDauer, new UConstraints(1, 1));
-
+			scrollListSchiff = new JScrollPane();
+			scrollListSchiff.setPreferredSize(new Dimension(200, 200));
+			scrollListSchiff.setViewportView(listSchiff);
+			panelBuchungsauswahl.add(scrollListSchiff, new UConstraints(2, 1));
+			
 			listDatum = new JList<String>();
 			listDatum.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
 			scrollListDatum = new JScrollPane();
 			scrollListDatum.setPreferredSize(new Dimension(200, 200));
 			scrollListDatum.setViewportView(listDatum);
-			panelBuchungsauswahl.add(scrollListDatum, new UConstraints(2, 1));
-			
-			listUhrzeiten = new JList<String>();
-			listUhrzeiten.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			
-			scrollListUhrzeiten = new JScrollPane();
-			scrollListUhrzeiten.setPreferredSize(new Dimension(200, 200));
-			scrollListUhrzeiten.setViewportView(listUhrzeiten);
-			panelBuchungsauswahl.add(scrollListUhrzeiten, new UConstraints(3, 1));
+			panelBuchungsauswahl.add(scrollListDatum, new UConstraints(3, 1));
 			
 		}
 		
@@ -205,9 +190,6 @@ public class BuchungenView extends JFrame{
 			labelDatumBestaetigung = new ULabel("Datum");
 			panelBuchungsbestaetigung.add(labelDatumBestaetigung, new UConstraints(2, 0));
 			
-			labelUhrzeitBestaetigung = new ULabel("Uhrzeit");
-			panelBuchungsbestaetigung.add(labelUhrzeitBestaetigung, new UConstraints(3, 0));
-			
 			labelSchiffBestaetigung = new ULabel("Schiff");
 			panelBuchungsbestaetigung.add(labelSchiffBestaetigung, new UConstraints(4, 0));
 			
@@ -223,10 +205,6 @@ public class BuchungenView extends JFrame{
 			textDatumBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textDatumBestaetigung, new UConstraints(2, 1));
 			
-			textUhrzeitBestaetigung = new UTextField(10);
-			textUhrzeitBestaetigung.setEditable(false);
-			panelBuchungsbestaetigung.add(textUhrzeitBestaetigung, new UConstraints(3, 1));
-			
 			textSchiffBestaetigung = new UTextField(20);
 			textSchiffBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textSchiffBestaetigung, new UConstraints(4, 1));
@@ -234,7 +212,7 @@ public class BuchungenView extends JFrame{
 			//Panel für die Button
 			{
 				panelButtonBestaetigung = new UPanel();
-				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(4, 2, 0, 2));
+				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(2, 2, 0, 3));
 				
 				buttonBuchungBestaetigung = new UButton();
 				buttonBuchungBestaetigung.setText("Kaufen");
@@ -247,6 +225,12 @@ public class BuchungenView extends JFrame{
 				buttonBuchungAbbrechen.setActionCommand(GlobaleVariablen.EVENT_BUTTONBUCHUNGABBRECHEN);
 				buttonBuchungAbbrechen.setBackground(Color.RED);
 				panelButtonBestaetigung.add(buttonBuchungAbbrechen, new UConstraints(1, 2));
+				
+				buttonSynchronisieren = new UButton();
+				buttonSynchronisieren.setText("Synchronisieren");
+				buttonSynchronisieren.setActionCommand(GlobaleVariablen.EVENT_BUTONSYNCHRONISIEREN);
+				buttonSynchronisieren.setBackground(Color.CYAN);
+				panelButtonBestaetigung.add(buttonSynchronisieren, new UConstraints(2, 2));
 			}
 		}
 		
@@ -259,12 +243,8 @@ public class BuchungenView extends JFrame{
 		return listRoute;
 	}
 	
-	public JList<Float> getListDauer() {
-		return listDauer;
-	}
-
 	public JList<String> getListUhrzeiten() {
-		return listUhrzeiten;
+		return listDatum;
 	}
 	
 	public UTextField getTextBenoetigtePlaete() {
@@ -278,7 +258,7 @@ public class BuchungenView extends JFrame{
 	}
 
 	public JList<String> getListDatum() {
-		return listDatum;
+		return listSchiff;
 	}
 
 	public UButton getButtonBuchungAbbrechen() {
@@ -291,10 +271,6 @@ public class BuchungenView extends JFrame{
 
 	public UTextField getTextSchiffBestaetigung() {
 		return textSchiffBestaetigung;
-	}
-
-	public UTextField getTextUhrzeitBestaetigung() {
-		return textUhrzeitBestaetigung;
 	}
 
 	public UTextField getTextDatumBestaetigung() {
