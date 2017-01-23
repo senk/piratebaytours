@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper,ngerman,english]{report}
+%\usepackage[left=12mm, top =0.5in, bottom=5in]{geometry}
+%\usepackage{lipsum}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel} 
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+%\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{epstopdf}
+\usepackage{lmodern}
+ 
+\usepackage{graphicx}
+\graphicspath{graphics}
+
+\begin{document}
+
+%Titlepage
+\begin{titlepage}
+\begin{center}	
+	\Huge{PirateBayTours}
+	
+	\line(1,0){400} \\
+	\textsc{\Large Projekt im Modul Verteilte Informationsysteme WS2016/17}\\
+	[10cm]
+
+	{\Large\itshape Jesko Appelfeller \par Robin Naundorf \par Frederik Broer \par Jonas Droste \par  }
+	%%{\small Martikelnummer: 65654}
+	\vfill
+
+	\large{betreut durch\par
+		Prof. Dr.-Ing. Thomas Christian \textsc{Weik}}
+
+	\vfill
+	{\large \today\par}
+
+\end{center}
+\end{titlepage}
+\newpage
+
+% Abstracts
+\selectlanguage{ngerman}
+\begin{samepage}
+\section*{\centering\abstractname}
+Dies ist die Zusammenfassung auf Deutsch.
+\vfill
+\selectlanguage{english}
+\section*{\centering\abstractname}
+This is an english abstract.
+\selectlanguage{ngerman}% oder was auch immer die Hauptsprache ist
+ \vfill
+\end{samepage}
+
+
+
+\newpage
+\tableofcontents
+
+\chapter{Motivation}
+
+\chapter{Anforderungen}
+\section{}
+\subsection{}
+\subsection{}
+
+\chapter{Lösungskonzept}
+\section{Backend}
+\subsection{Admin Interface}
+\subsection{Database}
+\section{Frontend}
+\subsection{Java Client}
+\subsection{Local Cache DB}
+
+
+\chapter{Theorie}
+\section{}
+\subsection{}
+\subsection{}
+
+\chapter{Umsetzung}
+\section{}
+\subsection{}
+\subsection{}
+
+\chapter{Fazit}
+
+\chapter*{Appendix} 
+\addcontentsline{toc}{chapter}{Appendix} 
+
+
+
+\begin{sidewaysfigure}
+%\begin{landscape}
+%\begin{figure}
+
+%\end{figure}
+%\end{landscape}
+\end{sidewaysfigure}
+
+
+
+% section section_name (end)
+
+
+\end{document}
