@@ -28,21 +28,22 @@ public class BuchungenView extends JFrame{
 	private UTextField textPlaetzeBestaetigung;
 	private UTextField textRouteBestaetigung;
 	private UTextField textSchiffBestaetigung;
+	private UTextField textUhrzeitBestaetigung;
 	private UTextField textDatumBestaetigung;
 	
 	// Button
 	private UButton buttonBuchungBestaetigung;
 	private UButton buttonBuchungAbbrechen;
-	private UButton buttonSynchronisieren;
+	private UButton buttonSysnchroniseiren;
 	
 	// Listen
-	private JList<String> listRoute;
+	private JList<String> listTour;
+	private JList<String> listUhrzeiten;
 	private JList<String> listDatum;
-	private JList<String> listSchiff;
-	
+
 	private JScrollPane scrollListRoute;
+	private JScrollPane scrollListUhrzeiten;
 	private JScrollPane scrollListDatum;
-	private JScrollPane scrollListSchiff;
 
 	// Panel
 	private UPanel rootPanel;
@@ -65,7 +66,9 @@ public class BuchungenView extends JFrame{
 	private ULabel labelPlaetzeBestaetigung;
 	private ULabel labelRouteBestaetigung;
 	private ULabel labelSchiffBestaetigung;
+	private ULabel labelUhrzeitBestaetigung;
 	private ULabel labelDatumBestaetigung;
+	private ULabel labelDauer;
 	
 	public BuchungenView() {
 		// Definition des Frames
@@ -140,38 +143,38 @@ public class BuchungenView extends JFrame{
 			panelBuchungsauswahl.setTitledBorder("Buchungsauswahl");
 			rootPanel.add(panelBuchungsauswahl, new UConstraints(0, 2));
 			
-			labelRoute = new ULabel("Routen");
+			labelRoute = new ULabel("Touren");
 			panelBuchungsauswahl.add(labelRoute, new UConstraints(0, 0));
 			
 			labelDatum = new ULabel("Datum");
 			panelBuchungsauswahl.add(labelDatum, new UConstraints(2, 0));
 			
-			labelUhrzeiten = new ULabel("Schiffe");
+			labelUhrzeiten = new ULabel("Uhrzeiten");
 			panelBuchungsauswahl.add(labelUhrzeiten, new UConstraints(3, 0));
 			
-			listRoute = new JList<String>();
-			listRoute.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			listTour = new JList<String>();
+			listTour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
 			scrollListRoute = new JScrollPane();
 			scrollListRoute.setPreferredSize(new Dimension(200, 200));
-			scrollListRoute.setViewportView(listRoute);
+			scrollListRoute.setViewportView(listTour);
 			panelBuchungsauswahl.add(scrollListRoute, new UConstraints(0, 1));
-			
-			listSchiff = new JList<String>();
-			listSchiff.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			
-			scrollListSchiff = new JScrollPane();
-			scrollListSchiff.setPreferredSize(new Dimension(200, 200));
-			scrollListSchiff.setViewportView(listSchiff);
-			panelBuchungsauswahl.add(scrollListSchiff, new UConstraints(2, 1));
-			
+
 			listDatum = new JList<String>();
 			listDatum.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
 			scrollListDatum = new JScrollPane();
 			scrollListDatum.setPreferredSize(new Dimension(200, 200));
 			scrollListDatum.setViewportView(listDatum);
-			panelBuchungsauswahl.add(scrollListDatum, new UConstraints(3, 1));
+			panelBuchungsauswahl.add(scrollListDatum, new UConstraints(2, 1));
+			
+			listUhrzeiten = new JList<String>();
+			listUhrzeiten.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			
+			scrollListUhrzeiten = new JScrollPane();
+			scrollListUhrzeiten.setPreferredSize(new Dimension(200, 200));
+			scrollListUhrzeiten.setViewportView(listUhrzeiten);
+			panelBuchungsauswahl.add(scrollListUhrzeiten, new UConstraints(3, 1));
 			
 		}
 		
@@ -190,6 +193,9 @@ public class BuchungenView extends JFrame{
 			labelDatumBestaetigung = new ULabel("Datum");
 			panelBuchungsbestaetigung.add(labelDatumBestaetigung, new UConstraints(2, 0));
 			
+			labelUhrzeitBestaetigung = new ULabel("Uhrzeit");
+			panelBuchungsbestaetigung.add(labelUhrzeitBestaetigung, new UConstraints(3, 0));
+			
 			labelSchiffBestaetigung = new ULabel("Schiff");
 			panelBuchungsbestaetigung.add(labelSchiffBestaetigung, new UConstraints(4, 0));
 			
@@ -197,7 +203,7 @@ public class BuchungenView extends JFrame{
 			textPlaetzeBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textPlaetzeBestaetigung, new UConstraints(0, 1, GridBagConstraints.BOTH));
 			
-			textRouteBestaetigung = new UTextField(20);
+			textRouteBestaetigung = new UTextField(15);
 			textRouteBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textRouteBestaetigung, new UConstraints(1, 1));
 			
@@ -205,14 +211,18 @@ public class BuchungenView extends JFrame{
 			textDatumBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textDatumBestaetigung, new UConstraints(2, 1));
 			
-			textSchiffBestaetigung = new UTextField(20);
+			textUhrzeitBestaetigung = new UTextField(10);
+			textUhrzeitBestaetigung.setEditable(false);
+			panelBuchungsbestaetigung.add(textUhrzeitBestaetigung, new UConstraints(3, 1));
+			
+			textSchiffBestaetigung = new UTextField(15);
 			textSchiffBestaetigung.setEditable(false);
 			panelBuchungsbestaetigung.add(textSchiffBestaetigung, new UConstraints(4, 1));
 			
 			//Panel für die Button
 			{
 				panelButtonBestaetigung = new UPanel();
-				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(2, 2, 0, 3));
+				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(3, 2, 0, 2));
 				
 				buttonBuchungBestaetigung = new UButton();
 				buttonBuchungBestaetigung.setText("Kaufen");
@@ -226,11 +236,11 @@ public class BuchungenView extends JFrame{
 				buttonBuchungAbbrechen.setBackground(Color.RED);
 				panelButtonBestaetigung.add(buttonBuchungAbbrechen, new UConstraints(1, 2));
 				
-				buttonSynchronisieren = new UButton();
-				buttonSynchronisieren.setText("Synchronisieren");
-				buttonSynchronisieren.setActionCommand(GlobaleVariablen.EVENT_BUTONSYNCHRONISIEREN);
-				buttonSynchronisieren.setBackground(Color.CYAN);
-				panelButtonBestaetigung.add(buttonSynchronisieren, new UConstraints(2, 2));
+				buttonSysnchroniseiren = new UButton();
+				buttonSysnchroniseiren.setText("Synchronisieren");
+				buttonSysnchroniseiren.setActionCommand(GlobaleVariablen.EVENT_BUTTONSYNCHRONISIEREN);
+				buttonSysnchroniseiren.setBackground(Color.CYAN);
+				panelButtonBestaetigung.add(buttonSysnchroniseiren, new UConstraints(2, 2));
 			}
 		}
 		
@@ -239,12 +249,12 @@ public class BuchungenView extends JFrame{
 	}
 
 	// Getter für die Wertebelegung
-	public JList<String> getListRoute() {
-		return listRoute;
+	public JList<String> getListTour() {
+		return listTour;
 	}
 	
 	public JList<String> getListUhrzeiten() {
-		return listDatum;
+		return listUhrzeiten;
 	}
 	
 	public UTextField getTextBenoetigtePlaete() {
@@ -258,7 +268,7 @@ public class BuchungenView extends JFrame{
 	}
 
 	public JList<String> getListDatum() {
-		return listSchiff;
+		return listDatum;
 	}
 
 	public UButton getButtonBuchungAbbrechen() {
@@ -271,6 +281,10 @@ public class BuchungenView extends JFrame{
 
 	public UTextField getTextSchiffBestaetigung() {
 		return textSchiffBestaetigung;
+	}
+
+	public UTextField getTextUhrzeitBestaetigung() {
+		return textUhrzeitBestaetigung;
 	}
 
 	public UTextField getTextDatumBestaetigung() {
