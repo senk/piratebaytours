@@ -5,11 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,31 +14,34 @@ public class Select {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;
-	private String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/Client/datenbank/" + "piratebaytours.db";
+	private String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3";
 
 
 	public Select() {
 
 	}
 
-	public String[] selectRouteIdFromTour(int plaetze_vorhanden) {
+	public String[] selectRouteNameFromTour(int plaetze_vorhanden) {
 
 		try {
 
 			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("SELECT * FROM tour WHERE reservations > " + (plaetze_vorhanden - 1)
-					, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			pst = con.prepareStatement("SELECT * FROM api_tour "  // WHERE reservations > " + (plaetze_vorhanden - 1)
+					);
 			rs = pst.executeQuery();
 
-			rs.last();
-			String[] ausgabe = new String[rs.getRow()];
+			ArrayList<String> select = new ArrayList<String>();
 
-			rs.beforeFirst();
-
-			int i = 0;
 			while (rs.next()) {
-				ausgabe[i++] = rs.getString("tourName");
+				select.add(rs.getString(1));
 			}
+			
+			String[] ausgabe = new String[select.size()];
+			
+			for(int i=0; i<select.size(); i++) {
+				ausgabe[i] = select.get((i+1));
+			}
+			
 			return ausgabe;
 
 		} catch (SQLException ex) {

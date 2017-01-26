@@ -197,27 +197,16 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.setPlaetze(Integer.parseInt(buchungenView.getTextBenoetigtePlaete().getText()));
 		
 		// Die "verfügbaren" Routen werden aus der "Touren"-Tabelle geladen  und im Model speichern
-//		buchungenModel.getRoutenVO().setRouten_id(new Select().selectRouteIdFromTour(buchungenModel.getPlaetze()));
-		
-		// Die passenden RoutenNamen aus der Tabelle Routen lesen und im Model speichern
-//		buchungenModel.getRoutenVO().setRouten_name(new Select().selectRoutenNameFromRouten(
-//				buchungenModel.getRoutenVO().getRouten_id()));
-		
-		// Die passenden RoutenDauern aus der tabelle Routen lesen und im Model speichern
-//		buchungenModel.getRoutenVO().setRouten_dauer(new Select().selectFloatFromRouten(
-//				buchungenModel.getRoutenVO().getRouten_id()));
-		// TODO umwandeln des Routentyps
+		buchungenModel.getRoutenVO().setRouten_name(new Select().selectRouteNameFromTour(buchungenModel.getPlaetze()));
 
-		// Die Werte an der Oberfl�che darstellen
+		// Die Werte an der Oberfläche darstellen
 		buchungenView.getTextPlaetzeBestaetigung().setText("" + buchungenModel.getPlaetze());
-		buchungenView.getListRoute().setListData(this.buchungenModel.getRoutenVO().getRouten_name());
-//		buchungenView.getListDauer().setListData(this.buchungenModel.getRoutenVO().getRouten_dauer());
-		// TODO umwandeln des Datentyps
+		buchungenView.getListRoute().setListData(new Select().selectRouteNameFromTour(buchungenModel.getPlaetze()));
 		
-//		// Die infrage kommenden Schiffs IDs eintragen TODO hier muss die Anzahl der Plätze über die 
-//		Tabelle Buchungen errechnet werden
-//		buchungenModel.getSchiffVO().setSchiff_id(new Select().selectIDFromSchiffWHERE(buchungenModel.getPlaetze()));
-//		
+		for (String a : this.buchungenModel.getRoutenVO().getRouten_name()) {
+			System.out.println(a);
+		}
+		
 		
 		// legt den Fokus auf das n�chste Textfeld
 		buchungenView.getTextName().requestFocus();
