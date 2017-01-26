@@ -113,11 +113,11 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextRouteBestaetigung().setText(buchungenView.getListRoute().getSelectedValue());
 		
 		// Datum aus der Tabelle Tour lesen und im model speichern
-		buchungenModel.getTourVO().setDatum(
-				new Select().selectRouteDatumFromTour(buchungenModel.getPlaetze(), buchungenModel.getRouteId()));
+//		buchungenModel.getTourVO().setDatum(
+//				new Select().selectRouteDatumFromTour(buchungenModel.getPlaetze(), buchungenModel.getRouteId()));
 		
 		// Datum in der Liste auf der Oberfläche ausgeben
-		buchungenView.getListDatum().setListData(buchungenModel.getTourVO().getDatum());
+//		buchungenView.getListDatum().setListData(buchungenModel.getTourVO().getDatum());
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
@@ -140,9 +140,9 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.setDatum(buchungenView.getListDatum().getSelectedValue());
 		
 		// startzeiten aus Tabelle Tour laden und im Model speichern.
-		buchungenModel.getTourVO().setStartzeit(
-				new Select().selectRoutenStartzeitFromTour(buchungenModel.getPlaetze(), buchungenModel.getRouteId(),
-						buchungenModel.getDatum()));
+//		buchungenModel.getTourVO().setStartzeit(
+//				new Select().selectRoutenStartzeitFromTour(buchungenModel.getPlaetze(), buchungenModel.getRouteId(),
+//						buchungenModel.getDatum()));
 		
 		// Startzeiten auf der Oberfläche ausgeben.
 		buchungenView.getListUhrzeiten().setListData(buchungenModel.getTourVO().getStartzeit());
@@ -158,20 +158,20 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		}
 		
 		// Variablen
-		int schiffId = new Select().selectSchiffIdFromTourWHERE(buchungenModel.getRouteId(), 
-				buchungenModel.getDatum(), buchungenModel.getUhrzeit());
-		String schiffName = new Select().selectSchiffNameFromSchiffWHERE(schiffId);
+//		int schiffId = new Select().selectSchiffIdFromTourWHERE(buchungenModel.getRouteId(), 
+//				buchungenModel.getDatum(), buchungenModel.getUhrzeit());
+//		String schiffName = new Select().selectSchiffNameFromSchiffWHERE(schiffId);
 		String uhrzeit = buchungenView.getListUhrzeiten().getSelectedValue();
 		
 		// Die Uhrzeit im Model speichern.
 		buchungenModel.setUhrzeit(uhrzeit);
 		
 		// SchiffsId und Schiffsname im Model speichern
-		buchungenModel.setSchiffId(schiffId);
-		buchungenModel.setSchiffName(schiffName);
+//		buchungenModel.setSchiffId(schiffId);
+//		buchungenModel.setSchiffName(schiffName);
 		
 		// Schiffsname speichern.
-		buchungenView.getTextSchiffBestaetigung().setText(schiffName);
+//		buchungenView.getTextSchiffBestaetigung().setText(schiffName);
 		
 		// Button anklickbar, weil alle Felder einen Wert besitzen.
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(true);
@@ -185,7 +185,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 
 	private void handleActionEventEnterPlaetze() {
 		
-		// l�schen der anderen Listen und Textfelder
+		// Löschen der anderen Listen und Textfelder
 		buchungenView.getListDatum().setListData(new String[0]);
 		buchungenView.getListUhrzeiten().setListData(new String[0]);
 		buchungenView.getTextDatumBestaetigung().setText("");
@@ -197,11 +197,11 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.setPlaetze(Integer.parseInt(buchungenView.getTextBenoetigtePlaete().getText()));
 		
 		// Die "verfügbaren" Routen werden aus der "Touren"-Tabelle geladen  und im Model speichern
-		buchungenModel.getRoutenVO().setRouten_id(new Select().selectRouteIdFromTour(buchungenModel.getPlaetze()));
+//		buchungenModel.getRoutenVO().setRouten_id(new Select().selectRouteIdFromTour(buchungenModel.getPlaetze()));
 		
 		// Die passenden RoutenNamen aus der Tabelle Routen lesen und im Model speichern
-		buchungenModel.getRoutenVO().setRouten_name(new Select().selectRoutenNameFromRouten(
-				buchungenModel.getRoutenVO().getRouten_id()));
+//		buchungenModel.getRoutenVO().setRouten_name(new Select().selectRoutenNameFromRouten(
+//				buchungenModel.getRoutenVO().getRouten_id()));
 		
 		// Die passenden RoutenDauern aus der tabelle Routen lesen und im Model speichern
 //		buchungenModel.getRoutenVO().setRouten_dauer(new Select().selectFloatFromRouten(
@@ -283,9 +283,9 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		new Insert().insertIntoBuchungen(plaetze, routenId, 
 				tourDatum, tourStartzeit , buchungenModel.getSchiffId());
 		
-		int plaetze_vorhanden = new Select().selectPlaetzeFromTour(routenId, tourDatum, tourStartzeit);
+//		int plaetze_vorhanden = new Select().selectPlaetzeFromTour(routenId, tourDatum, tourStartzeit);
 		
-		new Update().UpdateTourSetplaetze(plaetze_vorhanden - plaetze , routenId, tourDatum, tourStartzeit);
+//		new Update().UpdateTourSetplaetze(plaetze_vorhanden - plaetze , routenId, tourDatum, tourStartzeit);
 		
 		handleActionEventButtonAbbrechen();
 		
