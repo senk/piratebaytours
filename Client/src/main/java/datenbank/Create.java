@@ -20,7 +20,7 @@ public class Create {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 
-	private String url  = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
+	private String url  = "jdbc:sqlite:db.sqlite3";
 
 	public Create() {
 	}

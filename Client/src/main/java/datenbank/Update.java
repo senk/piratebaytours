@@ -12,7 +12,7 @@ public class Update {
 	 Connection con = null;
      Statement st = null;
 
-	private String  url = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
+	private String  url = "jdbc:sqlite:db.sqlite3";
 
 	public Update() {
 		// TODO Auto-generated constructor stub

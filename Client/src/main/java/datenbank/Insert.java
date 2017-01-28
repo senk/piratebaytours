@@ -27,7 +27,7 @@ public class Insert {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 
-	private String url  = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
+	private String url  = "jdbc:sqlite:db.sqlite3";
 	private ResultSet rs = null;
 
 	public Insert() {
