@@ -33,40 +33,7 @@ public class Insert {
 	public Insert() {
 
 	}
-
-	public void insertIntoBuchungen(int plaetze, int route_id, String tour_datum, String tour_startzeit,
-		int schiff_id) {
-
-		try {
-			con = DriverManager.getConnection(url);
-
-			String stm = "INSERT INTO buchungen(plaetze, route_id, tour_datum, tour_startzeit, schiff_id) VALUES( "
-			+ plaetze + ", " + route_id + ", '" + tour_datum + "', '" + tour_startzeit + "', " + schiff_id
-			+ ")";
-			pst = con.prepareStatement(stm);
-			pst.executeUpdate();
-
-		} catch (SQLException ex) {
-			Logger lgr = Logger.getLogger(Insert.class.getName());
-			lgr.log(Level.SEVERE, ex.getMessage(), ex);
-
-		} finally {
-
-			try {
-				if (pst != null) {
-					pst.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-
-			} catch (SQLException ex) {
-				Logger lgr = Logger.getLogger(Insert.class.getName());
-				lgr.log(Level.SEVERE, ex.getMessage(), ex);
-			}
-		}
-	}
-
+	
 	public void insertOfflineBooking(int count, int tour, String customer_name){
 
 		try {
