@@ -30,20 +30,21 @@ public class Insert {
 	private String url = "jdbc:sqlite:" + "db.sqlite3";
 	private String user = "postgres";
 	private String password = "1q1q1q1q";
+	private ResultSet rs = null;
 
 	public Insert() {
 
 	}
 
 	public void insertIntoBuchungen(int plaetze, int route_id, String tour_datum, String tour_startzeit,
-			int schiff_id) {
+		int schiff_id) {
 
 		try {
 			con = DriverManager.getConnection(url, user, password);
 
 			String stm = "INSERT INTO buchungen(plaetze, route_id, tour_datum, tour_startzeit, schiff_id) VALUES( "
-					+ plaetze + ", " + route_id + ", '" + tour_datum + "', '" + tour_startzeit + "', " + schiff_id
-					+ ")";
+			+ plaetze + ", " + route_id + ", '" + tour_datum + "', '" + tour_startzeit + "', " + schiff_id
+			+ ")";
 			pst = con.prepareStatement(stm);
 			pst.executeUpdate();
 
@@ -67,6 +68,52 @@ public class Insert {
 			}
 		}
 	}
+
+	public void insertOfflineBooking(int count, int tour, String customer_name ){
+
+		try {
+			con = DriverManager.getConnection(url, user, password);
+
+			String stm = "INSERT INTO offline_customers(name) VALUES( '"+ customer_name + "');";
+			System.out.println(stm);
+			pst = con.prepareStatement(stm);
+			pst.executeUpdate();
+
+
+			pst = con.prepareStatement("SELECT id FROM offline_customers ORDER BY id DESC LIMIT 1;");
+			rs = pst.executeQuery();
+			int generatedKey = 0;
+			if (rs.next()) {
+				generatedKey = rs.getInt(1);
+			}
+
+
+			stm = "INSERT INTO offline_bookings(count, tour, customer) VALUES( "+ count + "," + tour + "," + generatedKey + ");";
+			System.out.println(stm);
+			pst = con.prepareStatement(stm);
+			pst.executeUpdate();
+
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Insert.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+
+		} finally {
+
+			try {
+				if (pst != null) {
+					pst.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Insert.class.getName());
+				lgr.log(Level.SEVERE, ex.getMessage(), ex);
+			}
+		}
+	}
+
 
 	public void insertAgent(agent tmp){
 

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  */
 public class Drop {
-
+	private Boolean debug = true;
 	private Connection con = null;
 	private PreparedStatement pst = null;
 
@@ -39,6 +39,12 @@ public class Drop {
 			String stm_quotas = 		"DROP TABLE IF EXISTS quotas;";
 			String stm_reservations = 	"DROP TABLE IF EXISTS reservations;";
 
+			String stm_offline_bookings = 	"DROP TABLE IF EXISTS offline_bookings;";
+			String stm_offline_customers = 	"DROP TABLE IF EXISTS offline_customers;";
+
+
+
+
 			pst = con.prepareStatement(stm_agents);
 			pst.executeUpdate();
 
@@ -53,6 +59,14 @@ public class Drop {
 
 			pst = con.prepareStatement(stm_quotas);
 			pst.executeUpdate();
+
+			pst = con.prepareStatement(stm_offline_bookings);
+			pst.executeUpdate();
+			if (debug) System.out.println(stm_offline_bookings);
+
+			pst = con.prepareStatement(stm_offline_customers);
+			pst.executeUpdate();
+			if (debug) System.out.println(stm_offline_customers);
 
 
 

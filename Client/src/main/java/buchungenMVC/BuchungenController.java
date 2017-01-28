@@ -277,7 +277,12 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		for(customer tmp: customers) 
 			inserter.insertCustomer(tmp);
 
+		inserter.insertOfflineBooking(10,2,"Jonas");
+		inserter.insertOfflineBooking(10,2,"Jonas");
+
 		}
+
+
 
 
 	/**
