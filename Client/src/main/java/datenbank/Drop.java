@@ -47,18 +47,23 @@ public class Drop {
 
 			pst = con.prepareStatement(stm_agents);
 			pst.executeUpdate();
+			if (debug) System.out.println(stm_agents);
 
 			pst = con.prepareStatement(stm_customers);
 			pst.executeUpdate();
+			if (debug) System.out.println(stm_customers);
 
 			pst = con.prepareStatement(stm_ships);
 			pst.executeUpdate();
+			if (debug) System.out.println(stm_ships);
 
 			pst = con.prepareStatement(stm_tours);
 			pst.executeUpdate();
+			if (debug) System.out.println(stm_tours);
 
 			pst = con.prepareStatement(stm_quotas);
 			pst.executeUpdate();
+			if (debug) System.out.println(stm_quotas);
 
 			pst = con.prepareStatement(stm_offline_bookings);
 			pst.executeUpdate();
