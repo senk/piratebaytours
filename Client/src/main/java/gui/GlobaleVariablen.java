@@ -15,7 +15,8 @@ public class GlobaleVariablen {
 	public static final String EVENT_BUTTONABBRECHENTOUR = "buttonAbbrechenTour";
 	public static final String EVENT_BUTTONERSTELLENTOUR= "buttonErstellenTour";
 	public static final String EVENT_ENTERUHRZEIT = "Enter_Uhrzeit";
-	public static final String EVENT_BUTTONSYNCHRONISIEREN = "buttonSynchroniseiren";
+	public static final String EVENT_BUTTONDOWNLOAD = "buttonDownload";
+	public static final String EVENT_BUTTONUPLOAD = "buttonUpload";
 	
 	
 }

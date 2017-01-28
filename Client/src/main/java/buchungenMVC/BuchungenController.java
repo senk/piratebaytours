@@ -14,6 +14,7 @@ import datenbank.Select;
 import datenbank.Create;
 import datenbank.Drop;
 import datenbank.Insert;
+import datenbank.Update;
 
 
 import api_client.*;
@@ -31,21 +32,24 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		// ActionListener
 		buchungenView.getTextBenoetigtePlaete().addActionListener(this); 
 		buchungenView.getTextName().addActionListener(this);
-		buchungenView.getTextVorname().addActionListener(this);
-		buchungenView.getTextMail().addActionListener(this);
-		buchungenView.getTextTelefon().addActionListener(this);
+		buchungenView.getTextNameAgent().addActionListener(this);
 		buchungenView.getButtonBuchungBestaetigung().addActionListener(this);
 		buchungenView.getButtonBuchungAbbrechen().addActionListener(this);
-		buchungenView.getButtonBuchungSynchronisieren().addActionListener(this);
+		buchungenView.getButtonDownload().addActionListener(this);
+		buchungenView.getButtonUpload().addActionListener(this);
 
 		
 		// Selection Listener
 		buchungenView.getListTour().addListSelectionListener(this); 
 		buchungenView.getListDatum().addListSelectionListener(this); 
-		buchungenView.getListUhrzeiten().addListSelectionListener(this); 
+		buchungenView.getListUhrzeiten().addListSelectionListener(this);
 		
 		// Voreinstellungen
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
+		
+		if(new Select().selectIdFromLookButtton() == 1) {
+			buchungenView.getButtonDownload().setEnabled(false);
+		}
 		
 		// Sichtbarkeit
 		buchungenView.setVisible(true);
@@ -61,28 +65,22 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 			case GlobaleVariablen.EVENT_ENTER_NAME:
 			handleActionEventEnterName();
 			break;
-			case GlobaleVariablen.EVENT_ENTER_VORNAME:
-			handleActionEventEnterVorname();
-			break;
-			case GlobaleVariablen.EVENT_ENTER_TELEFON:
-			handleActionEventEnterTelefon();
-			break;
-			case GlobaleVariablen.EVENT_ENTER_MAIL:
-			handleActionEventEnterMail();
-			break;
 			case GlobaleVariablen.EVENT_BUTTONBUCHUNGBESTAETIGUNG:
 			handleActionEventButtonBestaetigung();
 			break;
 			case GlobaleVariablen.EVENT_BUTTONBUCHUNGABBRECHEN:
 			handleActionEventButtonAbbrechen();
 			break;
-			case GlobaleVariablen.EVENT_BUTTONSYNCHRONISIEREN:
+			case GlobaleVariablen.EVENT_BUTTONDOWNLOAD:
 			handleActionEventButtonSynchronisieren();
+			break;
+			case GlobaleVariablen.EVENT_BUTTONUPLOAD:
+			handleActionEventButtonUpload();
 			break;
 		}
 		
 	}
-	
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg0 == this.buchungenModel) {
@@ -162,10 +160,21 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		// Die Uhrzeit im Model speichern.
 		buchungenModel.setUhrzeit(buchungenView.getListUhrzeiten().getSelectedValue());
 		
-		buchungenView.getTextUhrzeitBestaetigung().setText(buchungenView.getListUhrzeiten().getSelectedValue());
+		buchungenModel.setUhrzeit(buchungenView.getListUhrzeiten().getSelectedValue());
 		
-		buchungenView.getTextSchiffBestaetigung().setText(new Select().selectRouteSchiffFromShip(
-			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), buchungenModel.getUhrzeit()));
+		buchungenView.getTextUhrzeitBestaetigung().setText(buchungenModel.getUhrzeit());
+		
+		String[] ship = new Select().selectRouteSchiffFromShip(
+				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), 
+				buchungenModel.getUhrzeit());
+		
+		buchungenView.getTextSchiffBestaetigung().setText(ship[0]);
+		
+		buchungenModel.setPlaetze(Integer.parseInt(ship[1]));
+		
+		buchungenModel.setTourId(new Select().selectTourIDfromTour(
+				buchungenModel.getTourName(), buchungenModel.getDatum()
+				, buchungenModel.getUhrzeit(), buchungenModel.getSchiffId()));
 		
 		// Button anklickbar, weil alle Felder einen Wert besitzen.
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(true);
@@ -194,21 +203,10 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
 	}
-	
+
 	private void handleActionEventEnterName() {
-		buchungenView.getTextVorname().requestFocus();
-	}
-	
-	private void handleActionEventEnterVorname() {
-		buchungenView.getTextMail().requestFocus();
-	}
-
-	private void handleActionEventEnterMail() {
-		buchungenView.getTextTelefon().requestFocus();
-	}
-
-	private void handleActionEventEnterTelefon() {
 		buchungenView.getListTour().requestFocus();
+		
 	}
 	
 	/**
@@ -221,9 +219,6 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextUhrzeitBestaetigung().setText("");
 		buchungenView.getTextUhrzeitBestaetigung().setText("");
 		buchungenView.getTextName().setText("");
-		buchungenView.getTextVorname().setText("");
-		buchungenView.getTextMail().setText("");
-		buchungenView.getTextTelefon().setText("");
 		buchungenView.getTextPlaetzeBestaetigung().setText("");
 		buchungenView.getTextRouteBestaetigung().setText("");
 		buchungenView.getTextSchiffBestaetigung().setText("");
@@ -279,18 +274,36 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 
 		inserter.insertOfflineBooking(10,2,"Jonas");
 		inserter.insertOfflineBooking(10,2,"Jonas");
+		
+		// unlook Button Download
+		new Update().UpdatelookButton(0);
+	}
 
-		}
+	private void handleActionEventButtonUpload() {
+		// TODO Auto-generated method stub
+		
+	}
 
 
-
-
+ 
 	/**
 	 * Der Button ist für die Buchungsbestätigung. Die Buchung wird in einer Datenbank 
 	 * gespeichert. Anschließend wird die Methode des Abbrechen-Button aufgerufen.
 	 */
 	private void handleActionEventButtonBestaetigung() {
-		handleActionEventButtonAbbrechen();		
+		
+		new Insert().insertOfflineBooking(buchungenModel.getPlaetze(),
+				buchungenModel.getTourId(), buchungenView.getTextName().getSelectedText());
+		
+		
+		
+		// 
+		handleActionEventButtonAbbrechen();
+		
+		// Look Button until Upload
+		buchungenView.getButtonDownload().setEnabled(false);
+		new Update().UpdatelookButton(1);
+		
 	}
 	
 }

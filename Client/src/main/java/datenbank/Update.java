@@ -12,9 +12,7 @@ public class Update {
 	 Connection con = null;
      Statement st = null;
 
-	private String url = "jdbc:postgresql://localhost:5432/piratebaytours";
-	private String user = "postgres";
-	private String password = "1q1q1q1q";
+	private String  url = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
 
 	public Update() {
 		// TODO Auto-generated constructor stub
@@ -23,7 +21,7 @@ public class Update {
 	public void UpdateTourSetplaetze(int plaetze, int routen_Id, String tour_datum, String tour_startzeit) {
 		try {
 
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
             st = con.createStatement();
 
             con.setAutoCommit(false);
@@ -64,5 +62,49 @@ public class Update {
                 lgr.log(Level.WARNING, ex.getMessage(), ex);
             }
         }
+	}
+
+	public void UpdatelookButton(int look) {
+		try {
+	
+			con = DriverManager.getConnection(url);
+	        st = con.createStatement();
+	
+	        con.setAutoCommit(false);
+	        
+	        st.executeUpdate("Update lookButton SET id = " + look);
+	
+	        con.commit();
+	
+	    } catch (SQLException ex) {
+	
+	        if (con != null) {
+	            try {
+	                con.rollback();
+	            } catch (SQLException ex1) {
+	                Logger lgr = Logger.getLogger(Update.class.getName());
+	                lgr.log(Level.WARNING, ex1.getMessage(), ex1);
+	            }
+	        }
+	
+	        Logger lgr = Logger.getLogger(Update.class.getName());
+	        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	        
+	    } finally {
+	
+	        try {
+	            if (st != null) {
+	                st.close();
+	            }
+	            if (con != null) {
+	                con.close();
+	            }
+	
+	        } catch (SQLException ex) {
+	
+	            Logger lgr = Logger.getLogger(Update.class.getName());
+	            lgr.log(Level.WARNING, ex.getMessage(), ex);
+	        }
+	    }
 	}
 }

@@ -20,9 +20,7 @@ public class Drop {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 
-	private String url = "jdbc:sqlite:" + "db.sqlite3";
-	private String user = "postgres";
-	private String password = "1q1q1q1q";
+	private String url  = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
 
 	public Drop() {
 	}
@@ -30,13 +28,14 @@ public class Drop {
 	public void DropDB() {
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm_agents = 		"DROP TABLE IF EXISTS agents;";
 			String stm_customers = 		"DROP TABLE IF EXISTS customers;";
 			String stm_ships = 			"DROP TABLE IF EXISTS ships;";
 			String stm_tours =	 		"DROP TABLE IF EXISTS tours;";
 			String stm_quotas = 		"DROP TABLE IF EXISTS quotas;";
+			String stm_lookButton = 	"DROP TABLE IF EXISTS lookButton";
 			String stm_reservations = 	"DROP TABLE IF EXISTS reservations;";
 
 			String stm_offline_bookings = 	"DROP TABLE IF EXISTS offline_bookings;";
@@ -64,6 +63,10 @@ public class Drop {
 			pst = con.prepareStatement(stm_quotas);
 			pst.executeUpdate();
 			if (debug) System.out.println(stm_quotas);
+			
+			pst = con.prepareStatement(stm_lookButton);
+			pst.executeUpdate();
+			if (debug) System.out.println(stm_lookButton);
 
 			pst = con.prepareStatement(stm_offline_bookings);
 			pst.executeUpdate();

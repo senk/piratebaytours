@@ -20,11 +20,9 @@ import gui.ULabel;
 public class BuchungenView extends JFrame{
 	private static final long serialVersionUID = 6038622921625628983L;
 	// Textfelder
+	private UTextField textNameAgent;
 	private UTextField textBenoetigtePlaetze;
 	private UTextField textName;
-	private UTextField textVorname;
-	private UTextField textMail;
-	private UTextField textTelefon;
 	private UTextField textPlaetzeBestaetigung;
 	private UTextField textRouteBestaetigung;
 	private UTextField textSchiffBestaetigung;
@@ -34,7 +32,8 @@ public class BuchungenView extends JFrame{
 	// Button
 	private UButton buttonBuchungBestaetigung;
 	private UButton buttonBuchungAbbrechen;
-	private UButton buttonSysnchroniseiren;
+	private UButton buttonDownload;
+	private UButton buttonUpload;
 	
 	// Listen
 	private JList<String> listTour;
@@ -55,11 +54,9 @@ public class BuchungenView extends JFrame{
 
 	// Label
 	private ULabel labelUeberschrift;
+	private ULabel labelNameAgent;
 	private ULabel labelBenoetigtePlaete;
 	private ULabel labelName;
-	private ULabel labelVorname;
-	private ULabel labelMail;
-	private ULabel labelTelefon;
 	private ULabel labelRoute;
 	private ULabel labelUhrzeiten;
 	private ULabel labelDatum;
@@ -68,7 +65,6 @@ public class BuchungenView extends JFrame{
 	private ULabel labelSchiffBestaetigung;
 	private ULabel labelUhrzeitBestaetigung;
 	private ULabel labelDatumBestaetigung;
-	private ULabel labelDauer;
 	
 	public BuchungenView() {
 		// Definition des Frames
@@ -107,14 +103,8 @@ public class BuchungenView extends JFrame{
 			labelName = new ULabel("Name");
 			panelKundenInfo.add(labelName, new UConstraints(0, 1));
 			
-			labelVorname = new ULabel("Vorname");
-			panelKundenInfo.add(labelVorname, new UConstraints(0, 2));
-			
-			labelMail = new ULabel("Mail-Adresse");
-			panelKundenInfo.add(labelMail, new UConstraints(0, 3));
-			
-			labelTelefon = new ULabel("Telefon-Nr.");
-			panelKundenInfo.add(labelTelefon, new UConstraints(0, 4));
+			labelNameAgent = new ULabel("Agent");
+			panelKundenInfo.add(labelNameAgent, new UConstraints(2, 0));
 			
 			textBenoetigtePlaetze = new UTextField(20);
 			textBenoetigtePlaetze.setActionCommand(GlobaleVariablen.EVENT_ENTER_PLAETZE);
@@ -124,17 +114,9 @@ public class BuchungenView extends JFrame{
 			textName.setActionCommand(GlobaleVariablen.EVENT_ENTER_NAME);
 			panelKundenInfo.add(textName, new UConstraints(1, 1));
 			
-			textVorname = new UTextField(20);
-			textVorname.setActionCommand(GlobaleVariablen.EVENT_ENTER_VORNAME);
-			panelKundenInfo.add(textVorname, new UConstraints(1, 2));
+			textNameAgent = new UTextField(20);
+			panelKundenInfo.add(textNameAgent, new UConstraints(3, 0));
 			
-			textMail = new UTextField(20);
-			textMail.setActionCommand(GlobaleVariablen.EVENT_ENTER_MAIL);
-			panelKundenInfo.add(textMail, new UConstraints(1, 3));
-			
-			textTelefon = new UTextField(20);
-			textTelefon.setActionCommand(GlobaleVariablen.EVENT_ENTER_TELEFON);
-			panelKundenInfo.add(textTelefon, new UConstraints(1, 4));
 		}
 		
 		// Panel für die Buchungen
@@ -222,7 +204,7 @@ public class BuchungenView extends JFrame{
 			//Panel für die Button
 			{
 				panelButtonBestaetigung = new UPanel();
-				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(3, 2, 0, 2));
+				panelBuchungsbestaetigung.add(panelButtonBestaetigung, new UConstraints(2, 2, 0, 4));
 				
 				buttonBuchungBestaetigung = new UButton();
 				buttonBuchungBestaetigung.setText("Kaufen");
@@ -236,11 +218,19 @@ public class BuchungenView extends JFrame{
 				buttonBuchungAbbrechen.setBackground(Color.RED);
 				panelButtonBestaetigung.add(buttonBuchungAbbrechen, new UConstraints(1, 2));
 				
-				buttonSysnchroniseiren = new UButton();
-				buttonSysnchroniseiren.setText("Synchronisieren");
-				buttonSysnchroniseiren.setActionCommand(GlobaleVariablen.EVENT_BUTTONSYNCHRONISIEREN);
-				buttonSysnchroniseiren.setBackground(Color.CYAN);
-				panelButtonBestaetigung.add(buttonSysnchroniseiren, new UConstraints(2, 2));
+				buttonDownload = new UButton();
+				buttonDownload.setText("Download");
+				buttonDownload.setActionCommand(GlobaleVariablen.EVENT_BUTTONDOWNLOAD);
+				buttonDownload.setBackground(Color.darkGray);
+				buttonDownload.setForeground(Color.white);
+				panelButtonBestaetigung.add(buttonDownload, new UConstraints(2, 2));
+				
+				buttonUpload = new UButton();
+				buttonUpload.setText("Upload");
+				buttonUpload.setActionCommand(GlobaleVariablen.EVENT_BUTTONDOWNLOAD);
+				buttonUpload.setBackground(Color.darkGray);
+				buttonUpload.setForeground(Color.white);
+				panelButtonBestaetigung.add(buttonUpload, new UConstraints(3, 2));
 			}
 		}
 		
@@ -275,8 +265,11 @@ public class BuchungenView extends JFrame{
 		return buttonBuchungAbbrechen;
 	}
 
-	public UButton getButtonBuchungSynchronisieren() {
-		return buttonSysnchroniseiren;
+	public UButton getButtonDownload() {
+		return buttonDownload;
+	}
+	public UButton getButtonUpload() {
+		return buttonUpload;
 	}
 
 	public UTextField getTextRouteBestaetigung() {
@@ -295,20 +288,11 @@ public class BuchungenView extends JFrame{
 		return textDatumBestaetigung;
 	}
 
-	
 	public UTextField getTextName() {
 		return textName;
 	}
 
-	public UTextField getTextVorname() {
-		return textVorname;
-	}
-
-	public UTextField getTextMail() {
-		return textMail;
-	}
-
-	public UTextField getTextTelefon() {
-		return textTelefon;
+	public UTextField getTextNameAgent() {
+		return textNameAgent;
 	}
 }

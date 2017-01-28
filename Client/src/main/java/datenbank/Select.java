@@ -14,7 +14,7 @@ public class Select {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;
-	private String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3";
+	private String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
 
 
 	public Select() {
@@ -164,22 +164,21 @@ public class Select {
 		return null;
 	}
 
-	public String selectRouteSchiffFromShip(int plaetze_vorhanden, String routenName, String datum, String time) {
+	public String[] selectRouteSchiffFromShip(int plaetze_vorhanden, String routenName, String datum, String time) {
 	
 		try {
 	
 			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("Select api_ship.name from api_tour JOIN api_ship " +
+			pst = con.prepareStatement("Select api_ship.name, api_ship.id from api_tour JOIN api_ship " +
 					"ON api_tour.ship_id = api_ship.id WHERE api_tour.name = '" +
 					routenName + "' and api_tour.date = '" + datum + "' and api_tour.time = '" + time + "'");
 			rs = pst.executeQuery();
 			
-			String ausgabe = "";
-			
-			System.out.println();
+			String ausgabe[] = new String[2];
 			
 			while (rs.next()) {
-				ausgabe = rs.getString(1);
+				ausgabe[0] = rs.getString(1);
+				ausgabe[1] = "" + rs.getInt(1);
 			}
 			
 			return ausgabe;
@@ -207,6 +206,92 @@ public class Select {
 			}
 		}
 		return null;
+	}
+
+	public int selectIdFromLookButtton() {
+	
+		try {
+	
+			con = DriverManager.getConnection(url);
+			pst = con.prepareStatement("Select id from lookButton");
+			rs = pst.executeQuery();
+			
+			int ausgabe = -1;
+			
+			while (rs.next()) {
+				ausgabe = rs.getInt(1);
+			}
+			
+			return ausgabe;
+	
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Select.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	
+		} finally {
+	
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pst != null) {
+					pst.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+	
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Select.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+		return (-1);
+	}
+
+	public int selectTourIDfromTour(String tourName, String date, String time, int shipId) {
+	
+		try {
+	
+			con = DriverManager.getConnection(url);
+			pst = con.prepareStatement("Select id from api_tour " +
+					"WHERE name = '" + tourName + "' " +
+					"AND date = '" + date + "' " +
+					"AND time = '" + time + "' " +
+					"AND ship_id = " + shipId);
+			rs = pst.executeQuery();
+			
+			int ausgabe = -1;
+			
+			while (rs.next()) {
+				ausgabe = rs.getInt(1);
+			}
+			
+			return ausgabe;
+	
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Select.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	
+		} finally {
+	
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pst != null) {
+					pst.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+	
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Select.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+		return (-1);
 	}
 
 	

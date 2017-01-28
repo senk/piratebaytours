@@ -10,8 +10,9 @@ public class BuchungenModel extends Observable{
 	private int plaetze;
 	private String datum;
 	private String uhrzeit;
-	private String schiffName;
+	private int schiffId;
 	private String routeName;
+	private int tourId;
 	
 	// Getter und Setter
 	
@@ -40,11 +41,17 @@ public class BuchungenModel extends Observable{
 	public void setUhrzeit(String uhrzeit) {
 		this.uhrzeit = uhrzeit;
 	}
-	public String getSchiffName() {
-		return schiffName;
+	public int getSchiffId() {
+		return schiffId;
 	}
-	public void setSchiffName(String schiffName) {
-		this.schiffName = schiffName;
+	public void setSchiffId(int schiffId) {
+		this.schiffId = schiffId;
+	}
+	public int getTourId() {
+		return tourId;
+	}
+	public void setTourId(int tourId) {
+		this.tourId = tourId;
 	}
 	
 	

@@ -20,9 +20,7 @@ public class Create {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 
-	private String url = "jdbc:sqlite:" + "db.sqlite3";
-	private String user = "postgres";
-	private String password = "1q1q1q1q";
+	private String url  = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
 
 	public Create() {
 	}
@@ -30,7 +28,7 @@ public class Create {
 	public void CreatePlainDB() {
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			//Create offline cache tables
 			String stm_agents = 		"CREATE TABLE IF NOT EXISTS agents(id int,name varchar(255));";
@@ -39,6 +37,8 @@ public class Create {
 			String stm_tours =	 		"CREATE TABLE IF NOT EXISTS tours(id int,name varchar(255), date varchar(255), time varchar(255), ship int,FOREIGN KEY(ship) REFERENCES ships(id));";
 			String stm_quotas = 		"CREATE TABLE IF NOT EXISTS quotas(count int,tour int, agent int, FOREIGN KEY(tour) REFERENCES tours(id), FOREIGN KEY(agent) REFERENCES agents(id));";
 			String stm_reservations = 	"CREATE TABLE IF NOT EXISTS reservations(id int,count int, tour int, customer int ,  FOREIGN KEY(tour) REFERENCES tours(id), FOREIGN KEY(customer) REFERENCES customers(id));";
+			String stm_lookButton = 	"CREATE TABLE IF NOT EXISTS lookButton(id int);";
+			String stm_insertValue = 		"INSERT INTO lookButton VALUES(0);";
 
 			//Create Tables for temporary storage
 			String stm_offline_bookings = 		"CREATE TABLE IF NOT EXISTS offline_bookings(count int, tour int, customer int, FOREIGN KEY(tour) REFERENCES tours(id), FOREIGN KEY(customer) REFERENCES offline_customers(id));";
@@ -64,6 +64,14 @@ public class Create {
 			pst = con.prepareStatement(stm_quotas);
 			pst.executeUpdate();
 			if (debug) System.out.println(stm_quotas);
+			
+			pst = con.prepareStatement(stm_lookButton);
+			pst.executeUpdate();
+			if (debug) System.out.println(stm_lookButton);
+			
+			pst = con.prepareStatement(stm_insertValue);
+			pst.executeUpdate();
+			if (debug) System.out.println(stm_insertValue);
 
 			pst = con.prepareStatement(stm_offline_bookings);
 			pst.executeUpdate();
@@ -72,6 +80,7 @@ public class Create {
 			pst = con.prepareStatement(stm_offline_customers);
 			pst.executeUpdate();
 			if (debug) System.out.println(stm_offline_customers);
+			
 
 		} catch (SQLException ex) {
 			Logger lgr = Logger.getLogger(Insert.class.getName());

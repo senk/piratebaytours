@@ -27,9 +27,7 @@ public class Insert {
 	private Connection con = null;
 	private PreparedStatement pst = null;
 
-	private String url = "jdbc:sqlite:" + "db.sqlite3";
-	private String user = "postgres";
-	private String password = "1q1q1q1q";
+	private String url  = "jdbc:sqlite:" + System.getProperty("user.home") + "/piratebaytours/" + "db.sqlite3-journal";
 	private ResultSet rs = null;
 
 	public Insert() {
@@ -40,7 +38,7 @@ public class Insert {
 		int schiff_id) {
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO buchungen(plaetze, route_id, tour_datum, tour_startzeit, schiff_id) VALUES( "
 			+ plaetze + ", " + route_id + ", '" + tour_datum + "', '" + tour_startzeit + "', " + schiff_id
@@ -69,10 +67,10 @@ public class Insert {
 		}
 	}
 
-	public void insertOfflineBooking(int count, int tour, String customer_name ){
+	public void insertOfflineBooking(int count, int tour, String customer_name){
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO offline_customers(name) VALUES( '"+ customer_name + "');";
 			System.out.println(stm);
@@ -118,7 +116,7 @@ public class Insert {
 	public void insertAgent(agent tmp){
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO agents(id, name) VALUES( "+ tmp.id + ", '" + tmp.name + "')";
 			System.out.println(stm);
@@ -149,7 +147,7 @@ public class Insert {
 	public void insertCustomer(customer tmp){
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO customers(id, name) VALUES( "+ tmp.id + ", '" + tmp.name + "')";
 			System.out.println(stm);
@@ -181,7 +179,7 @@ public class Insert {
 	public void insertQuota(quota tmp){
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO quotas(count, tour, agent) VALUES( "+ tmp.count + ", " + tmp.tour + ", " + tmp.agent + ")";
 			System.out.println(stm);
@@ -212,7 +210,7 @@ public class Insert {
 	public void insertShip(ship tmp){
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO ships(id, name, seats) VALUES( "+ tmp.id + ", '" + tmp.name + "', " + tmp.seats + ")";
 			System.out.println(stm);
@@ -244,7 +242,7 @@ public class Insert {
 	public void insertTour(tour tmp){
 
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(url);
 
 			String stm = "INSERT INTO tours(id, name, date, time, ship) VALUES( "+ tmp.id + ", '" + tmp.name + "', '" + tmp.date+"', '" + tmp.time+"', " + tmp.id + ")";
 			System.out.println(stm);
