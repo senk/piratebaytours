@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import datenbank.Select;
 import datenbank.Create;
 import datenbank.Drop;
+import datenbank.Insert;
 
 
 import api_client.*;
@@ -242,40 +243,39 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 
 	private void handleActionEventButtonSynchronisieren(){
 
-		Create creater = new Create();
-
-		creater.CreatePlainDB();
-
 		Drop dropper = new Drop();
 		dropper.DropDB();
 
+		Create creater = new Create();
+		creater.CreatePlainDB();
 
-		/*
+		Insert inserter = new Insert();
+
+
+		
 
 		api_client http= new api_client();
 
+		List<agent> agents=http.get_agents();
 		List<ship> ships=http.get_ships();
 		List<tour> tours=http.get_tours();
 		List<quota> quotas=http.get_quotas();
-		List<agent> agents=http.get_agents();
 		List<customer> customers=http.get_customers();
-		List<reservation> reservations=http.get_reservations();
 
+		for(agent tmp: agents) 
+			inserter.insertAgent(tmp);
 
 		for(ship tmp: ships) 
-			System.out.println(tmp.name);
-		for(tour tmp: tours) 
-			System.out.println(tmp.name);
-		for(quota tmp: quotas) 
-			System.out.println(tmp.count);
-		for(agent tmp: agents) 
-			System.out.println(tmp.name);
-		for(customer tmp: customers) 
-			System.out.println(tmp.name);
-		for(reservation tmp: reservations) 
-			System.out.println(tmp.count);
+			inserter.insertShip(tmp);
 
-			*/
+		for(tour tmp: tours) 
+			inserter.insertTour(tmp);
+
+		for(quota tmp: quotas) 
+			inserter.insertQuota(tmp);
+
+		for(customer tmp: customers) 
+			inserter.insertCustomer(tmp);
 
 		}
 
