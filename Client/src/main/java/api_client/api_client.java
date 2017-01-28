@@ -1,108 +1,26 @@
+package api_client;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
+
 import org.json.*;
+import api_client.*;
 
 
-
-class ship{
-	public int id;
-	public String name;
-	public int seats;
-
-	public List<Integer> tours = new ArrayList<Integer>();
-
-	public ship(){}
-
-	public void addTour(Integer x) {
-		this.tours.add(x);
-	};	
-}
-
-class tour{
-	public int id;
-	public String name;
-	public String date;
-	public String time;
-	public int ship_id;
-	
-	public List<Integer> reservations = new ArrayList<Integer>();
-	public List<Integer> quotas = new ArrayList<Integer>();
-
-
-	public tour(){}
-
-	public void addReservation(Integer x) {
-		this.reservations.add(x);
-	};	
-
-	public void addQuota(Integer x) {
-		this.quotas.add(x);
-	};	
-
-}
-
-class quota{
-	public int count;
-	public int tour;
-	public int agent;
-
-	public quota(){}
-}
-
-class agent{
-	public int id;
-	public String name;
-	
-
-	public List<Integer> quotas = new ArrayList<Integer>();
-
-	public agent(){}
-	public void addQuota(Integer x) {
-		this.quotas.add(x);
-	};	
-}
-
-class customer{
-	public int id;
-	public String name;
-	
-
-	public List<Integer> reservations = new ArrayList<Integer>();
-
-	public customer(){}
-	public void addReservation(Integer x) {
-		this.reservations.add(x);
-	};	
-}
-
-class reservation{
-	public int id;
-	public int count;
-	public int tour;
-	public int customer;
-
-	public reservation(){}
-}
-
-
-
-
-
-class api{
+public class api_client{
 
 	private final String USER_AGENT = "Mozilla/5.0";
 	private final String API_ROOT = "http://robin-app1.fh-muenster.de/";
 
 
-	public api(){
+	public api_client(){
 
 
 	}
@@ -339,46 +257,6 @@ class api{
 
 }
 
-
-
-public class api_client 
-{
-
-
-	public static void main(String[] args) throws Exception {
-
-		api_client client = new api_client();
-
-		api http= new api();
-
-		List<ship> ships=http.get_ships();
-		List<tour> tours=http.get_tours();
-		List<quota> quotas=http.get_quotas();
-		List<agent> agents=http.get_agents();
-		List<customer> customers=http.get_customers();
-		List<reservation> reservations=http.get_reservations();
-
-
-		for(ship tmp: ships) System.out.println(tmp.name);
-			for(tour tmp: tours) System.out.println(tmp.name);
-				for(quota tmp: quotas) System.out.println(tmp.count);
-					for(agent tmp: agents) System.out.println(tmp.name);
-						for(customer tmp: customers) System.out.println(tmp.name);
-							for(reservation tmp: reservations) System.out.println(tmp.count);
-
-
-
-
-
-			//tmp_ship.id = arr.getJSONObject(i).getString("name");
-
-		    //System.out.println(post_id);
-
-						}
-
-		//http.request("quotas","agent=1");
-
-				}
 
 
 

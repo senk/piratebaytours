@@ -275,6 +275,10 @@ public class BuchungenView extends JFrame{
 		return buttonBuchungAbbrechen;
 	}
 
+	public UButton getButtonBuchungSynchronisieren() {
+		return buttonSysnchroniseiren;
+	}
+
 	public UTextField getTextRouteBestaetigung() {
 		return textRouteBestaetigung;
 	}
@@ -290,6 +294,7 @@ public class BuchungenView extends JFrame{
 	public UTextField getTextDatumBestaetigung() {
 		return textDatumBestaetigung;
 	}
+
 	
 	public UTextField getTextName() {
 		return textName;

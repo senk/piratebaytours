@@ -4,11 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import datenbank.Select;
+import datenbank.Create;
+import datenbank.Drop;
+
+
+import api_client.*;
 import gui.GlobaleVariablen;
 
 public class BuchungenController implements Observer, ActionListener, ListSelectionListener {
@@ -28,6 +35,8 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextTelefon().addActionListener(this);
 		buchungenView.getButtonBuchungBestaetigung().addActionListener(this);
 		buchungenView.getButtonBuchungAbbrechen().addActionListener(this);
+		buchungenView.getButtonBuchungSynchronisieren().addActionListener(this);
+
 		
 		// Selection Listener
 		buchungenView.getListTour().addListSelectionListener(this); 
@@ -45,28 +54,32 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case GlobaleVariablen.EVENT_ENTER_PLAETZE:
+			case GlobaleVariablen.EVENT_ENTER_PLAETZE:
 			handleActionEventEnterPlaetze();
 			break;
-		case GlobaleVariablen.EVENT_ENTER_NAME:
+			case GlobaleVariablen.EVENT_ENTER_NAME:
 			handleActionEventEnterName();
 			break;
-		case GlobaleVariablen.EVENT_ENTER_VORNAME:
+			case GlobaleVariablen.EVENT_ENTER_VORNAME:
 			handleActionEventEnterVorname();
 			break;
-		case GlobaleVariablen.EVENT_ENTER_TELEFON:
+			case GlobaleVariablen.EVENT_ENTER_TELEFON:
 			handleActionEventEnterTelefon();
 			break;
-		case GlobaleVariablen.EVENT_ENTER_MAIL:
+			case GlobaleVariablen.EVENT_ENTER_MAIL:
 			handleActionEventEnterMail();
 			break;
-		case GlobaleVariablen.EVENT_BUTTONBUCHUNGBESTAETIGUNG:
+			case GlobaleVariablen.EVENT_BUTTONBUCHUNGBESTAETIGUNG:
 			handleActionEventButtonBestaetigung();
 			break;
-		case GlobaleVariablen.EVENT_BUTTONBUCHUNGABBRECHEN:
+			case GlobaleVariablen.EVENT_BUTTONBUCHUNGABBRECHEN:
 			handleActionEventButtonAbbrechen();
 			break;
+			case GlobaleVariablen.EVENT_BUTTONSYNCHRONISIEREN:
+			handleActionEventButtonSynchronisieren();
+			break;
 		}
+		
 	}
 	
 	@Override
@@ -133,7 +146,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.setDatum(buchungenView.getListDatum().getSelectedValue());
 		
 		buchungenView.getListUhrzeiten().setListData(new Select().selectRouteZeitFromTour(
-				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum()));
+			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum()));
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
@@ -151,7 +164,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextUhrzeitBestaetigung().setText(buchungenView.getListUhrzeiten().getSelectedValue());
 		
 		buchungenView.getTextSchiffBestaetigung().setText(new Select().selectRouteSchiffFromShip(
-				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), buchungenModel.getUhrzeit()));
+			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), buchungenModel.getUhrzeit()));
 		
 		// Button anklickbar, weil alle Felder einen Wert besitzen.
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(true);
@@ -227,15 +240,52 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextBenoetigtePlaete().requestFocus();
 	}
 
+	private void handleActionEventButtonSynchronisieren(){
+
+		Create creater = new Create();
+
+		creater.CreatePlainDB();
+
+		Drop dropper = new Drop();
+		dropper.DropDB();
+
+
+		/*
+
+		api_client http= new api_client();
+
+		List<ship> ships=http.get_ships();
+		List<tour> tours=http.get_tours();
+		List<quota> quotas=http.get_quotas();
+		List<agent> agents=http.get_agents();
+		List<customer> customers=http.get_customers();
+		List<reservation> reservations=http.get_reservations();
+
+
+		for(ship tmp: ships) 
+			System.out.println(tmp.name);
+		for(tour tmp: tours) 
+			System.out.println(tmp.name);
+		for(quota tmp: quotas) 
+			System.out.println(tmp.count);
+		for(agent tmp: agents) 
+			System.out.println(tmp.name);
+		for(customer tmp: customers) 
+			System.out.println(tmp.name);
+		for(reservation tmp: reservations) 
+			System.out.println(tmp.count);
+
+			*/
+
+		}
+
+
 	/**
 	 * Der Button ist für die Buchungsbestätigung. Die Buchung wird in einer Datenbank 
 	 * gespeichert. Anschließend wird die Methode des Abbrechen-Button aufgerufen.
 	 */
 	private void handleActionEventButtonBestaetigung() {
-//		
-		
-		handleActionEventButtonAbbrechen();
-		
+		handleActionEventButtonAbbrechen();		
 	}
 	
 }
