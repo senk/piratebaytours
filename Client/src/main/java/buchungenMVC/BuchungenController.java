@@ -22,6 +22,8 @@ import gui.GlobaleVariablen;
 
 public class BuchungenController implements Observer, ActionListener, ListSelectionListener {
 
+	private Boolean debug = true;
+
 	private BuchungenModel buchungenModel;
 	private BuchungenView buchungenView;
 
@@ -123,7 +125,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		
 		//Datum eintragen
 		buchungenView.getListDatum().setListData(new Select().selectRouteDatumFromTour(
-				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getAgentNr()));
+			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getAgentNr()));
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
@@ -145,7 +147,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		
 		// Datum 
 		String[] datumunformatiert = buchungenView.getListDatum().getSelectedValue().split(java.util.regex.Pattern.quote("."));
-				
+		
 		buchungenModel.setDatum(datumunformatiert[2] +  "-" + datumunformatiert[1] + "-" + datumunformatiert[0]);
 		
 		buchungenView.getListUhrzeiten().setListData(new Select().selectRouteZeitFromTour(
@@ -167,16 +169,16 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextUhrzeitBestaetigung().setText(buchungenView.getListUhrzeiten().getSelectedValue());
 		
 		String[] ship = new Select().selectRouteSchiffFromShip(
-				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), 
-				buchungenModel.getUhrzeit(), buchungenModel.getAgentNr());
+			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), 
+			buchungenModel.getUhrzeit(), buchungenModel.getAgentNr());
 		
 		buchungenView.getTextSchiffBestaetigung().setText(ship[0]);
 		
 		buchungenModel.setPlaetze(Integer.parseInt(ship[1]));
 		
 		buchungenModel.setTourId(new Select().selectTourIDfromTour(
-				buchungenModel.getTourName(), buchungenModel.getDatum()
-				, buchungenModel.getUhrzeit(), buchungenModel.getSchiffId()));
+			buchungenModel.getTourName(), buchungenModel.getDatum()
+			, buchungenModel.getUhrzeit(), buchungenModel.getSchiffId()));
 		
 		// Button anklickbar, weil alle Felder einen Wert besitzen.
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(true);
@@ -201,7 +203,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		
 		// Die Werte an der Oberfläche darstellen
 		buchungenView.getListTour().setListData(new Select().selectRouteNameFromTour(buchungenModel.getPlaetze(),
-				buchungenModel.getAgentNr()));
+			buchungenModel.getAgentNr()));
 		
 		// legt den Fokus auf das nächste Textfeld
 		buchungenView.getTextName().requestFocus();
@@ -294,15 +296,20 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	}
 
 
- 
+	
 	/**
 	 * Der Button ist für die Buchungsbestätigung. Die Buchung wird in einer Datenbank 
 	 * gespeichert. Anschließend wird die Methode des Abbrechen-Button aufgerufen.
 	 */
 	private void handleActionEventButtonBestaetigung() {
 		
+		if (debug) System.out.println("Plätze:" + buchungenModel.getPlaetze());
+		if (debug) System.out.println("Tour ID:" + buchungenModel.getTourId());
+		if (debug) System.out.println("Customer Name: " + buchungenView.getTextName().getSelectedText());
+
+
 		new Insert().insertOfflineBooking(buchungenModel.getPlaetze(),
-				buchungenModel.getTourId(), buchungenView.getTextName().getSelectedText());
+			buchungenModel.getTourId(), buchungenView.getTextName().getSelectedText());
 		
 		
 		
