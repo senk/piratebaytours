@@ -222,50 +222,89 @@ public class api_client{
 		}
 	}
 
+    public customer upload_customer(customer cust){
 
+    try{
+        String enc_cust = "name=" + cust.name;
+        int resp_code = write_request("customers", enc_cust);
+        if( resp_code != 200) throw new Exception("Could not write customers");
 
+        List<customer> tmp_customer_list = new ArrayList<customer>();
+        String response = request("customers","name=" + cust.name);
+        JSONArray arr = new JSONArray(response);
+        for (int i = 0; i < arr.length(); i++)
+            {
+                customer tmp_customer = new customer();
 
-	private String request(String api_endpoint, String api_filters) throws Exception {
+                tmp_customer.id = arr.getJSONObject(i).getInt("id");
+                tmp_customer.name = arr.getJSONObject(i).getString("name");
 
-		String url = API_ROOT + api_endpoint + "?format=json&" + api_filters;
+                tmp_customer_list.add(tmp_customer);
 
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            }
 
-		// optional default is GET
-		con.setRequestMethod("GET");
-		con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		int responseCode = con.getResponseCode();
-		System.out.println("Sending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-			new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		//print result
-		return response.toString();
+        return tmp_customer_list.get(tmp_customer_list.size()-1);
+    } catch(Exception e){
+        return null;
+    }
 	}
 
 
 
+
+    private String request(String api_endpoint, String api_filters) throws Exception {
+
+        String url = API_ROOT + api_endpoint + "?format=json&" + api_filters;
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        // optional default is GET
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+
+        int responseCode = con.getResponseCode();
+        System.out.println("Sending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(
+        new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+        response.append(inputLine);
+        }
+        in.close();
+
+        //print result
+        return response.toString();
+    }
+
+    private int write_request(String api_endpoint, String data) throws Exception {
+
+        String url = API_ROOT + api_endpoint + "/"; //for some reason, the / is critical
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(data);
+        wr.flush();
+        wr.close();
+
+
+        int responseCode = con.getResponseCode();
+        System.out.println("Sending 'POST' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        //print result
+        return responseCode;
+    }
 }
-
-
-
-
-
-
-
-
-	// HTTP GET request
-
 

@@ -255,9 +255,6 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 
 		Insert inserter = new Insert();
 
-
-		
-
 		api_client http= new api_client();
 
 		List<agent> agents=http.get_agents();
@@ -287,10 +284,18 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	}
 
 	private void handleActionEventButtonUpload() {
-		// TODO Auto-generated method stub
+      customer cust = new customer();
+      cust.name = "Müller";
+      cust.id = 1;
+
+      api_client http= new api_client();
+
+      cust 
+      System.out.println(http.upload_customer(cust));
+    
 		
-		//unlook Button Download
-		buchungenView.getButtonDownload().setEnabled(true);
+		//unlook Button Upload
+		buchungenView.getButtonUpload().setEnabled(true);
 		new Update().UpdatelookButton(0);
 	}
 
