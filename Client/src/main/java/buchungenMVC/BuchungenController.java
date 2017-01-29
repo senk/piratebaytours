@@ -307,10 +307,12 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		if (debug) System.out.println("Plätze:" + buchungenModel.getPlaetze());
 		if (debug) System.out.println("Tour ID:" + buchungenModel.getTourId());
 		if (debug) System.out.println("Customer Name: " + buchungenView.getTextName().getText());
+		if (debug) System.out.println("Agent ID: " + buchungenModel.getAgentNr());
 
 
 		new Insert().insertOfflineBooking(buchungenModel.getPlaetze(),
 			buchungenModel.getTourId(), buchungenView.getTextName().getText());
+		new Update().UpdateQuotas(buchungenModel.getPlaetze(), buchungenModel.getTourId(), buchungenModel.getAgentNr());
 		
 		
 		
