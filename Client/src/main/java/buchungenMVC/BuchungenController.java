@@ -46,6 +46,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		
 		// Voreinstellungen
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
+		buchungenView.getTextNameAgent().setText("1");
 		
 		if(new Select().selectIdFromLookButtton() == 1) {
 			buchungenView.getButtonDownload().setEnabled(false);
@@ -121,7 +122,8 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextRouteBestaetigung().setText(buchungenModel.getTourName());
 		
 		//Datum eintragen
-		buchungenView.getListDatum().setListData(new Select().selectRouteDatumFromTour(0, buchungenModel.getTourName()));
+		buchungenView.getListDatum().setListData(new Select().selectRouteDatumFromTour(
+				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getAgentNr()));
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
@@ -142,10 +144,12 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextDatumBestaetigung().setText(buchungenView.getListDatum().getSelectedValue());
 		
 		// Datum 
-		buchungenModel.setDatum(buchungenView.getListDatum().getSelectedValue());
+		String[] datumunformatiert = buchungenView.getListDatum().getSelectedValue().split(java.util.regex.Pattern.quote("."));
+				
+		buchungenModel.setDatum(datumunformatiert[2] +  "-" + datumunformatiert[1] + "-" + datumunformatiert[0]);
 		
 		buchungenView.getListUhrzeiten().setListData(new Select().selectRouteZeitFromTour(
-			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum()));
+			buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), buchungenModel.getAgentNr()));
 		
 		// Button zum Buchen auf Enabled(false) setzen = nicht anklickbar
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(false);
@@ -158,15 +162,13 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		}
 		
 		// Die Uhrzeit im Model speichern.
-		buchungenModel.setUhrzeit(buchungenView.getListUhrzeiten().getSelectedValue());
+		buchungenModel.setUhrzeit(buchungenView.getListUhrzeiten().getSelectedValue() + ":00");
 		
-		buchungenModel.setUhrzeit(buchungenView.getListUhrzeiten().getSelectedValue());
-		
-		buchungenView.getTextUhrzeitBestaetigung().setText(buchungenModel.getUhrzeit());
+		buchungenView.getTextUhrzeitBestaetigung().setText(buchungenView.getListUhrzeiten().getSelectedValue());
 		
 		String[] ship = new Select().selectRouteSchiffFromShip(
 				buchungenModel.getPlaetze(), buchungenModel.getTourName(), buchungenModel.getDatum(), 
-				buchungenModel.getUhrzeit());
+				buchungenModel.getUhrzeit(), buchungenModel.getAgentNr());
 		
 		buchungenView.getTextSchiffBestaetigung().setText(ship[0]);
 		
@@ -194,8 +196,12 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.setPlaetze(Integer.parseInt(buchungenView.getTextBenoetigtePlaete().getText()));
 		buchungenView.getTextPlaetzeBestaetigung().setText(buchungenView.getTextBenoetigtePlaete().getText());
 		
+		buchungenModel.setAgentNr(Integer.parseInt(buchungenView.getTextNameAgent().getText()));
+		
+		
 		// Die Werte an der Oberfläche darstellen
-		buchungenView.getListTour().setListData(new Select().selectRouteNameFromTour(buchungenModel.getPlaetze()));
+		buchungenView.getListTour().setListData(new Select().selectRouteNameFromTour(buchungenModel.getPlaetze(),
+				buchungenModel.getAgentNr()));
 		
 		// legt den Fokus auf das nächste Textfeld
 		buchungenView.getTextName().requestFocus();
@@ -282,6 +288,9 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	private void handleActionEventButtonUpload() {
 		// TODO Auto-generated method stub
 		
+		//unlook Button Download
+		buchungenView.getButtonDownload().setEnabled(true);
+		new Update().UpdatelookButton(0);
 	}
 
 

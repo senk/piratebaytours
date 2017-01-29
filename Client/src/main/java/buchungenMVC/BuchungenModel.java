@@ -13,6 +13,7 @@ public class BuchungenModel extends Observable{
 	private int schiffId;
 	private String routeName;
 	private int tourId;
+	private int AgentNr;
 	
 	// Getter und Setter
 	
@@ -52,6 +53,12 @@ public class BuchungenModel extends Observable{
 	}
 	public void setTourId(int tourId) {
 		this.tourId = tourId;
+	}
+	public int getAgentNr() {
+		return AgentNr;
+	}
+	public void setAgentNr(int agentNr) {
+		AgentNr = agentNr;
 	}
 	
 	

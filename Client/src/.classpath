@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="/home/agentfriz/workspace/lib/postgresql-9.4.1212.jre6.jar"/>
 	<classpathentry kind="lib" path="/home/agentfriz/piratebaytours/Client/bib/sqlite.jar"/>
 	<classpathentry kind="lib" path="/home/agentfriz/piratebaytours/Client/build/libs/Client.jar"/>
-	<classpathentry kind="lib" path="/home/agentfriz/piratebaytours/Client/bib/json-20160810.jar"/>
+	<classpathentry kind="lib" path="/home/agentfriz/downloads/json-20140107.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

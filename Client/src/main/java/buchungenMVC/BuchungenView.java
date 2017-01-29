@@ -227,7 +227,7 @@ public class BuchungenView extends JFrame{
 				
 				buttonUpload = new UButton();
 				buttonUpload.setText("Upload");
-				buttonUpload.setActionCommand(GlobaleVariablen.EVENT_BUTTONDOWNLOAD);
+				buttonUpload.setActionCommand(GlobaleVariablen.EVENT_BUTTONUPLOAD);
 				buttonUpload.setBackground(Color.darkGray);
 				buttonUpload.setForeground(Color.white);
 				panelButtonBestaetigung.add(buttonUpload, new UConstraints(3, 2));

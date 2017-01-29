@@ -21,12 +21,17 @@ public class Select {
 
 	}
 
-	public String[] selectRouteNameFromTour(int plaetze_vorhanden) {
+	public String[] selectRouteNameFromTour(int plaetze_vorhanden, int agentNr) {
 
 		try {
 
 			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("SELECT name FROM api_tour GROUP BY name"  // WHERE reservations > " + (plaetze_vorhanden - 1)
+			pst = con.prepareStatement("SELECT tours.name " +
+					"FROM tours " +
+					"JOIN quotas on tours.id = quotas.tour " +
+					"WHERE Agent = " + agentNr + 
+					" AND count > " + plaetze_vorhanden + 
+					" GROUP BY name"  // WHERE reservations > " + (plaetze_vorhanden - 1)
 					);
 			rs = pst.executeQuery();
 
@@ -69,12 +74,17 @@ public class Select {
 		return null;
 	}
 
-	public String[] selectRouteDatumFromTour(int plaetze_vorhanden, String routenName) {
+	public String[] selectRouteDatumFromTour(int plaetze_vorhanden, String routenName, int agentNr) {
 	
 		try {
 	
 			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("SELECT date FROM api_tour WHERE name = '" + routenName + "' GROUP BY date");
+			pst = con.prepareStatement("SELECT date FROM tours " +
+					"JOIN quotas on tours.id = quotas.tour " +
+					"WHERE name = '" + routenName + "'" +
+					" AND count > " + plaetze_vorhanden + 
+					" AND Agent = " + agentNr +
+					" GROUP BY date");
 			rs = pst.executeQuery();
 	
 			ArrayList<String> select = new ArrayList<String>();
@@ -86,7 +96,65 @@ public class Select {
 			String[] ausgabe = new String[select.size()+1];
 			
 			for(int i=0; i<select.size(); i++) {
-				ausgabe[i] = select.get((i));
+				String[] splitter = select.get((i)).split("-");
+				ausgabe[i] = splitter[2] + "." + splitter[1] + "." +  splitter[0];
+			}
+			
+			
+			
+			return ausgabe;
+	
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Select.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	
+		} finally {
+	
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pst != null) {
+					pst.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+	
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Select.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+		return null;
+	}
+
+	public String[] selectRouteZeitFromTour(int plaetze_vorhanden, String routenName, String datum, int agentNr) {
+	
+		try {
+	
+			con = DriverManager.getConnection(url);
+			pst = con.prepareStatement("SELECT time " +
+					"FROM tours " +
+					"JOIN quotas on tours.id = quotas.tour " +
+					"WHERE name = '" + routenName + "'" +
+					" AND date = '" + datum + "'" + 
+					" AND Agent = " + agentNr +
+					" AND count > " + plaetze_vorhanden + 
+					" GROUP BY time");
+			rs = pst.executeQuery();
+	
+			ArrayList<String> select = new ArrayList<String>();
+			
+			while (rs.next()) {
+				select.add(rs.getString(1));
+			}
+			
+			String[] ausgabe = new String[select.size()+1];
+			
+			for(int i=0; i<select.size(); i++) {
+				String[] splitter = select.get((i)).split(":");
+				ausgabe[i] = splitter[0] + ":" + splitter[1];
 			}
 			
 			return ausgabe;
@@ -116,62 +184,21 @@ public class Select {
 		return null;
 	}
 
-	public String[] selectRouteZeitFromTour(int plaetze_vorhanden, String routenName, String datum) {
+	public String[] selectRouteSchiffFromShip(int plaetze_vorhanden, String routenName, String datum, String time, int agentNr) {
 	
 		try {
 	
 			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("SELECT time FROM api_tour WHERE name = '" +
-					routenName + "' and date = '" + datum + "' GROUP BY time");
-			rs = pst.executeQuery();
-	
-			ArrayList<String> select = new ArrayList<String>();
+			pst = con.prepareStatement("Select ships.name, ships.id " +
+					"FROM tours " +
+					"JOIN quotas on tours.id = quotas.tour " +
+					"JOIN ships ON tours.ship = ships.id " +
+					"WHERE tours.name = '" + routenName + "' " +
+					" AND tours.date = '" + datum + "'" +
+					" AND count > " + plaetze_vorhanden + 
+					" AND Agent = " + agentNr +
+					" AND tours.time = '" + time + "'");
 			
-			while (rs.next()) {
-				select.add(rs.getString(1));
-			}
-			
-			String[] ausgabe = new String[select.size()+1];
-			
-			for(int i=0; i<select.size(); i++) {
-				ausgabe[i] = select.get((i));
-			}
-			
-			return ausgabe;
-	
-		} catch (SQLException ex) {
-			Logger lgr = Logger.getLogger(Select.class.getName());
-			lgr.log(Level.SEVERE, ex.getMessage(), ex);
-	
-		} finally {
-	
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pst != null) {
-					pst.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-	
-			} catch (SQLException ex) {
-				Logger lgr = Logger.getLogger(Select.class.getName());
-				lgr.log(Level.WARNING, ex.getMessage(), ex);
-			}
-		}
-		return null;
-	}
-
-	public String[] selectRouteSchiffFromShip(int plaetze_vorhanden, String routenName, String datum, String time) {
-	
-		try {
-	
-			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("Select api_ship.name, api_ship.id from api_tour JOIN api_ship " +
-					"ON api_tour.ship_id = api_ship.id WHERE api_tour.name = '" +
-					routenName + "' and api_tour.date = '" + datum + "' and api_tour.time = '" + time + "'");
 			rs = pst.executeQuery();
 			
 			String ausgabe[] = new String[2];
@@ -254,11 +281,11 @@ public class Select {
 		try {
 	
 			con = DriverManager.getConnection(url);
-			pst = con.prepareStatement("Select id from api_tour " +
+			pst = con.prepareStatement("Select id from tours " +
 					"WHERE name = '" + tourName + "' " +
 					"AND date = '" + date + "' " +
 					"AND time = '" + time + "' " +
-					"AND ship_id = " + shipId);
+					"AND ship = " + shipId);
 			rs = pst.executeQuery();
 			
 			int ausgabe = -1;
