@@ -205,7 +205,7 @@ public class Select {
 			
 			while (rs.next()) {
 				ausgabe[0] = rs.getString(1);
-				ausgabe[1] = "" + rs.getInt(1);
+				ausgabe[1] = "" + rs.getObject(2);
 			}
 			
 			return ausgabe;
@@ -277,9 +277,10 @@ public class Select {
 	}
 
 	public int selectTourIDfromTour(String tourName, String date, String time, int shipId) {
+		
+		
 	
 		try {
-	
 			con = DriverManager.getConnection(url);
 			pst = con.prepareStatement("Select id from tours " +
 					"WHERE name = '" + tourName + "' " +
@@ -293,7 +294,6 @@ public class Select {
 			while (rs.next()) {
 				ausgabe = rs.getInt(1);
 			}
-			
 			return ausgabe;
 	
 		} catch (SQLException ex) {

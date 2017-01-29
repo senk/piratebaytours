@@ -174,7 +174,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		
 		buchungenView.getTextSchiffBestaetigung().setText(ship[0]);
 		
-		buchungenModel.setPlaetze(Integer.parseInt(ship[1]));
+		buchungenModel.setSchiffId((Integer.parseInt(ship[1])));
 		
 		buchungenModel.setTourId(new Select().selectTourIDfromTour(
 			buchungenModel.getTourName(), buchungenModel.getDatum()
@@ -214,6 +214,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 
 	private void handleActionEventEnterName() {
 		buchungenView.getListTour().requestFocus();
+		System.out.println(buchungenView.getTextName().getText());
 		
 	}
 	
@@ -305,11 +306,11 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		
 		if (debug) System.out.println("Plätze:" + buchungenModel.getPlaetze());
 		if (debug) System.out.println("Tour ID:" + buchungenModel.getTourId());
-		if (debug) System.out.println("Customer Name: " + buchungenView.getTextName().getSelectedText());
+		if (debug) System.out.println("Customer Name: " + buchungenView.getTextName().getText());
 
 
 		new Insert().insertOfflineBooking(buchungenModel.getPlaetze(),
-			buchungenModel.getTourId(), buchungenView.getTextName().getSelectedText());
+			buchungenModel.getTourId(), buchungenView.getTextName().getText());
 		
 		
 		
