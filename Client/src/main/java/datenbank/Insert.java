@@ -211,7 +211,7 @@ public class Insert {
 		try {
 			con = DriverManager.getConnection(url);
 
-			String stm = "INSERT INTO tours(id, name, date, time, ship) VALUES( "+ tmp.id + ", '" + tmp.name + "', '" + tmp.date+"', '" + tmp.time+"', " + tmp.id + ")";
+			String stm = "INSERT INTO tours(id, name, date, time, ship) VALUES( "+ tmp.id + ", '" + tmp.name + "', '" + tmp.date+"', '" + tmp.time+"', " + tmp.ship_id + ")";
 			System.out.println(stm);
 			pst = con.prepareStatement(stm);
 			pst.executeUpdate();
