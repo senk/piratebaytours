@@ -68,7 +68,7 @@ public class BuchungenView extends JFrame{
 	
 	public BuchungenView() {
 		// Definition des Frames
-		this.setTitle("PricatBayTours-Buchungen");
+		this.setTitle("PirateBayTours-Buchungen");
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
