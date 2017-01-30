@@ -335,7 +335,7 @@ public class Select {
             while(rs.next()){
                 customer tmp_customer = new customer();
 
-                tmp_customer.id = rs.getInt(1);
+                tmp_customer.id = rs.getInt(2);
                 tmp_customer.name = rs.getString(1);
                 tmp_customer_list.add(tmp_customer);
 
@@ -374,7 +374,7 @@ public class Select {
 			
             int remote_id = 0;
             while(rs.next()){
-                remote_id = rs.getInt(2);
+                remote_id = rs.getInt(1);
 
             }
             return remote_id;

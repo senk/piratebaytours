@@ -119,10 +119,9 @@ public class Update {
 	
 	        con.setAutoCommit(false);
 	        
-	        st.executeUpdate(
-	        		"Update offline_customers " +
-	        		" SET remote_id = " + remote_id + 
-	        		" WHERE id = " + offline_id);
+          String update_stm = "UPDATE offline_customers " + " SET remote_id = " + remote_id + " WHERE id = " + offline_id;
+          System.out.println(update_stm);
+	        st.executeUpdate(update_stm);
 	
 	        con.commit();
 	
