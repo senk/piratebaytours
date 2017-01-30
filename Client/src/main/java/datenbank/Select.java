@@ -366,5 +366,83 @@ public class Select {
         return null;
     }
 
+    public int selectRemoteCustomerIDForReservation(int offline_id){
+        try {
+            con = DriverManager.getConnection(url);
+            pst = con.prepareStatement("Select remote_id from offline_customers WHERE id = " + offline_id);
+            rs = pst.executeQuery();
+			
+            int remote_id = 0;
+            while(rs.next()){
+                remote_id = rs.getInt(2);
+
+            }
+            return remote_id;
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Select.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	
+        } finally {
+	
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+	
+            } catch (SQLException ex) {
+                Logger lgr = Logger.getLogger(Select.class.getName());
+                lgr.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<reservation> getAllReservations(){
+        try {
+            con = DriverManager.getConnection(url);
+            pst = con.prepareStatement("Select * from offline_bookings");
+            rs = pst.executeQuery();
+			
+            ArrayList<reservation> tmp_reserv_list = new ArrayList<reservation>();
+            while(rs.next()){
+                reservation tmp_reserv = new reservation();
+
+                tmp_reserv.count = rs.getInt(1);
+                tmp_reserv.tour = rs.getInt(2);
+                tmp_reserv.customer = rs.getInt(3);
+
+                tmp_reserv_list.add(tmp_reserv);
+            }
+            return tmp_customer_list;
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Select.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	
+        } finally {
+	
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+	
+            } catch (SQLException ex) {
+                Logger lgr = Logger.getLogger(Select.class.getName());
+                lgr.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        }
+        return null;
+    }
 
 }
