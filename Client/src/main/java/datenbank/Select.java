@@ -369,7 +369,7 @@ public class Select {
     public int selectRemoteCustomerIDForReservation(int offline_id){
         try {
             con = DriverManager.getConnection(url);
-            pst = con.prepareStatement("Select remote_id from offline_customers WHERE id = " + offline_id);
+            pst = con.prepareStatement("SELECT remote_id FROM offline_customers WHERE id = " + offline_id);
             rs = pst.executeQuery();
 			
             int remote_id = 0;

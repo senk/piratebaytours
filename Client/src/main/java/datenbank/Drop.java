@@ -99,5 +99,52 @@ public class Drop {
 		}
 	}
 
+	public void dropRecreateLocalTables() {
+
+		try {
+			con = DriverManager.getConnection(url);
+
+			String dropstm_offline_bookings = 	"DROP TABLE IF EXISTS offline_bookings;";
+			String dropstm_offline_customers = 	"DROP TABLE IF EXISTS offline_customers;";
+			String recreatestm_offline_bookings = 	"CREATE TABLE IF NOT EXISTS offline_bookings(count int, tour int, customer int, FOREIGN KEY(tour) REFERENCES tours(id), FOREIGN KEY(customer) REFERENCES offline_customers(id));";
+			String recreatestm_offline_customers = "CREATE TABLE IF NOT EXISTS offline_customers(id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), remote_id int);";
+
+			pst = con.prepareStatement(dropstm_offline_bookings);
+			pst.executeUpdate();
+			if (debug) System.out.println(dropstm_offline_bookings);
+
+			pst = con.prepareStatement(dropstm_offline_customers);
+			pst.executeUpdate();
+			if (debug) System.out.println(dropstm_offline_customers);
+
+			pst = con.prepareStatement(recreatestm_offline_bookings);
+			pst.executeUpdate();
+			if (debug) System.out.println(recreatestm_offline_bookings);
+
+			pst = con.prepareStatement(recreatestm_offline_customers);
+			pst.executeUpdate();
+			if (debug) System.out.println(recreatestm_offline_customers);
+
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Insert.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+
+		} finally {
+
+			try {
+				if (pst != null) {
+					pst.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Insert.class.getName());
+				lgr.log(Level.SEVERE, ex.getMessage(), ex);
+			}
+		}
+	}
+
 
 }

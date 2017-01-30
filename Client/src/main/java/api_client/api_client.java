@@ -254,10 +254,6 @@ public class api_client{
         }
     }
 
-
-
-
-
     private String request(String api_endpoint, String api_filters) throws Exception {
 
         String url = API_ROOT + api_endpoint + "?format=json&" + api_filters;

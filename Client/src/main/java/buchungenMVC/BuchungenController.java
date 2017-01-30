@@ -295,6 +295,19 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
           updater.updateOfflineCustomer(tmp.id, returned_cust.id);
       }
 
+      ArrayList<reservation> reservations = selector.getAllReservations();
+      int remote_id = 0;
+      for(reservation tmp:reservations){
+          remote_id = selector.selectRemoteCustomerIDForReservation(tmp.customer);
+          if(remote_id == 0){
+              System.out.println("Could not connect reservation to remote customer id!");
+              return;
+          }
+          tmp.customer = remote_id;
+          http.upload_reservation();
+      }
+
+
 		//unlook Button Upload
 		buchungenView.getButtonUpload().setEnabled(true);
 		new Update().UpdatelookButton(0);
