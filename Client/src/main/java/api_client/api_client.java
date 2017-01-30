@@ -217,7 +217,7 @@ public class api_client{
         }
     }
 
-	public List<reservation> get_reservations(){
+    public List<reservation> get_reservations(){
 
 		List<reservation> tmp_reservation_list = new ArrayList<reservation>();
 		try{
@@ -241,6 +241,18 @@ public class api_client{
 			return null;
 		}
 	}
+
+    public void upload_reservation(reservation reserv){
+        try{
+            String enc_reserv = "count=" + reserv.count + "&tour=" + reserv.tour + "&customer=" + reserv.customer;
+            int resp_code = write_request("reservations", enc_reserv);
+            if( resp_code != 201) throw new Exception("Could not write reservation");
+            return;
+        } catch(Exception e){
+            System.out.println(e);
+            return;
+        }
+    }
 
 
 
