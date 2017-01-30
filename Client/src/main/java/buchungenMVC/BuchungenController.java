@@ -309,7 +309,8 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 
 
 		//unlook Button Upload
-		buchungenView.getButtonUpload().setEnabled(true);
+	
+		buchungenView.getButtonDownload().setEnabled(true);
 		new Update().UpdatelookButton(0);
 	}
 
