@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import javax.net.ssl.HttpsURLConnection;
 
-import org.json.JSONArray;
+import org.json.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -200,17 +200,17 @@ public class api_client{
 
         try{
             String enc_cust = "name=" + cust.name;
-            int resp_code = write_request("customers", enc_cust);
-            if( resp_code != 201) throw new Exception("Could not write customers");
+            String resp = write_request("customers", enc_cust);
+            if( resp == null ) throw new Exception("Could not write customers");
 
-            List<customer> tmp_customer_list = new ArrayList<customer>();
-            tmp_customer_list = get_customers();
-            int highest_id=0;
-            customer ret_cust = null;
-            for(customer new_cust: tmp_customer_list){ //search for newest customer with the name we just inserted
-                if( new_cust.name.equals(cust.name) && new_cust.id > highest_id )
-                    ret_cust = new_cust;
-            }
+            JSONObject jsonResp = new JSONObject(resp);
+            customer ret_cust = new customer();
+            ret_cust.id = jsonResp.getInt("id");
+            ret_cust.name = jsonResp.getString("name");
+
+
+            //ret_cust = new_cust;
+
             return ret_cust;
         } catch(Exception e){
             return null;
@@ -232,7 +232,6 @@ public class api_client{
 				tmp_reservation.tour = arr.getJSONObject(i).getInt("tour");
 				tmp_reservation.customer = arr.getJSONObject(i).getInt("customer");
 
-
 				tmp_reservation_list.add(tmp_reservation);
 
 			}
@@ -245,8 +244,8 @@ public class api_client{
     public void upload_reservation(reservation reserv){
         try{
             String enc_reserv = "count=" + reserv.count + "&tour=" + reserv.tour + "&customer=" + reserv.customer;
-            int resp_code = write_request("reservations", enc_reserv);
-            if( resp_code != 201) throw new Exception("Could not write reservation");
+            String resp= write_request("reservations", enc_reserv);
+            if( resp == null) throw new Exception("Could not write reservation");
             return;
         } catch(Exception e){
             System.out.println(e);
@@ -284,9 +283,9 @@ public class api_client{
         return response.toString();
     }
 
-    private int write_request(String api_endpoint, String data) throws Exception {
+    private String write_request(String api_endpoint, String data) throws Exception {
 
-        String url = API_ROOT + api_endpoint + "/"; //for some reason, the / is critical
+        String url = API_ROOT + api_endpoint + "/?format=json"; //for some reason, the / is critical
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -302,11 +301,18 @@ public class api_client{
 
 
         int responseCode = con.getResponseCode();
+        if(responseCode != 201)
+            return null;
+        BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
+        StringBuilder sb = new StringBuilder();
+        String output;
+        while ((output = br.readLine()) != null) {
+            sb.append(output);
+        }
         System.out.println("Sending 'POST' request to URL : " + url);
         System.out.println("Response Code : " + responseCode);
 
-        //print result
-        return responseCode;
+        return sb.toString();
     }
 }
 

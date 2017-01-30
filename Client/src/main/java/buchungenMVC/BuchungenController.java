@@ -286,6 +286,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	private void handleActionEventButtonUpload() {
       Select selector = new Select();
       Update updater = new Update();
+      Drop dropper = new Drop();
       ArrayList<customer> customers = selector.selectOfflineCustomersWOReservations();
       api_client http= new api_client();
       customer returned_cust = null;
@@ -307,6 +308,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
           http.upload_reservation(tmp);
       }
 
+      dropper.dropRecreateLocalTables();
 
 		//unlook Button Upload
 	
