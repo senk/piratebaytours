@@ -304,7 +304,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
               return;
           }
           tmp.customer = remote_id;
-          http.upload_reservation();
+          http.upload_reservation(tmp);
       }
 
 

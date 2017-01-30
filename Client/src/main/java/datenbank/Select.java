@@ -400,7 +400,7 @@ public class Select {
                 lgr.log(Level.WARNING, ex.getMessage(), ex);
             }
         }
-        return null;
+        return 0;
     }
 
     public ArrayList<reservation> getAllReservations(){
@@ -419,7 +419,7 @@ public class Select {
 
                 tmp_reserv_list.add(tmp_reserv);
             }
-            return tmp_customer_list;
+            return tmp_reserv_list;
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(Select.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
