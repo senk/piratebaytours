@@ -110,4 +110,52 @@ public class Update {
 	        }
 	    }
 	}
+
+    public void updateOfflineCustomer(int offline_id, int remote_id){
+		try {
+	
+			con = DriverManager.getConnection(url);
+	        st = con.createStatement();
+	
+	        con.setAutoCommit(false);
+	        
+	        st.executeUpdate(
+	        		"Update offline_customers " +
+	        		" SET remote_id = " + remote_id + 
+	        		" WHERE id = " + offline_id);
+	
+	        con.commit();
+	
+	    } catch (SQLException ex) {
+	
+	        if (con != null) {
+	            try {
+	                con.rollback();
+	            } catch (SQLException ex1) {
+	                Logger lgr = Logger.getLogger(Update.class.getName());
+	                lgr.log(Level.WARNING, ex1.getMessage(), ex1);
+	            }
+	        }
+	
+	        Logger lgr = Logger.getLogger(Update.class.getName());
+	        lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	        
+	    } finally {
+	
+	        try {
+	            if (st != null) {
+	                st.close();
+	            }
+	            if (con != null) {
+	                con.close();
+	            }
+	
+	        } catch (SQLException ex) {
+	
+	            Logger lgr = Logger.getLogger(Update.class.getName());
+	            lgr.log(Level.WARNING, ex.getMessage(), ex);
+	        }
+	    }
+        
+    }
 }

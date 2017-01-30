@@ -284,16 +284,17 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 	}
 
 	private void handleActionEventButtonUpload() {
-      customer cust = new customer();
-      cust.name = "Müller";
-      cust.id = 1;
-
+      Select selector = new Select();
+      Update updater = new Update();
+      ArrayList<customer> customers = selector.selectOfflineCustomersWOReservations();
       api_client http= new api_client();
+      customer returned_cust = null;
 
-      cust 
-      System.out.println(http.upload_customer(cust));
-    
-		
+      for(customer tmp:customers){ //send each customer to server, update local DB with remote id
+          returned_cust = http.upload_customer(tmp);
+          updater.updateOfflineCustomer(tmp.id, returned_cust.id);
+      }
+
 		//unlook Button Upload
 		buchungenView.getButtonUpload().setEnabled(true);
 		new Update().UpdatelookButton(0);

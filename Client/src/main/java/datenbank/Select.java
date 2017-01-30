@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
+import api_client.*;
 
 public class Select {
 
@@ -321,6 +325,46 @@ public class Select {
 		return (-1);
 	}
 
+    public ArrayList<customer> selectOfflineCustomersWOReservations() {
+        try {
+            con = DriverManager.getConnection(url);
+            pst = con.prepareStatement("Select name,id from offline_customers");
+            rs = pst.executeQuery();
+			
+            ArrayList<customer> tmp_customer_list = new ArrayList<customer>();
+            while(rs.next()){
+                customer tmp_customer = new customer();
+
+                tmp_customer.id = rs.getInt(1);
+                tmp_customer.name = rs.getString(1);
+                tmp_customer_list.add(tmp_customer);
+
+            }
+            return tmp_customer_list;
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Select.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
 	
+        } finally {
+	
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+	
+            } catch (SQLException ex) {
+                Logger lgr = Logger.getLogger(Select.class.getName());
+                lgr.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        }
+        return null;
+    }
+
 
 }
