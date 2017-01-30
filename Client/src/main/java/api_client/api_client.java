@@ -196,6 +196,26 @@ public class api_client{
 		}
 	}
 
+    public customer upload_customer(customer cust){
+
+        try{
+            String enc_cust = "name=" + cust.name;
+            int resp_code = write_request("customers", enc_cust);
+            if( resp_code != 201) throw new Exception("Could not write customers");
+
+            List<customer> tmp_customer_list = new ArrayList<customer>();
+            tmp_customer_list = get_customers();
+            int highest_id=0;
+            customer ret_cust = null;
+            for(customer new_cust: tmp_customer_list){ //search for newest customer with the name we just inserted
+                if( new_cust.name.equals(cust.name) && new_cust.id > highest_id )
+                    ret_cust = new_cust;
+            }
+            return ret_cust;
+        } catch(Exception e){
+            return null;
+        }
+    }
 
 	public List<reservation> get_reservations(){
 
@@ -222,32 +242,6 @@ public class api_client{
 		}
 	}
 
-    public customer upload_customer(customer cust){
-
-    try{
-        String enc_cust = "name=" + cust.name;
-        int resp_code = write_request("customers", enc_cust);
-        if( resp_code != 200) throw new Exception("Could not write customers");
-
-        List<customer> tmp_customer_list = new ArrayList<customer>();
-        String response = request("customers","name=" + cust.name);
-        JSONArray arr = new JSONArray(response);
-        for (int i = 0; i < arr.length(); i++)
-            {
-                customer tmp_customer = new customer();
-
-                tmp_customer.id = arr.getJSONObject(i).getInt("id");
-                tmp_customer.name = arr.getJSONObject(i).getString("name");
-
-                tmp_customer_list.add(tmp_customer);
-
-            }
-
-        return tmp_customer_list.get(tmp_customer_list.size()-1);
-    } catch(Exception e){
-        return null;
-    }
-	}
 
 
 
