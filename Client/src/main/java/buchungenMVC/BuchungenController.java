@@ -115,6 +115,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextUhrzeitBestaetigung().setText("");
 		buchungenView.getTextDatumBestaetigung().setText("");
 		buchungenView.getTextSchiffBestaetigung().setText("");
+		buchungenView.getTextExistingCount().setText("");
 		
 		// Tour Name eintragen
 		buchungenModel.setTourName(buchungenView.getListTour().getSelectedValue());
@@ -141,6 +142,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getListUhrzeiten().setListData(new String[0]);
 		buchungenView.getTextUhrzeitBestaetigung().setText("");
 		buchungenView.getTextSchiffBestaetigung().setText("");
+		buchungenView.getTextExistingCount().setText("");
 		
 		// Datum aus der Liste in das entsprechende Textfeld schreiben
 		buchungenView.getTextDatumBestaetigung().setText(buchungenView.getListDatum().getSelectedValue());
@@ -177,8 +179,14 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenModel.setSchiffId((Integer.parseInt(ship[1])));
 		
 		buchungenModel.setTourId(new Select().selectTourIDfromTour(
-			buchungenModel.getTourName(), buchungenModel.getDatum()
-			, buchungenModel.getUhrzeit(), buchungenModel.getSchiffId()));
+			buchungenModel.getTourName(), buchungenModel.getDatum(),
+			buchungenModel.getUhrzeit(), buchungenModel.getSchiffId()));
+		
+		buchungenModel.setExistingCount((new Select().selectCountfromQuotas(
+				buchungenModel.getTourId(), buchungenModel.getAgentNr()) - buchungenModel.getPlaetze()));
+		
+		buchungenView.getTextExistingCount().setText("" + buchungenModel.getExistingCount());
+		
 		
 		// Button anklickbar, weil alle Felder einen Wert besitzen.
 		buchungenView.getButtonBuchungBestaetigung().setEnabled(true);
@@ -193,6 +201,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextSchiffBestaetigung().setText("");
 		buchungenView.getTextRouteBestaetigung().setText("");
 		buchungenView.getTextPlaetzeBestaetigung().setText("");
+		buchungenView.getTextExistingCount().setText("");
 		
 		// Die Anzahl der gesuchten Plätze wird gespeichert
 		buchungenModel.setPlaetze(Integer.parseInt(buchungenView.getTextBenoetigtePlaete().getText()));
@@ -232,6 +241,7 @@ public class BuchungenController implements Observer, ActionListener, ListSelect
 		buchungenView.getTextRouteBestaetigung().setText("");
 		buchungenView.getTextSchiffBestaetigung().setText("");
 		buchungenView.getTextDatumBestaetigung().setText("");
+		buchungenView.getTextExistingCount().setText("");
 		
 		// leere Listen für die Listen
 		buchungenView.getListUhrzeiten().setListData(new String[0]);

@@ -28,7 +28,8 @@ public class BuchungenView extends JFrame{
 	private UTextField textSchiffBestaetigung;
 	private UTextField textUhrzeitBestaetigung;
 	private UTextField textDatumBestaetigung;
-	
+	private UTextField textExistingCount;
+
 	// Button
 	private UButton buttonBuchungBestaetigung;
 	private UButton buttonBuchungAbbrechen;
@@ -58,6 +59,7 @@ public class BuchungenView extends JFrame{
 	private ULabel labelBenoetigtePlaete;
 	private ULabel labelName;
 	private ULabel labelRoute;
+	private ULabel labelExistingCount;
 	private ULabel labelUhrzeiten;
 	private ULabel labelDatum;
 	private ULabel labelPlaetzeBestaetigung;
@@ -106,6 +108,9 @@ public class BuchungenView extends JFrame{
 			labelNameAgent = new ULabel("Agent");
 			panelKundenInfo.add(labelNameAgent, new UConstraints(2, 0));
 			
+			labelExistingCount = new ULabel("Verbleibende Plätze");
+			panelKundenInfo.add(labelExistingCount, new UConstraints(2, 1));
+			
 			textBenoetigtePlaetze = new UTextField(20);
 			textBenoetigtePlaetze.setActionCommand(GlobaleVariablen.EVENT_ENTER_PLAETZE);
 			panelKundenInfo.add(textBenoetigtePlaetze, new UConstraints(1, 0));
@@ -116,6 +121,10 @@ public class BuchungenView extends JFrame{
 			
 			textNameAgent = new UTextField(20);
 			panelKundenInfo.add(textNameAgent, new UConstraints(3, 0));
+			
+			textExistingCount = new UTextField(20);
+			textExistingCount.setEditable(false);
+			panelKundenInfo.add(textExistingCount, new UConstraints(3, 1));
 			
 		}
 		
@@ -295,4 +304,8 @@ public class BuchungenView extends JFrame{
 	public UTextField getTextNameAgent() {
 		return textNameAgent;
 	}
+	public UTextField getTextExistingCount() {
+		return textExistingCount;
+	}
+
 }

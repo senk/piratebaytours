@@ -34,7 +34,7 @@ public class Select {
 					"FROM tours " +
 					"JOIN quotas on tours.id = quotas.tour " +
 					"WHERE Agent = " + agentNr + 
-					" AND count > " + plaetze_vorhanden + 
+					" AND count > " + (plaetze_vorhanden-1) + 
 					" GROUP BY name"  // WHERE reservations > " + (plaetze_vorhanden - 1)
 					);
 			rs = pst.executeQuery();
@@ -86,7 +86,7 @@ public class Select {
 			pst = con.prepareStatement("SELECT date FROM tours " +
 					"JOIN quotas on tours.id = quotas.tour " +
 					"WHERE name = '" + routenName + "'" +
-					" AND count > " + plaetze_vorhanden + 
+					" AND count > " + (plaetze_vorhanden-1) + 
 					" AND Agent = " + agentNr +
 					" GROUP BY date");
 			rs = pst.executeQuery();
@@ -144,7 +144,7 @@ public class Select {
 					"WHERE name = '" + routenName + "'" +
 					" AND date = '" + datum + "'" + 
 					" AND Agent = " + agentNr +
-					" AND count > " + plaetze_vorhanden + 
+					" AND count > " + (plaetze_vorhanden-1) + 
 					" GROUP BY time");
 			rs = pst.executeQuery();
 	
@@ -199,7 +199,7 @@ public class Select {
 					"JOIN ships ON tours.ship = ships.id " +
 					"WHERE tours.name = '" + routenName + "' " +
 					" AND tours.date = '" + datum + "'" +
-					" AND count > " + plaetze_vorhanden + 
+					" AND count > " + (plaetze_vorhanden-1) + 
 					" AND Agent = " + agentNr +
 					" AND tours.time = '" + time + "'");
 			
@@ -444,5 +444,48 @@ public class Select {
         }
         return null;
     }
+
+	public int selectCountfromQuotas(int tourID, int agent) {
+		
+		
+	
+		try {
+			con = DriverManager.getConnection(url);
+			pst = con.prepareStatement("Select count from quotas " +
+					"WHERE tour = " + tourID +
+					" AND agent = " + agent);
+			rs = pst.executeQuery();
+			
+			int ausgabe = -1;
+			
+			while (rs.next()) {
+				ausgabe = rs.getInt(1);
+			}
+			return ausgabe;
+	
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Select.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	
+		} finally {
+	
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pst != null) {
+					pst.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+	
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Select.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+		return (-1);
+	}
 
 }

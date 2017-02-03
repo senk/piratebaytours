@@ -14,6 +14,7 @@ public class BuchungenModel extends Observable{
 	private String routeName;
 	private int tourId;
 	private int AgentNr;
+	private int existingCount;
 	
 	// Getter und Setter
 	
@@ -59,6 +60,12 @@ public class BuchungenModel extends Observable{
 	}
 	public void setAgentNr(int agentNr) {
 		AgentNr = agentNr;
+	}
+	public int getExistingCount() {
+		return existingCount;
+	}
+	public void setExistingCount(int existingCount) {
+		this.existingCount = existingCount;
 	}
 	
 	
