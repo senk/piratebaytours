@@ -1,17 +1,66 @@
 \documentclass[12pt,a4paper,ngerman,english]{report}
-%\usepackage[left=12mm, top =0.5in, bottom=5in]{geometry}
-%\usepackage{lipsum}
 \usepackage[utf8]{inputenc}
-\usepackage[german]{babel} 
+\usepackage[german]{babel}
+\usepackage[draft]{todonotes} 
 \usepackage{pdfpages}
 \usepackage{pdflscape}
-%\usepackage{lscape}
 \usepackage{rotating}
 \usepackage{epstopdf}
-\usepackage{lmodern}
- 
+\usepackage{cite}
 \usepackage{graphicx}
+\usepackage{gensymb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage[numbers]{natbib}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage[ngerman]{cleveref}
+\usepackage{listings}
+
+\usepackage[a4paper, top=30mm, left=30mm, right=30mm, bottom=30mm,headsep=10mm, footskip=12mm]{geometry}
+\parindent0pt
+
+%\usepackage[sorting=nyt, backend=biber, style=alphabetic]{biblatex}
+%\addbibresource{mybib.bib}
+
+\usepackage[onehalfspacing]{setspace}
+
 \graphicspath{graphics}
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\pagestyle{fancy} %eigener Seitenstil
+\fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\fancyhead[L]{\small{\leftmark}}
+
+\newcommand{\icode}[1]{{\ttfamily{#1}}}
+
+\renewcommand{\headrulewidth}{0.1pt} %obere Trennlinie
+\fancyfoot[C]{\thepage} %Seitennummer
+\setlength{\headheight}{13.6pt}
+
+%\lstset{language=C++, basicstyle=\ttfamily\footnotesize, showstringspaces=false} %C++ code formatierung
+\lstset{language=C++,
+	basicstyle=\ttfamily\footnotesize,
+	breaklines=true,
+	%	literate={\ \ }{{\ }}1, 
+	showstringspaces=false,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	morecomment=[l][\color{magenta}]{\#}
+}
+
+\newenvironment{abstractpage}
+{\cleardoublepage\vspace*{\fill}\thispagestyle{empty}}
+{\vfill\cleardoublepage}
+\newenvironment{abstrac}[1]
+{\bigskip\selectlanguage{#1}%
+	\begin{center}\bfseries\abstractname\end{center}}
+{\par\bigskip}
 
 \begin{document}
 
@@ -36,20 +85,19 @@
 
 \end{center}
 \end{titlepage}
-\newpage
+
 
 % Abstracts
-\selectlanguage{ngerman}
-\begin{samepage}
-\section*{\centering\abstractname}
-Dies ist die Zusammenfassung auf Deutsch.
-\vfill
-\selectlanguage{english}
-\section*{\centering\abstractname}
-This is an english abstract.
-\selectlanguage{ngerman}% oder was auch immer die Hauptsprache ist
- \vfill
-\end{samepage}
+\newpage
+\begin{abstractpage}
+	\begin{abstrac}{ngerman}
+		\todo[inline]{Abstrakt schreiben}
+	\end{abstrac}
+	
+	\begin{abstrac}{english}
+		\todo[inline]{Abstrakt übersetzen}
+	\end{abstrac}
+\end{abstractpage}
 
 
 
@@ -84,22 +132,11 @@ This is an english abstract.
 
 \chapter{Fazit}
 
-\chapter*{Appendix} 
-\addcontentsline{toc}{chapter}{Appendix} 
 
 
+\bibliography{mybib}{}
+\bibliographystyle{plainnat}
 
-\begin{sidewaysfigure}
-%\begin{landscape}
-%\begin{figure}
-
-%\end{figure}
-%\end{landscape}
-\end{sidewaysfigure}
-
-
-
-% section section_name (end)
 
 
 \end{document}
