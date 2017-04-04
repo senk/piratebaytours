@@ -147,12 +147,22 @@ Zusätzlich dazu werden zwei lokale Tabellen angelegt.
 Die 'offline bookings' Tabelle enthält alle Buchungen, die der Vertriebsmitarbeiter im Offline-Fall tätigt. Werden im Offline-Modus neue Kundenstammdaten angelegt werden diese in der Tabelle 'offline customers' gespeichert. Dies ist notwendig, um ID Konflikte bei der Replizierung zu vermeiden. Weiterhin lässt sich so mit wenig Aufwand nachvollziehen welche Buchungen noch nicht repliziert wurden. Da das Serverabbild bei einer Offline-Buchung nicht verändert wird, besteht kein Risiko, das es zu inkonsistenten Ausgangsdaten kommt und ein Offline-Arbeiten nicht mehr möglich ist.
 
 \section{Replizierung}
+\label{sec:Replizierung}
 \todo[inline]{Wie wird repliziert??\\
 }
 \chapter{Geschäftslogik}
 \todo[inline]{Wie werden Fälle wie Überbuchen gehandelt?\\
 	Wie erfolgt die Replizierung von Server zu Client und zurück?\\
 	Wir replizieren an zwei Punkten pro Tag\\}
+
+\section{Replikationszeitpunkt}
+
+Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile Anwendung, wird im Normalfalle nur zu bestimmten Zeitpunkten eine Replizierung von der zentralen Datenbank zur lokalen Datenbank und zurück durchgeführt. Beider Vorgänge werden manuell vom Benutzer ausgelöst. Bei erhöhter Verfügbarkeit des Internets steht es diesem frei häufiger zu replizieren, minimal sind jedoch folgende Replizierungen notwendig:\todo[inline]{Muss eine Reihenfolge eingehalten werden?}
+
+\begin{description}
+\item[Lesend/Morgens] Zu Beginn des Arbeitstages muss jeder Agent einen Lesevorgang auslösen. Dies geschieht über das GUI mittels der Schaltfläche \todo[inline]{Füge Namen des Buttons ein}. Hierbei werden die Tabellen Schiffe, Routen, Buchungen und Quoten \todo[inline]{TTabellenNamen checken} vom Server abgeholt und in die lokale DB eingelesen. Somit verfügt der Agent nach Abschluss des Vorgangs über alle Touren und Schiffe und kann mittels der bereits vorhandenen Buchungen ausrechnen welche Pältze noch frei sind. Er kennt außerdem seine persönlichen Quoten und weiß daher wie viele Pätze er maximal verkaufen kann.
+\item[Schreibend/Abends] 
+\end{description}
 
 \chapter{Fazit}
 \todo[inline]{Was sind die Lessons Learned\\
