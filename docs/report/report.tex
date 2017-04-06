@@ -132,19 +132,19 @@ Um offline einsatzfähig zu sein, wurde eine lokale SQLite Datenbank genutzt. W�
 Wie erwähnt, enthält die Datenbank nach einmalige Synchronisation ein komplett Abbild der Server-Datenbank. Das heißt, lokal sind folgende Tabellen verfügbar:
 \begin{itemize}
 	\setlength\itemsep{0.1em}
-	\item agents
-	\item customers
-	\item quotas
-	\item ships
-	\item tours
+	\item \texttt{agents}
+	\item \texttt{customers}
+	\item \texttt{quotas}
+	\item \texttt{ships}
+	\item \texttt{tours}
 \end{itemize}
 Zusätzlich dazu werden zwei lokale Tabellen angelegt.
 \begin{itemize}
 	\setlength\itemsep{0.1em}
-	\item offline bookings
-	\item offline customers
+	\item \texttt{offline\_bookings}
+	\item \texttt{offline\_customers}
 \end{itemize}
-Die 'offline bookings' Tabelle enthält alle Buchungen, die der Vertriebsmitarbeiter im Offline-Fall tätigt. Werden im Offline-Modus neue Kundenstammdaten angelegt werden diese in der Tabelle 'offline customers' gespeichert. Dies ist notwendig, um ID Konflikte bei der Replizierung zu vermeiden. Weiterhin lässt sich so mit wenig Aufwand nachvollziehen welche Buchungen noch nicht repliziert wurden. Da das Serverabbild bei einer Offline-Buchung nicht verändert wird, besteht kein Risiko, das es zu inkonsistenten Ausgangsdaten kommt und ein Offline-Arbeiten nicht mehr möglich ist.
+Die \texttt{offline\_bookings} Tabelle enthält alle Buchungen, die der Vertriebsmitarbeiter im Offline-Fall tätigt. Werden im Offline-Modus neue Kundenstammdaten angelegt werden diese in der Tabelle \texttt{offline\_customers} gespeichert. Dies ist notwendig, um ID Konflikte bei der Replizierung zu vermeiden. Weiterhin lässt sich so mit wenig Aufwand nachvollziehen welche Buchungen noch nicht repliziert wurden. Da das Serverabbild bei einer Offline-Buchung nicht verändert wird, besteht kein Risiko, das es zu inkonsistenten Ausgangsdaten kommt und ein Offline-Arbeiten nicht mehr möglich ist.
 
 \section{Replizierung}
 \label{sec:Replizierung}
