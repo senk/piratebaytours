@@ -146,13 +146,21 @@ Die \texttt{offline\_bookings} Tabelle enthält alle Buchungen, die der Vertrieb
 
 \section{Replizierung}
 \label{sec:Replizierung}
-\todo[inline]{Wie wird repliziert??\\
-}
+
+Wie in \autoref{sec:RepliZeit} beschrieben, gibt es zwei Replikationsprozesse. Zum einen lesend vom Server zur lokalen DB, zum anderen schreibend, von der lokalen DB zum Server.
+
+\subsection{Lesende Replizierung}
+
+Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} werden per HTTP bei der Django-API angefragt und von dieser als JSON zurückgegeben. Clientseitig werden diese JSON-Strings geparst und in die lokale DB eingefügt.
+
+\subsection{Schreibende Replizierung}
+
 \chapter{Geschäftslogik}
 \todo[inline]{Wie werden Fälle wie Überbuchen gehandelt?\\
 	Wie erfolgt die Replizierung von Server zu Client und zurück?\\}
 
 \section{Replikationszeitpunkt}
+\label{sec:RepliZeit}
 
 Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile Anwendung, wird im Normalfalle nur zu bestimmten Zeitpunkten eine Replizierung von der zentralen Datenbank zur lokalen Datenbank und zurück durchgeführt. Beider Vorgänge werden manuell vom Benutzer ausgelöst. Bei erhöhter Verfügbarkeit des Internets steht es diesem frei häufiger zu replizieren. Minimal wird jedoch davon ausgegangen, dass die Agenten zu Beginn und Ende ihres Arbeitstages Internetzugang haben und folgende Replizierungen durchführen können:\todo[inline]{Muss eine Reihenfolge eingehalten werden?}
 
