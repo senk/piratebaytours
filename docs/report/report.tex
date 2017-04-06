@@ -152,16 +152,15 @@ Die 'offline bookings' Tabelle enthält alle Buchungen, die der Vertriebsmitarbe
 }
 \chapter{Geschäftslogik}
 \todo[inline]{Wie werden Fälle wie Überbuchen gehandelt?\\
-	Wie erfolgt die Replizierung von Server zu Client und zurück?\\
-	Wir replizieren an zwei Punkten pro Tag\\}
+	Wie erfolgt die Replizierung von Server zu Client und zurück?\\}
 
 \section{Replikationszeitpunkt}
 
-Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile Anwendung, wird im Normalfalle nur zu bestimmten Zeitpunkten eine Replizierung von der zentralen Datenbank zur lokalen Datenbank und zurück durchgeführt. Beider Vorgänge werden manuell vom Benutzer ausgelöst. Bei erhöhter Verfügbarkeit des Internets steht es diesem frei häufiger zu replizieren, minimal sind jedoch folgende Replizierungen notwendig:\todo[inline]{Muss eine Reihenfolge eingehalten werden?}
+Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile Anwendung, wird im Normalfalle nur zu bestimmten Zeitpunkten eine Replizierung von der zentralen Datenbank zur lokalen Datenbank und zurück durchgeführt. Beider Vorgänge werden manuell vom Benutzer ausgelöst. Bei erhöhter Verfügbarkeit des Internets steht es diesem frei häufiger zu replizieren. Minimal wird jedoch davon ausgegangen, dass die Agenten zu Beginn und Ende ihres Arbeitstages Internetzugang haben und folgende Replizierungen durchführen können:\todo[inline]{Muss eine Reihenfolge eingehalten werden?}
 
 \begin{description}
-\item[Lesend/Morgens] Zu Beginn des Arbeitstages muss jeder Agent einen Lesevorgang auslösen. Dies geschieht über das GUI mittels der Schaltfläche \todo[inline]{Füge Namen des Buttons ein}. Hierbei werden die Tabellen Schiffe, Routen, Buchungen und Quoten \todo[inline]{TTabellenNamen checken} vom Server abgeholt und in die lokale DB eingelesen. Somit verfügt der Agent nach Abschluss des Vorgangs über alle Touren und Schiffe und kann mittels der bereits vorhandenen Buchungen ausrechnen welche Pältze noch frei sind. Er kennt außerdem seine persönlichen Quoten und weiß daher wie viele Pätze er maximal verkaufen kann.
-\item[Schreibend/Abends] 
+\item[Lesend/Morgens] Zu Beginn des Arbeitstages muss jeder Agent einen Lesevorgang auslösen. Dies geschieht über das GUI mittels der Schaltfläche \todo[inline]{Füge Namen des Buttons ein}. Hierbei werden die Tabellen Schiffe, Routen, Buchungen und Quoten \todo[inline]{TabellenNamen checken} vom Server abgeholt und in die lokale DB eingelesen. Somit verfügt der Agent nach Abschluss des Vorgangs über alle Touren und Schiffe und kann mittels der bereits vorhandenen Buchungen ausrechnen welche Pältze noch frei sind. Er kennt außerdem seine persönlichen Quoten und weiß daher wie viele Pätze er maximal verkaufen kann.
+\item[Schreibend/Abends] Am Ende des Arbeitstages muss jeder Agent einen Schreibvorgang auslösen. Dies geschieht über das GUI mittels der Schaltfläche \todo[inline]{Füge Namen des Buttons ein}. Hierbei werden die neu angelegten Kunden und Buchungen aus den Tabellen \todo[inline]{Füge Namen Tabellen ein} der lokalen DB in die Tabellen \todo[inline]{Füge Namen Tabellen ein} der zentralen DB hochgeladen. Der Uploadmechanismus ist in \autoref{sec:Replizierung} beschrieben. Nach Abschluss dieses Vorgangs durch alle Agenten sind dem Server alle neuen Kunden und Buchungen bekannt. 
 \end{description}
 
 \chapter{Fazit}
