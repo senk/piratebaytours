@@ -151,9 +151,27 @@ Wie in \autoref{sec:RepliZeit} beschrieben, gibt es zwei Replikationsprozesse. Z
 
 \subsection{Lesende Replizierung}
 
-Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} werden per HTTP bei der Django-API angefragt und von dieser als JSON zurückgegeben. Clientseitig werden diese JSON-Strings geparst und in die lokale DB eingefügt.
+Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} werden per HTTP bei der Django-API angefragt und von dieser als JSON zurückgegeben. Clientseitig werden diese JSON-Strings geparst und in die lokale DB eingefügt. \todo[inline]{Verweise auf API Kapitel}
 
 \subsection{Schreibende Replizierung}
+
+Bei der schreibenden Replizierung sollen die Eintrage der Tabellen \texttt{offline\_customers} und \texttt{offline\_bookings} aus der lokalen Datenbank an die Tabellen \texttt{customers} und \texttt{bookings} der zentralen Datenbank übertragen werden. Dies geschiecht, analog zum lesenden Zugriff, durch Umformung der Einträge in JSON-Objekte welche dann mittels HTTP-Requests an eine Django-API geschickt werden.\\
+
+Hierbei ergibt sich die Schwierigkeit, dass die Einträge in der lokalen DB einen automatisch eine ID bekommen haben, die jedoch nur lokal gültig. Bei der Übertragung werden neue, dort gültige IDs für jeden Eintrag vergeben. Dies bedeutet jedoch, dass die Verweise aus der \texttt{offline\_bookings} Tabelle auf IDs in der \texttt{offline\_customers} Tabelle serverseitig nicht mehr gültig sind.\\ \todo[inline]{Verweis auf DB-Schema einfügen}
+
+Es müssen also vor dem Upload der Einträge aus der Tabelle \texttt{offline\_bookings} die Verweise auf die lokalen IDs in der Tabelle \texttt{offline\_customers} ersetzt werden durch Verweise auf die zentralen IDs in der Tabelle \texttt{customers}. Diese werden aber vom Server erst vergeben, wenn die Einträge aus der \texttt{offline\_customers} zum Server gesendet werden. Die bereits erwähnte Django-API beantwortet jeden erfolgreichen Schreibzugriff mit dem Versand des erzeugten Eintrags als JSON-Objekt. Diese Objekte enthalten die vom Server vergebene ID die somit direkt in den entsprechenden Datensatz der lokalen \texttt{offline\_customers} eingetragen werden kann.\\
+
+Es werden jedoch nicht die lokalen IDs überschrieben, sondern die zentralen IDs hinzugefügt. Dies ermöglicht es in einem zweiten Schritt für jeden Eintrag der Tabelle \texttt{offline\_bookings} den Verweis von der lokalen auf die zentrale ID anzupassen und den Eintrag dann zum Server zu senden.\\
+
+Nach Abschluss der Replikation werden die Einträge der Tabellen \texttt{offline\_bookings} und \texttt{offline\_customers} nicht mehr benötigt. Beide Tabellen werden gelöscht und neu angelegt, um Duplikate sicher auszuschließen. Der gesamte Vorgang wird in \autoref{fig:ReplSchreibend} graphisch dargestellt.
+
+\begin{figure}[h]
+  \centering
+  
+  \caption{Ablaufdiagramm schreibende Replikation}
+  \label{fig:ReplSchreibend}
+\end{figure}
+\todo[inline]{Graphik einfügen}
 
 \chapter{Geschäftslogik}
 \todo[inline]{Wie werden Fälle wie Überbuchen gehandelt?\\
