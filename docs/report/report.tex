@@ -119,14 +119,20 @@ Wichtigstes Funktionsmerkmal des Systems ist die Offline-Fähigkeit. Das heißt,
 \todo[inline]{Wie ist die Datenbank aufgebaut?\\
 	Welche Replikation setzen wir ein?\\
 	Wie ist diese Implementiert?\\}
+
+\subsubsection{Replikation}
+
+Eine vorgefertigte Replikationslösung zwischen SQLite und PostgreSQL gibt es nicht. Daher wird die Replikation in Eigenentwicklung umgesetzt. Für Details siehe \autoref{sec:Replizierung}.
+
 \section{Client}
 \subsection{Java Client}
 \todo[inline]{Welche Konzepte nutzt der Client? MVC\\
 	Wie ist die Struktur im Client?\\
 	Welche Klassen wurden implementiert?\\
 	Wie erfolgt die Datenhaltung?}
-\subsection{Local Cache DB}
+\subsection{Local Cache DB}Name
 Um offline einsatzfähig zu sein, wurde eine lokale SQLite Datenbank genutzt. Während der Synchronisierung vom Server zum Client wird ein Abbild der Serverdatenbank heruntergeladen und in der lokalen Datenbank gecached. Wir haben uns entschieden eine SQLite Datenbank zu nutzen, da keine zusätzlich Datenbankserver installiert werden müssen und alle notwendigen Ressourcen gut in die Applikation eingebunden werden können. Weiterhin wird SQLite von einer Vielzahl an Programmiersprachen gut unterstützt und bietet eine ressourcensparende Möglichkeit Daten abzulegen. \\
+
 Wie erwähnt, enthält die Datenbank nach einmalige Synchronisation ein komplett Abbild der Server-Datenbank. Das heißt, lokal sind folgende Tabellen verfügbar:
 \begin{itemize}
 	\setlength\itemsep{0.1em}
