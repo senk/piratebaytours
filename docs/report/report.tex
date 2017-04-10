@@ -154,6 +154,7 @@ Wie in \autoref{sec:RepliZeit} beschrieben, gibt es zwei Replikationsprozesse. Z
 Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} werden per HTTP bei der Django-API angefragt und von dieser als JSON zurückgegeben. Clientseitig werden diese JSON-Strings geparst und in die lokale DB eingefügt. \todo[inline]{Verweise auf API Kapitel}
 
 \subsection{Schreibende Replizierung}
+\label{subsec:SchrRepl}
 
 Bei der schreibenden Replizierung sollen die Eintrage der Tabellen \texttt{offline\_customers} und \texttt{offline\_bookings} aus der lokalen Datenbank an die Tabellen \texttt{customers} und \texttt{bookings} der zentralen Datenbank übertragen werden. Dies geschiecht, analog zum lesenden Zugriff, durch Umformung der Einträge in JSON-Objekte welche dann mittels HTTP-Requests an eine Django-API geschickt werden.\\
 
@@ -194,8 +195,13 @@ Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile 
 \section{Replikation}
 \label{sec:FazitRepl}
 
+Unsere Lösung setzt clientseitig mit SQLite eine andere Datenbank ein als serverseitig mit PostgreSQL. Dies vereinfacht sowohl die Entwicklung als auch das Deployment des Client, da keine separate DB aufgesetzt und angesprochen werden muss sondern alles in einer Datei und mit einem Treiber funktioniert.\\
 
+Bei der Replikation entstehen durch diesen Ansatz jedoch Probleme, da es für diese Kombination aus Datenbanken keine vorgefertigte Replikationslösung gibt. Auf dem Weg vom Server zum Client verursacht dies keinen großen Mehraufwand zumindest in der Entwicklung. Die Umwandlung zwischen JSON und der jeweiligen Datenbank dürfte jedoch Performanznachteile mit sich bringen.
 
+Lesend werden die verschiedenen Datenbanken jedoch zu einem größeren Problem. Wie in \autoref{subsec:SchrRepl} beschrieben, ist ein in der Entwicklung aufwendiger Mechanismus zur Synchronisierung der IDs nötig. Weiterhin wird jeder Datensatz einzeln übertragen, was Performanznachteile mit sich bringt.\\
+
+Ob diese Nachteile durch den Vorteil des einfacheren Setups aufgewogen werden, hängt davon ab wie oft in der Praxis ein Client neu eingerichtet wird. Bei den im Szenario vorkommenden ``fliegenden'' Händlern, kann mit einer recht hohen Fluktuation gerechnet werden, so dass sich der Einsatz von SQLite rechnen sollte.
 
 \bibliography{mybib}{}
 \bibliographystyle{plainnat}
