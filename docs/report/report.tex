@@ -126,11 +126,50 @@ Eine vorgefertigte Replikationslösung zwischen SQLite und PostgreSQL gibt es ni
 
 \section{Client}
 \subsection{Java Client}
-\todo[inline]{Welche Konzepte nutzt der Client? MVC\\
-	Wie ist die Struktur im Client?\\
-	Welche Klassen wurden implementiert?\\
-	Wie erfolgt die Datenhalt ung?}
-\subsection{Local Cache DB}Name
+\subsubsection{Implementierungsmodell}
+Wir haben uns dazu entschieden den Client in der Programmiersprache Java zu schreiben, dadurch konnte unsere gesamte Gruppe gemeinsam an den Implementierungen für den Client arbeiten, weil Java eine Standartprogrammiersprache ist, die jeder aus unserer Gruppe beherrschte. Außerdem ist Java sehr praktikabel für die Implementierung einer Oberfläche, wie wir sie für den Client gebraucht haben.\\
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/mvc.png}
+  \caption{Darstellung des MVC Modells \citep{PIC: MVC}}
+  \label{fig:MVC}
+\end{figure}
+
+Für die Implementierung haben wir das „Model-View-Controller“-Modell (MVC-Modell) verwendet, das sich für die Erledigung unserer Aufgabe sehr geeignet war.\\
+Das MVC-Modell teilt die Implementierung in drei unterschiedliche Komponenten ein:	
+\begin{itemize}
+	\setlength\itemsep{0.1em}
+	\item \texttt{das Datenmodell (engl. model),}
+	\item \texttt{die Präsentation (engl. view) und}
+	\item \texttt{die Programmsteuerung (engl. controller).}
+\end{itemize}
+\newpage
+Deswegen benötigen wir drei unterschiedliche Klasse, die in Abbildung \ref{fig:MVC} dargestellt sind. In der Klasse „model“ wurden daher die darzustellenden Daten gespeichert, wie beispielsweise der Routenname, in der die ausgewählte Route zwischengespeichert wird. In der Klasse „view“ wurden die benötigten Daten aus dem „model“ dargestellt und die Benutzerinteraktionen entgegengenommen. In der Klasse „controller“ wurde die Steuerung Implementiert, die für die Bearbeitung der Benutzerinteraktionen zuständig ist. Zusätzlich zu diesen drei Klassen des MVC-Modells, haben wir eine Klasse für die API-Zugriffe und eine Klasse für die SQLite Cache Datenbank Zugriffe erstellt.
+\subsubsection{Struktur}
+Nachdem im letzten Kapitel das Implementierungsmodell dargestellt wurde, folgt nun die Beschreibung der Struktur des Clients. Der Client ist wie in Abbildung \ref{fig:Client} dargestellt. Diese sehr simple Darstellung der Oberflächenelemente und die dadurch entstehende  hohe Benutzerfreundlichkeit ist ein großer Vorteil unseres Clients. Die einfache Bedienbarkeit entsteht durch die Bedienung mit Maus und Tastatur, wobei die Anwendung nur mit der Tastatur bedient werden kann. Dadurch können beispielsweise viele Tickets in kürzester Zeit verkauft werden.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.94\textwidth]{img/Client.png}
+  \caption{Darstellung des Clients}
+  \label{fig:Client}
+\end{figure}
+\newpage
+Beim Start der Anwendung müssen zunächst die Daten, also die bisher nicht verkauften Tickets sowie alle anderen notwendigen Daten aus den Datenbanken, vom Server geladen werden. Dafür wird die Schaltfläche „Download“ angeklickt. Anschließend liegen die aktuellen Daten in der lokalen Datenbank und können verwendet und bearbeitet werden. In das Textfeld „Agent“ muss die Personalnummer des jeweiligen Vertriebsmitarbeiters eingetragen werden.\\
+Damit der Tickets für eine bestimmte Route gebucht werden können, müssen folgende Schritte nacheinander durchgeführt werden.
+
+\begin{enumerate}
+\item Die Anzahl der benötigten Tickets sowie der Name des Käufers müssen in die entsprechenden Textfelder eingetragen werden. Anschließend steht im Textfeld „Plätze“ der eingetragene Wert.
+\item Nach der Bestätigung mit der „Enter“-Taste werden die Touren angezeigt, für die noch genügend Plätze vorhanden sind.
+\item Sobald eine Tour, durch die Selektion einer Zeile, ausgewählt wurde, wird die ausgewählte Route im Textfeld „Route“ angegeben.
+\item Nun werden in der Liste „Datum“ alle möglichen Datums angegeben, an denen die Tour gebucht werden kann.
+\item Mit der Auswahl eines Datum und der zugehörigen Selektion einer Zeile wird im Textfeld „Datum“ das gewählte Datum angegeben und in der Liste „Uhrzeiten“ werden die möglichen Uhrzeiten für die gewählte Tour sowie Datum angezeigt.
+\item Erst mit der Auswahl einer Uhrzeit kann ein Ticket, bzw. mehrere Tickets gebucht werden, weil erst dann die Schaltfläche „Kaufen“ anklickbar ist.
+\end{enumerate}
+Mit der Schaltfläche „Abbrechen“ kann die Buchung jederzeit beendet werden und alle Textfelder, bis auf das Textfeld „Agent“, werden zurückgesetzt. Nachdem der Arbeitstag beendet ist, oder der Vertriebsmitarbeiter zwischenzeitlich eine Internetverbindung aufnehmen kann, können die bisher verkauften Tickets mit dem Server synchronisiert werden. Dafür muss lediglich die Schaltfläche „Upload“ angeklickt werden.\\
+
+
+\subsection{Local Cache DB}
 Um offline einsatzfähig zu sein, wurde eine lokale SQLite Datenbank genutzt. Während der Synchronisierung vom Server zum Client wird ein Abbild der Serverdatenbank heruntergeladen und in der lokalen Datenbank gecached. Wir haben uns entschieden eine SQLite Datenbank zu nutzen, da keine zusätzlich Datenbankserver installiert werden müssen und alle notwendigen Ressourcen gut in die Applikation eingebunden werden können. Weiterhin wird SQLite von einer Vielzahl an Programmiersprachen gut unterstützt und bietet eine ressourcensparende Möglichkeit Daten abzulegen. \\
 
 Wie erwähnt, enthält die Datenbank nach einmalige Synchronisation ein komplett Abbild der Server-Datenbank. Das heißt, lokal sind folgende Tabellen verfügbar:
