@@ -71,7 +71,7 @@
 	\textsc{\Large Projekt im Modul Verteilte Informationsysteme WS2016/17}\\
 	[8cm]
 
-	{\Large\itshape Jesko Appelfeller\footnote{Matrikelnr.: 916832} \par Frederik Broer\footnote{Matrikelnr.: 916832} \par Jonas Droste\footnote{Matrikelnr.: 897553} \par Robin Naundorf\footnote{Matrikelnr.: 636612} \par }
+	{\Large\itshape Jesko Appelfeller\footnote{Matrikelnr.: 916832} \par Frederik Broer\footnote{Matrikelnr.: 789617} \par Jonas Droste\footnote{Matrikelnr.: 897553} \par Robin Naundorf\footnote{Matrikelnr.: 636612} \par }
 	\vfill
 
 	\large{betreut durch\par
@@ -103,8 +103,6 @@
 \chapter{Motivation und Anforderungen}
 Im Rahmen des Moduls 'Verteilte Informationssysteme' an der Fachhochschule Münster wird ein Semester begleitendes Datenbank Projekt durchgeführt. Ziel des Projektes ist es, ein Buchungssystem für Bootstouren zu implementieren. Die Firma Pirate-Bay-Tours beschäftigt mehrere Vertriebsmitarbeiter, die an Touristen Hotspots Tickets für Boots"-touren vertreiben. Für diese Mitarbeiter soll ein neues Buchungssystem implementiert werden.\\
 Wichtigstes Funktionsmerkmal des Systems ist die Offline-Fähigkeit. Das heißt, auch wenn der Mitarbeiter keine Verbindung zum zentralen Buchungsserver hat, muss die Buchung von Touren möglich sein. Dazu soll eine Replikationslogik entwickelt werden, die offline getätigte Buchungen bei verfügbarer Online-Verbindung mit dem Server synchronisiert. Weiterhin soll ein Quotensystem entwickelt werden, mit dem es möglich ist, verfügbare Tourtickets auf unterschiedliche Agenten zu verteilen. Zusätzlich muss eine Strategie entwickelt werden, wie mit Überbuchungen umgegangen werden soll.
-\todo[inline]{Motivation des Projektes\\
-	Was waren seine Anforderungen?\\}
 
 \chapter{Lösungskonzept}
 \section{Architektur}
@@ -135,7 +133,7 @@ Für die Administration der Datenbestände (z.B. Hinzufügen neuer Touren/Schiff
 	\label{fig:django-modell}
 \end{figure}
 
-\subsection{Database}
+\subsection{Datenbank}
 
 Die Datenbank für das Projekt PirateBayTours basiert auf PostgreSQL. Die Replizierung der Datenbank serverseitig erfolgt mittels einer angepassten PostgreSQL-Version zur bidirektionalen Replikation \textit{Postgres-BDR} der Firma 2ndQuandrant. Für die Hochverfügbarkeit der Datenbank wurden 2 Server mit Debian-Linux aufgesetzt auf denen jeweils eine Postgres-Datenbank in der BDR-Anpassung von 2ndQuadrant läuft. Diese beiden Datenbanken synchronisieren sich ständig und sind beide sowohl lesend als auch schreibend benutzbar (sogenannte Multi-Master-Replikation).
 
@@ -189,7 +187,7 @@ Damit der Tickets für eine bestimmte Route gebucht werden können, müssen folg
 Mit der Schaltfläche „Abbrechen“ kann die Buchung jederzeit beendet werden und alle Textfelder, bis auf das Textfeld „Agent“, werden zurückgesetzt. Nachdem der Arbeitstag beendet ist, oder der Vertriebsmitarbeiter zwischenzeitlich eine Internetverbindung aufnehmen kann, können die bisher verkauften Tickets mit dem Server synchronisiert werden. Dafür muss lediglich die Schaltfläche „Upload“ angeklickt werden.\\
 
 
-\subsection{Local Cache DB}
+\subsection{Lokale Cache DB}
 Um offline einsatzfähig zu sein, wurde eine lokale SQLite Datenbank genutzt. Während der Synchronisierung vom Server zum Client wird ein Abbild der Serverdatenbank heruntergeladen und in der lokalen Datenbank gecached. Wir haben uns entschieden eine SQLite Datenbank zu nutzen, da keine zusätzlich Datenbankserver installiert werden müssen und alle notwendigen Ressourcen gut in die Applikation eingebunden werden können. Weiterhin wird SQLite von einer Vielzahl an Programmiersprachen gut unterstützt und bietet eine ressourcensparende Möglichkeit Daten abzulegen. \\
 
 Wie erwähnt, enthält die Datenbank nach einmalige Synchronisation ein komplett Abbild der Server-Datenbank. Das heißt, lokal sind folgende Tabellen verfügbar:
@@ -249,7 +247,7 @@ Es müssen also die vorhandenen Plätze auf jedem Schiff und jeder Route auf die
 \section{Replikationszeitpunkt}
 \label{sec:RepliZeit}
 
-Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile Anwendung, wird im Normalfalle nur zu bestimmten Zeitpunkten eine Replizierung von der zentralen Datenbank zur lokalen Datenbank und zurück durchgeführt. Beider Vorgänge werden manuell vom Benutzer ausgelöst. Bei erhöhter Verfügbarkeit des Internets steht es diesem frei häufiger zu replizieren. Minimal wird jedoch davon ausgegangen, dass die Agenten zu Beginn und Ende ihres Arbeitstages Internetzugang haben und folgende Replizierungen durchführen können:\todo[inline]{Muss eine Reihenfolge eingehalten werden?}
+Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile Anwendung, wird im Normalfalle nur zu bestimmten Zeitpunkten eine Replizierung von der zentralen Datenbank zur lokalen Datenbank und zurück durchgeführt. Beider Vorgänge werden manuell vom Benutzer ausgelöst. Bei erhöhter Verfügbarkeit des Internets steht es diesem frei häufiger zu replizieren. Minimal wird jedoch davon ausgegangen, dass die Agenten zu Beginn und Ende ihres Arbeitstages Internetzugang haben und folgende Replizierungen durchführen können:
 
 \begin{description}
 \item[Lesend/Morgens] Zu Beginn des Arbeitstages muss jeder Agent einen Lesevorgang auslösen. Dies geschieht über das GUI mittels der Schaltfläche \emph{Download}. Hierbei werden die Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} vom Server heruntergeladen und in die lokale DB eingelesen. Somit verfügt der Agent nach Abschluss des Vorgangs über alle Touren und Schiffe und kann mittels der bereits vorhandenen Buchungen ausrechnen welche Pältze noch frei sind. Er kennt außerdem seine persönlichen Quoten und weiß daher wie viele Pätze er maximal verkaufen kann.
@@ -257,21 +255,18 @@ Auf Grund der begrenzten Verfügbarkeit von mobilen Internet für unsere mobile 
 \end{description}
 
 \chapter{Fazit}
-\todo[inline]{Was sind die Lessons Learned\\
-	Was könnte man das nächste mal besser machen?\\
-	Waren unsere ausgewählten Komponenten für das Problem geeignet?}
+Zusammenfassend lässt sich sagen, dass sich das Projekt mit den von uns gewählten Komponenten gut umsetzen lies. 
 
-\section{Replikation}
-\label{sec:FazitRepl}
+Das Django-Framework eignet sich in Verbindung mit Django-Rest-Framework ideal für kleinere bis mittlere Projekte. 
+Eine Multi-Master-Replikation hat sich bei unserem Projekt als nicht notwendig erwiesen. Das Einrichten der Replikation ist nicht trivial und man ist mit der BDR-Version immer auf die Updates des Herstellers angewiesen. Im Falle eines Split-Brain-Szenarios könnten sich bei der Postgres-BDR Version ungewünschte Seiteneffekte einstellen.\\
 
-Unsere Lösung setzt clientseitig mit SQLite eine andere Datenbank ein als serverseitig mit PostgreSQL. Dies vereinfacht sowohl die Entwicklung als auch das Deployment des Client, da keine separate DB aufgesetzt und angesprochen werden muss sondern alles in einer Datei und mit einem Treiber funktioniert. Dies ist insbesonder von Vorteil wenn viele verschiedene Endgeräte eingesetzt werden, da die von unserem Client eingesetzte Kombination von SQLite und Java auf sehr vielen Plattformen verfügbar ist.\\
 
-Bei der Replikation entstehen durch diesen Ansatz jedoch Probleme, da es für diese Kombination aus Datenbanken keine vorgefertigte Replikationslösung gibt. Auf dem Weg vom Server zum Client verursacht dies keinen großen Mehraufwand zumindest in der Entwicklung. Die Umwandlung zwischen JSON und der jeweiligen Datenbank dürfte jedoch Performanznachteile mit sich bringen.\\
+
+Unsere Lösung setzt clientseitig mit SQLite eine andere Datenbank ein als serverseitig mit PostgreSQL. Dies vereinfacht sowohl die Entwicklung als auch die Bereitstellung des Client, da keine separate DB aufgesetzt und angesprochen werden muss sondern alles in einer Datei und mit einem Treiber funktioniert. Dies ist insbesondere von Vorteil wenn viele verschiedene Endgeräte eingesetzt werden, da die von unserem Client eingesetzte Kombination von SQLite und Java auf sehr vielen Plattformen verfügbar ist.\\
+
+Bei der Replikation entstehen durch diesen Ansatz jedoch Probleme, da es für diese Kombination aus Datenbanken keine vorgefertigte Replikationslösung gibt. Auf dem Weg vom Server zum Client verursacht dies keinen großen Mehraufwand zumindest in der Entwicklung. Die Umwandlung zwischen JSON und der jeweiligen Datenbank dürfte jedoch Performanznachteile mit sich bringen.
 
 Lesend werden die verschiedenen Datenbanken jedoch zu einem größeren Problem. Wie in \autoref{subsec:SchrRepl} beschrieben, ist ein in der Entwicklung aufwendiger Mechanismus zur Synchronisierung der IDs nötig. Weiterhin wird jeder Datensatz einzeln übertragen, was Performanznachteile mit sich bringt.\\
 
 Ob diese Nachteile durch den Vorteil des einfacheren Setups aufgewogen werden, hängt davon ab wie oft in der Praxis ein Client neu eingerichtet wird. Bei den im Szenario vorkommenden ``fliegenden'' Händlern, kann sowohl mit einer recht hohen Fluktuation als auch mit einer heterogenen Gerätelandschaft gerechnet werden, so dass sich der Einsatz von SQLite rechnen sollte. Zusamenfassend ist zu sagen, dass sich die gewählten Komponenten für den Einsatzzweck eignen.
-
-
-
 \end{document}
