@@ -106,11 +106,9 @@ Wichtigstes Funktionsmerkmal des Systems ist die Offline-Fähigkeit. Das heißt,
 
 \chapter{Lösungskonzept}
 \section{Architektur}
-\todo[inline]{Aus welchen Komponenten besteht die Software?\\
-	Was sind die Schnittstellen?\\}
 
 Das Projekt PirateBayTours besteht aus einer Client-Server-Architektur.
-Die Agenten arbeiten mit eine Client auf Java-Basis. Eine Synchronisierung mit dem Server erfolgt mittels HTTP-Rest aufrufen. Der Server basiert auf Python 3\footnote{https://www.python.org} und dem Django Web-Framework\footnote{https://www.djangoproject.com} . Für die Implementierung der Rest-API wurde das Paket \textit{django-rest-framework}\footnote{https://www.django-rest-framework.org} verwendet. Für das Load-Balancing der Postgres-Instanzen wurde ein Software-Loadbalancer auf Basis von VMware NSX\footnote{https://www.vmware.com/products/nsx.html} verwendet.
+Die Agenten arbeiten mit eine Client auf Java-Basis. Eine Synchronisierung mit dem Server erfolgt mittels HTTP-Rest aufrufen. Der Server basiert auf Python 3\footnote{https://www.python.org} und dem Django Web-Framework\footnote{https://www.djangoproject.com} . Für die Implementierung der Rest-API wurde das Paket \textit{django-rest-framework}\footnote{https://www.django-rest-framework.org} verwendet. Für das Load-Balancing der Postgres-Instanzen wurde ein Software-Loadbalancer auf Basis von VMware NSX\footnote{https://www.vmware.com/products/nsx.html} verwendet. Eine schematische Darstellung findet sich in Abbildung \ref{fig:architecture}
 
 \begin{figure}[h]
 	\centering
@@ -121,11 +119,12 @@ Die Agenten arbeiten mit eine Client auf Java-Basis. Eine Synchronisierung mit d
 
 
 \section{Backend}
-\subsection{Django und Admin Interface}
-\todo[inline]{Was bietet Django alles von Hausaus?}
-Für das Backend wurde Django in der Version 1.10.5 verwendet. Django bietet als Framework unter anderem einen Object-Relational-Mapper (kurz: ORM) mit der bei der Abstrahierung der Datenbank-Schicht hilft. Django basiert auf dem MVC-Prinzip. Hierdurch ist es möglich in der Modell-Schicht ein Modell zu implementieren, dass dann mittels ORM auf die als Schema in der Datenbank abgelegt wird. 
+\subsection{Django und Admin Interface}\label{sec:django-und-admin-interface}
+Für das Backend wurde Django in der Version 1.10.5 verwendet. Django bietet als Framework unter anderem einen Object-Relational-Mapper (kurz: ORM) mit der bei der Abstrahierung der Datenbank-Schicht hilft. Django basiert auf dem MVC-Prinzip. Hierdurch ist es möglich in der Modell-Schicht ein Modell zu implementieren, dass dann mittels ORM auf die als Schema in der Datenbank abgelegt wird. Das Implementierte Modell ist in Abbildung \ref{fig:django-modell} zu sehen.
 
 Mit Hilfe des  Django-Rest-Frameworks wird der Zugriff auf das Backend mittels HTTP-Rest-Aufrufen realisiert. Es ist z.B. möglich alle vorhanden Touren über einen HTTP-GET-Aufruf an http://SERVER/api/tours  zu bekommen. Der Server liefert die angeforderten Daten im JSON-Format\footnote{http://www.json.org/} zurück.
+
+Für die Administration der Datenbestände (z.B. Hinzufügen neuer Touren/Schiffe) bietet Django ein integriertes Admin-Backend mit Authentifizierung über Benutzername/Passwort.
 
 \begin{figure}[h]
 	\centering
@@ -135,11 +134,9 @@ Mit Hilfe des  Django-Rest-Frameworks wird der Zugriff auf das Backend mittels H
 \end{figure}
 
 \subsection{Database}
-\todo[inline]{Wie ist die Datenbank aufgebaut?\\
-	Welche Replikation setzen wir ein?\\
-	Wie ist diese Implementiert?\\}
 
-Die Datenbank für das Projekt PirateBayTours basiert auf PostgreSQL. Die Replizierung der Datenbank serverseitig erfolgt mittels einer angepassten PostgreSQL-Version zur bidirektionalen Replikation \textit{Postgres-BDR} der Firma 2ndQuandrant.
+Die Datenbank für das Projekt PirateBayTours basiert auf PostgreSQL. Die Replizierung der Datenbank serverseitig erfolgt mittels einer angepassten PostgreSQL-Version zur bidirektionalen Replikation \textit{Postgres-BDR} der Firma 2ndQuandrant. Für die Hochverfügbarkeit der Datenbank wurden 2 Server mit Debian-Linux aufgesetzt auf denen jeweils eine Postgres-Datenbank in der BDR-Anpassung von 2ndQuadrant läuft. Diese beiden Datenbanken synchronisieren sich ständig und sind beide sowohl lesend als auch schreibend benutzbar (sogenannte Multi-Master-Replikation).
+
 
 \subsubsection{Replikation}
 
@@ -166,7 +163,7 @@ Das MVC-Modell teilt die Implementierung in drei unterschiedliche Komponenten ei
 	\item \texttt{die Programmsteuerung (engl. controller).}
 \end{itemize}
 \newpage
-Deswegen benötigen wir drei unterschiedliche Klasse, die in Abbildung \ref{fig:MVC} dargestellt sind. In der Klasse „model“ wurden daher die darzustellenden Daten gespeichert, wie beispielsweise der Routenname, in der die ausgewählte Route zwischengespeichert wird. In der Klasse „view“ wurden die benötigten Daten aus dem „model“ dargestellt und die Benutzerinteraktionen entgegengenommen. In der Klasse „controller“ wurde die Steuerung Implementiert, die für die Bearbeitung der Benutzerinteraktionen zuständig ist. Zusätzlich zu diesen drei Klassen des MVC-Modells, haben wir eine Klasse für die API-Zugriffe und eine Klasse für die SQLite Cache Datenbank Zugriffe erstellt.
+Deswegen benötigen wir drei unterschiedliche Klasse, die in Abbildung \ref{fig:MVC}\footnote{http://docs.sitefinity.com/sf-images/default-source/default-album/mvc.png} dargestellt sind. In der Klasse „model“ wurden daher die darzustellenden Daten gespeichert, wie beispielsweise der Routenname, in der die ausgewählte Route zwischengespeichert wird. In der Klasse „view“ wurden die benötigten Daten aus dem „model“ dargestellt und die Benutzerinteraktionen entgegengenommen. In der Klasse „controller“ wurde die Steuerung Implementiert, die für die Bearbeitung der Benutzerinteraktionen zuständig ist. Zusätzlich zu diesen drei Klassen des MVC-Modells, haben wir eine Klasse für die API-Zugriffe und eine Klasse für die SQLite Cache Datenbank Zugriffe erstellt.
 \subsubsection{Struktur}
 Nachdem im letzten Kapitel das Implementierungsmodell dargestellt wurde, folgt nun die Beschreibung der Struktur des Clients. Der Client ist wie in Abbildung \ref{fig:Client} dargestellt. Diese sehr simple Darstellung der Oberflächenelemente und die dadurch entstehende  hohe Benutzerfreundlichkeit ist ein großer Vorteil unseres Clients. Die einfache Bedienbarkeit entsteht durch die Bedienung mit Maus und Tastatur, wobei die Anwendung nur mit der Tastatur bedient werden kann. Dadurch können beispielsweise viele Tickets in kürzester Zeit verkauft werden.
 \begin{figure}[h]
@@ -217,14 +214,14 @@ Wie in \autoref{sec:RepliZeit} beschrieben, gibt es zwei Replikationsprozesse. Z
 
 \subsection{Lesende Replizierung}
 
-Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} werden per HTTP bei der Django-API angefragt und von dieser als JSON zurückgegeben. Clientseitig werden diese JSON-Strings geparst und in die lokale DB eingefügt. \todo[inline]{Verweise auf API Kapitel}
+Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{agents, customers, quotas, ships} und \texttt{tours} werden per HTTP bei der Django-API angefragt und von dieser als JSON zurückgegeben. Clientseitig werden diese JSON-Strings geparst und in die lokale DB eingefügt. Vergleiche hierzu Kapitel \ref{sec:django-und-admin-interface}
 
 \subsection{Schreibende Replizierung}
 \label{subsec:SchrRepl}
 
 Bei der schreibenden Replizierung sollen die Eintrage der Tabellen \texttt{offline\_customers} und \texttt{offline\_bookings} aus der lokalen Datenbank an die Tabellen \texttt{customers} und \texttt{bookings} der zentralen Datenbank übertragen werden. Dies geschiecht, analog zum lesenden Zugriff, durch Umformung der Einträge in JSON-Objekte welche dann mittels HTTP-Requests an eine Django-API geschickt werden.\\
 
-Hierbei ergibt sich die Schwierigkeit, dass die Einträge in der lokalen DB einen automatisch eine ID bekommen haben, die jedoch nur lokal gültig. Bei der Übertragung werden neue, dort gültige IDs für jeden Eintrag vergeben. Dies bedeutet jedoch, dass die Verweise aus der \texttt{offline\_bookings} Tabelle auf IDs in der \texttt{offline\_customers} Tabelle serverseitig nicht mehr gültig sind.\\ \todo[inline]{Verweis auf DB-Schema einfügen}
+Hierbei ergibt sich die Schwierigkeit, dass die Einträge in der lokalen DB einen automatisch eine ID bekommen haben, die jedoch nur lokal gültig. Bei der Übertragung werden neue, dort gültige IDs für jeden Eintrag vergeben. Dies bedeutet jedoch, dass die Verweise aus der \texttt{offline\_bookings} Tabelle auf IDs in der \texttt{offline\_customers} Tabelle serverseitig nicht mehr gültig sind. Vergleiche hierzu Kapitel \ref{sec:django-und-admin-interface} Abbildung \ref{fig:django-modell}
 
 Es müssen also vor dem Upload der Einträge aus der Tabelle \texttt{offline\_bookings} die Verweise auf die lokalen IDs in der Tabelle \texttt{offline\_customers} ersetzt werden durch Verweise auf die zentralen IDs in der Tabelle \texttt{customers}. Diese werden aber vom Server erst vergeben, wenn die Einträge aus der \texttt{offline\_customers} zum Server gesendet werden. Die bereits erwähnte Django-API beantwortet jeden erfolgreichen Schreibzugriff mit dem Versand des erzeugten Eintrags als JSON-Objekt. Diese Objekte enthalten die vom Server vergebene ID die somit direkt in den entsprechenden Datensatz der lokalen \texttt{offline\_customers} eingetragen werden kann.\\
 
