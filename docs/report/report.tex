@@ -91,10 +91,6 @@
 	\begin{abstrac}{ngerman}
 		\todo[inline]{Abstrakt schreiben}
 	\end{abstrac}
-	
-	\begin{abstrac}{english}
-		\todo[inline]{Abstrakt übersetzen}
-	\end{abstrac}
 \end{abstractpage}
 
 
@@ -112,13 +108,38 @@ Wichtigstes Funktionsmerkmal des Systems ist die Offline-Fähigkeit. Das heißt,
 \section{Architektur}
 \todo[inline]{Aus welchen Komponenten besteht die Software?\\
 	Was sind die Schnittstellen?\\}
+
+Das Projekt PirateBayTours besteht aus einer Client-Server-Architektur.
+Die Agenten arbeiten mit eine Client auf Java-Basis. Eine Synchronisierung mit dem Server erfolgt mittels HTTP-Rest aufrufen. Der Server basiert auf Python 3\footnote{https://www.python.org} und dem Django Web-Framework\footnote{https://www.djangoproject.com} . Für die Implementierung der Rest-API wurde das Paket \textit{django-rest-framework}\footnote{https://www.django-rest-framework.org} verwendet. Für das Load-Balancing der Postgres-Instanzen wurde ein Software-Loadbalancer auf Basis von VMware NSX\footnote{https://www.vmware.com/products/nsx.html} verwendet.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/architecture.png}
+	\caption{Architektur}
+	\label{fig:architecture}
+\end{figure}
+
+
 \section{Backend}
 \subsection{Django und Admin Interface}
-\todo[inline]{Was bieted Django alles von Hausaus?}
+\todo[inline]{Was bietet Django alles von Hausaus?}
+Für das Backend wurde Django in der Version 1.10.5 verwendet. Django bietet als Framework unter anderem einen Object-Relational-Mapper (kurz: ORM) mit der bei der Abstrahierung der Datenbank-Schicht hilft. Django basiert auf dem MVC-Prinzip. Hierdurch ist es möglich in der Modell-Schicht ein Modell zu implementieren, dass dann mittels ORM auf die als Schema in der Datenbank abgelegt wird. 
+
+Mit Hilfe des  Django-Rest-Frameworks wird der Zugriff auf das Backend mittels HTTP-Rest-Aufrufen realisiert. Es ist z.B. möglich alle vorhanden Touren über einen HTTP-GET-Aufruf an http://SERVER/api/tours  zu bekommen. Der Server liefert die angeforderten Daten im JSON-Format\footnote{http://www.json.org/} zurück.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{img/django-modell.png}
+	\caption{Django Modell}
+	\label{fig:django-modell}
+\end{figure}
+
 \subsection{Database}
 \todo[inline]{Wie ist die Datenbank aufgebaut?\\
 	Welche Replikation setzen wir ein?\\
 	Wie ist diese Implementiert?\\}
+
+Die Datenbank für das Projekt PirateBayTours basiert auf PostgreSQL. Die Replizierung der Datenbank serverseitig erfolgt mittels einer angepassten PostgreSQL-Version zur bidirektionalen Replikation \textit{Postgres-BDR} der Firma 2ndQuandrant.
 
 \subsubsection{Replikation}
 
