@@ -132,7 +132,7 @@ Wir haben uns dazu entschieden den Client in der Programmiersprache Java zu schr
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.6\textwidth]{img/mvc.png}
-  \caption{Darstellung des MVC Modells \citep{PIC: MVC}}
+  \caption{Darstellung des MVC Modells}
   \label{fig:MVC}
 \end{figure}
 
@@ -252,9 +252,6 @@ Bei der Replikation entstehen durch diesen Ansatz jedoch Probleme, da es für di
 Lesend werden die verschiedenen Datenbanken jedoch zu einem größeren Problem. Wie in \autoref{subsec:SchrRepl} beschrieben, ist ein in der Entwicklung aufwendiger Mechanismus zur Synchronisierung der IDs nötig. Weiterhin wird jeder Datensatz einzeln übertragen, was Performanznachteile mit sich bringt.\\
 
 Ob diese Nachteile durch den Vorteil des einfacheren Setups aufgewogen werden, hängt davon ab wie oft in der Praxis ein Client neu eingerichtet wird. Bei den im Szenario vorkommenden ``fliegenden'' Händlern, kann sowohl mit einer recht hohen Fluktuation als auch mit einer heterogenen Gerätelandschaft gerechnet werden, so dass sich der Einsatz von SQLite rechnen sollte. Zusamenfassend ist zu sagen, dass sich die gewählten Komponenten für den Einsatzzweck eignen.
-
-\bibliography{mybib}{}
-\bibliographystyle{plainnat}
 
 
 
