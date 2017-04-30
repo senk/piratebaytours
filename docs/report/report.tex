@@ -69,10 +69,9 @@
 	
 	\line(1,0){400} \\
 	\textsc{\Large Projekt im Modul Verteilte Informationsysteme WS2016/17}\\
-	[10cm]
+	[8cm]
 
-	{\Large\itshape Jesko Appelfeller \par Robin Naundorf \par Frederik Broer \par Jonas Droste \par  }
-	%%{\small Martikelnummer: 65654}
+	{\Large\itshape Jesko Appelfeller\footnote{Matrikelnr.: 916832} \par Frederik Broer\footnote{Matrikelnr.: 916832} \par Jonas Droste\footnote{Matrikelnr.: 897553} \par Robin Naundorf\footnote{Matrikelnr.: 636612} \par }
 	\vfill
 
 	\large{betreut durch\par
@@ -89,7 +88,10 @@
 \newpage
 \begin{abstractpage}
 	\begin{abstrac}{ngerman}
-		\todo[inline]{Abstrakt schreiben}
+    Im Modul ``Verteilte Informationssysteme'' wurde die Aufgabe gestellt, eine Software zur Buchung von Tickets für Bootstouren zu entwickeln. Hierbei bestand die Schwierigkeit, dass die Vertriebsagenten nur vor Beginn und nach Ende des Ticketverkaufs Internetzugang benötigen sollten. Es war also eine Lösung zu entwickeln, die es ermöglicht sowohl Angaben über Touren und Boote als auch die Buchung von Tickets offline vorzuhalten und zu den gegebenen Zeitpunkten mit Internetzugang zu synchronisieren. Insbesondere interessant war die Replikation der offline-Buchungen zurück zum Server, da hier Potential für Konflikte mit den Buchungen anderer Agenten bestand. Dieses Dokument beschreibt eine solche Lösung basierend auf einem PostgreSQL-Server mit einem RESTful Python-API mittels des Django-Frameworks als Backend, sowie einem Client der mittels Java und SQLite implementiert wurde.
+	\end{abstrac}
+	\begin{abstrac}{english}
+    In the class ``Distributed Information Systems'' a task was set for the students to implement an application for booking tickets for boat tours. As an added challenge, the sales agents would only have internet access before starting and after finishing their sales. Therefore, a solution was to be developed that would enable both the offline storage of boats and tours and the offline booking of tickets as well as the synchronisation of those bookings once internet access had been established. The latter area was of special interest, as there were potential conflicts with bookings from other agents to resolve. This document describes one such solution based on a PostgreSQL-server with a RESTful Python API using the Django framework, as well as a client implemented in Java and using SQLite. 
 	\end{abstrac}
 \end{abstractpage}
 
