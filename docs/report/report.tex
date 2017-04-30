@@ -107,8 +107,7 @@ Wichtigstes Funktionsmerkmal des Systems ist die Offline-Fähigkeit. Das heißt,
 \chapter{Lösungskonzept}
 \section{Architektur}
 
-Das Projekt PirateBayTours besteht aus einer Client-Server-Architektur.
-Die Agenten arbeiten mit eine Client auf Java-Basis. Eine Synchronisierung mit dem Server erfolgt mittels HTTP-Rest aufrufen. Der Server basiert auf Python 3\footnote{https://www.python.org} und dem Django Web-Framework\footnote{https://www.djangoproject.com} . Für die Implementierung der Rest-API wurde das Paket \textit{django-rest-framework}\footnote{https://www.django-rest-framework.org} verwendet. Für das Load-Balancing der Postgres-Instanzen wurde ein Software-Loadbalancer auf Basis von VMware NSX\footnote{https://www.vmware.com/products/nsx.html} verwendet. Eine schematische Darstellung findet sich in Abbildung \ref{fig:architecture}
+Das Projekt PirateBayTours besteht aus einer Client-Server-Architektur. Die Agenten arbeiten mit einem Client auf Java-Basis. Eine Synchronisierung mit dem Server erfolgt mittels HTTP-Rest aufrufen. Der Server basiert auf Python 3\footnote{https://www.python.org} und dem Django Web-Framework\footnote{https://www.djangoproject.com} . Für die Implementierung der Rest-API wurde das Paket \textit{django-rest-framework}\footnote{https://www.django-rest-framework.org} verwendet. Für das Load-Balancing der Postgres-Instanzen wurde ein Software-Loadbalancer auf Basis von VMware NSX\footnote{https://www.vmware.com/products/nsx.html} verwendet. Eine schematische Darstellung findet sich in Abbildung \ref{fig:architecture}
 
 \begin{figure}[h]
 	\centering
@@ -120,7 +119,7 @@ Die Agenten arbeiten mit eine Client auf Java-Basis. Eine Synchronisierung mit d
 
 \section{Backend}
 \subsection{Django und Admin Interface}\label{sec:django-und-admin-interface}
-Für das Backend wurde Django in der Version 1.10.5 verwendet. Django bietet als Framework unter anderem einen Object-Relational-Mapper (kurz: ORM) mit der bei der Abstrahierung der Datenbank-Schicht hilft. Django basiert auf dem MVC-Prinzip. Hierdurch ist es möglich in der Modell-Schicht ein Modell zu implementieren, dass dann mittels ORM auf die als Schema in der Datenbank abgelegt wird. Das Implementierte Modell ist in Abbildung \ref{fig:django-modell} zu sehen.
+Für das Backend wurde Django in der Version 1.10.5 verwendet. Django bietet als Framework unter anderem einen Object-Relational-Mapper (kurz: ORM) der bei der Abstrahierung der Datenbank-Schicht hilft. Django basiert auf dem MVC-Prinzip. Hierdurch ist es möglich in der Modell-Schicht ein Modell zu implementieren, dass dann mittels ORM als Schema in der Datenbank abgelegt wird. Das Implementierte Modell ist in Abbildung \ref{fig:django-modell} zu sehen.
 
 Mit Hilfe des  Django-Rest-Frameworks wird der Zugriff auf das Backend mittels HTTP-Rest-Aufrufen realisiert. Es ist z.B. möglich alle vorhanden Touren über einen HTTP-GET-Aufruf an http://SERVER/api/tours  zu bekommen. Der Server liefert die angeforderten Daten im JSON-Format\footnote{http://www.json.org/} zurück.
 
@@ -145,7 +144,7 @@ Eine vorgefertigte Replikationslösung zwischen SQLite und PostgreSQL gibt es ni
 \section{Client}
 \subsection{Java Client}
 \subsubsection{Implementierungsmodell}
-Wir haben uns dazu entschieden den Client in der Programmiersprache Java zu schreiben, dadurch konnte unsere gesamte Gruppe gemeinsam an den Implementierungen für den Client arbeiten, weil Java eine Standartprogrammiersprache ist, die jeder aus unserer Gruppe beherrschte. Außerdem ist Java sehr praktikabel für die Implementierung einer Oberfläche, wie wir sie für den Client gebraucht haben.\\
+Wir haben uns dazu entschieden den Client in der Programmiersprache Java zu schreiben, dadurch konnte unsere gesamte Gruppe gemeinsam an den Implementierungen für den Client arbeiten, weil Java eine Standardprogrammiersprache ist die jeder aus unserer Gruppe beherrschte. Außerdem ist Java sehr praktikabel für die Implementierung einer graphischen Oberfläche, wie sie für einen benutzerfreundlichen Client nötig ist.\\
 
 \begin{figure}[h]
   \centering
@@ -154,7 +153,7 @@ Wir haben uns dazu entschieden den Client in der Programmiersprache Java zu schr
   \label{fig:MVC}
 \end{figure}
 
-Für die Implementierung haben wir das „Model-View-Controller“-Modell (MVC-Modell) verwendet, das sich für die Erledigung unserer Aufgabe sehr geeignet war.\\
+Für die Implementierung haben wir das MVC-Modell („Model-View-Controller“-Modell) verwendet, welches für die Umsetzung unserer Aufgabe sehr geeignet war.\\
 Das MVC-Modell teilt die Implementierung in drei unterschiedliche Komponenten ein:	
 \begin{itemize}
 	\setlength\itemsep{0.1em}
@@ -162,10 +161,9 @@ Das MVC-Modell teilt die Implementierung in drei unterschiedliche Komponenten ei
 	\item \texttt{die Präsentation (engl. view) und}
 	\item \texttt{die Programmsteuerung (engl. controller).}
 \end{itemize}
-\newpage
-Deswegen benötigen wir drei unterschiedliche Klasse, die in Abbildung \ref{fig:MVC}\footnote{http://docs.sitefinity.com/sf-images/default-source/default-album/mvc.png} dargestellt sind. In der Klasse „model“ wurden daher die darzustellenden Daten gespeichert, wie beispielsweise der Routenname, in der die ausgewählte Route zwischengespeichert wird. In der Klasse „view“ wurden die benötigten Daten aus dem „model“ dargestellt und die Benutzerinteraktionen entgegengenommen. In der Klasse „controller“ wurde die Steuerung Implementiert, die für die Bearbeitung der Benutzerinteraktionen zuständig ist. Zusätzlich zu diesen drei Klassen des MVC-Modells, haben wir eine Klasse für die API-Zugriffe und eine Klasse für die SQLite Cache Datenbank Zugriffe erstellt.
+Daher benötigen wir drei unterschiedliche Klassen, die in Abbildung \ref{fig:MVC}\footnote{http://docs.sitefinity.com/sf-images/default-source/default-album/mvc.png} dargestellt sind. In der Klasse „model“ wurden die darzustellenden Daten gespeichert, wie beispielsweise der Routenname, in der die ausgewählte Route zwischengespeichert wird. In der Klasse „view“ wurden die benötigten Daten aus dem „model“ dargestellt und die Benutzerinteraktionen entgegengenommen. In der Klasse „controller“ wurde die Steuerung Implementiert, die für die Bearbeitung der Benutzerinteraktionen zuständig ist. Zusätzlich zu diesen drei Klassen des MVC-Modells, haben wir eine Klasse für die API-Zugriffe sowie eine Klasse für Zugriffe auf die SQLite Cache-Datenbank erstellt.
 \subsubsection{Struktur}
-Nachdem im letzten Kapitel das Implementierungsmodell dargestellt wurde, folgt nun die Beschreibung der Struktur des Clients. Der Client ist wie in Abbildung \ref{fig:Client} dargestellt. Diese sehr simple Darstellung der Oberflächenelemente und die dadurch entstehende  hohe Benutzerfreundlichkeit ist ein großer Vorteil unseres Clients. Die einfache Bedienbarkeit entsteht durch die Bedienung mit Maus und Tastatur, wobei die Anwendung nur mit der Tastatur bedient werden kann. Dadurch können beispielsweise viele Tickets in kürzester Zeit verkauft werden.
+Nachdem im letzten Kapitel das Implementierungsmodell dargestellt wurde, folgt nun die Beschreibung der Struktur des Clients. Der Client ist wie in Abbildung \ref{fig:Client} dargestellt. Diese sehr simple Darstellung der Oberflächenelemente und die dadurch entstehende  hohe Benutzerfreundlichkeit ist ein großer Vorteil unseres Clients. Die einfache Bedienbarkeit entsteht insbesondere durch die Möglichkeit die Anwendung nur mit der Tastatur zu bedienen. Dadurch können beispielsweise viele Tickets in kürzester Zeit verkauft werden.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.94\textwidth]{img/Client.png}
@@ -173,16 +171,17 @@ Nachdem im letzten Kapitel das Implementierungsmodell dargestellt wurde, folgt n
   \label{fig:Client}
 \end{figure}
 \newpage
-Beim Start der Anwendung müssen zunächst die Daten, also die bisher nicht verkauften Tickets sowie alle anderen notwendigen Daten aus den Datenbanken, vom Server geladen werden. Dafür wird die Schaltfläche „Download“ angeklickt. Anschließend liegen die aktuellen Daten in der lokalen Datenbank und können verwendet und bearbeitet werden. In das Textfeld „Agent“ muss die Personalnummer des jeweiligen Vertriebsmitarbeiters eingetragen werden.\\
-Damit der Tickets für eine bestimmte Route gebucht werden können, müssen folgende Schritte nacheinander durchgeführt werden.
+Beim Start der Anwendung müssen zunächst die Daten, also die bisher nicht verkauften Tickets sowie alle anderen notwendigen Daten vom Server geladen werden. Hierfür wird die Schaltfläche „Download“ angeklickt. Anschließend liegen die aktuellen Daten in der lokalen Datenbank und können verwendet und bearbeitet werden. In das Textfeld „Agent“ muss die Personalnummer des jeweiligen Vertriebsmitarbeiters eingetragen werden.\\
+
+Damit Tickets für eine bestimmte Route gebucht werden können, müssen folgende Schritte nacheinander durchgeführt werden.
 
 \begin{enumerate}
 \item Die Anzahl der benötigten Tickets sowie der Name des Käufers müssen in die entsprechenden Textfelder eingetragen werden. Anschließend steht im Textfeld „Plätze“ der eingetragene Wert.
 \item Nach der Bestätigung mit der „Enter“-Taste werden die Touren angezeigt, für die noch genügend Plätze vorhanden sind.
 \item Sobald eine Tour, durch die Selektion einer Zeile, ausgewählt wurde, wird die ausgewählte Route im Textfeld „Route“ angegeben.
-\item Nun werden in der Liste „Datum“ alle möglichen Datums angegeben, an denen die Tour gebucht werden kann.
-\item Mit der Auswahl eines Datum und der zugehörigen Selektion einer Zeile wird im Textfeld „Datum“ das gewählte Datum angegeben und in der Liste „Uhrzeiten“ werden die möglichen Uhrzeiten für die gewählte Tour sowie Datum angezeigt.
-\item Erst mit der Auswahl einer Uhrzeit kann ein Ticket, bzw. mehrere Tickets gebucht werden, weil erst dann die Schaltfläche „Kaufen“ anklickbar ist.
+\item Nun werden in der Liste „Datum“ alle möglichen Daten angegeben, an denen die Tour gebucht werden kann.
+\item Mit der Auswahl eines Datums und der zugehörigen Selektion einer Zeile wird im Textfeld „Datum“ das gewählte Datum angegeben und in der Liste „Uhrzeiten“ werden die möglichen Uhrzeiten für die gewählte Tour sowie Datum angezeigt.
+\item Erst mit der Auswahl einer Uhrzeit wird die Schaltfläche "Kaufen" aktiviert womit ein Ticket, bzw. mehrere Tickets gebucht werden können.
 \end{enumerate}
 Mit der Schaltfläche „Abbrechen“ kann die Buchung jederzeit beendet werden und alle Textfelder, bis auf das Textfeld „Agent“, werden zurückgesetzt. Nachdem der Arbeitstag beendet ist, oder der Vertriebsmitarbeiter zwischenzeitlich eine Internetverbindung aufnehmen kann, können die bisher verkauften Tickets mit dem Server synchronisiert werden. Dafür muss lediglich die Schaltfläche „Upload“ angeklickt werden.\\
 
@@ -205,7 +204,7 @@ Zusätzlich dazu werden zwei lokale Tabellen angelegt.
 	\item \texttt{offline\_bookings}
 	\item \texttt{offline\_customers}
 \end{itemize}
-Die \texttt{offline\_bookings} Tabelle enthält alle Buchungen, die der Vertriebsmitarbeiter im Offline-Fall tätigt. Werden im Offline-Modus neue Kundenstammdaten angelegt werden diese in der Tabelle \texttt{offline\_customers} gespeichert. Dies ist notwendig, um ID Konflikte bei der Replizierung zu vermeiden. Weiterhin lässt sich so mit wenig Aufwand nachvollziehen welche Buchungen noch nicht repliziert wurden. Da das Serverabbild bei einer Offline-Buchung nicht verändert wird, besteht kein Risiko, das es zu inkonsistenten Ausgangsdaten kommt und ein Offline-Arbeiten nicht mehr möglich ist.
+Die \texttt{offline\_bookings} Tabelle enthält alle Buchungen, die der Vertriebsmitarbeiter im Offline-Fall tätigt. Werden im Offline-Modus neue Kundenstammdaten angelegt werden diese in der Tabelle \texttt{offline\_customers} gespeichert. Dies ist notwendig, um ID Konflikte bei der Replizierung zu vermeiden. Weiterhin lässt sich so mit wenig Aufwand nachvollziehen welche Buchungen noch nicht repliziert wurden. Da das Serverabbild bei einer Offline-Buchung nicht verändert wird, besteht kein Risiko, dass es zu inkonsistenten Ausgangsdaten kommt und ein Offline-Arbeiten nicht mehr möglich ist.
 
 \section{Replizierung}
 \label{sec:Replizierung}
@@ -219,9 +218,9 @@ Der lesende Replikationsvorgang ist trivial. Die Inhalte der Tabellen \texttt{ag
 \subsection{Schreibende Replizierung}
 \label{subsec:SchrRepl}
 
-Bei der schreibenden Replizierung sollen die Eintrage der Tabellen \texttt{offline\_customers} und \texttt{offline\_bookings} aus der lokalen Datenbank an die Tabellen \texttt{customers} und \texttt{bookings} der zentralen Datenbank übertragen werden. Dies geschiecht, analog zum lesenden Zugriff, durch Umformung der Einträge in JSON-Objekte welche dann mittels HTTP-Requests an eine Django-API geschickt werden.\\
+Bei der schreibenden Replizierung sollen die Eintrage der Tabellen \texttt{offline\_customers} und \texttt{offline\_bookings} aus der lokalen Datenbank an die Tabellen \texttt{customers} und \texttt{bookings} der zentralen Datenbank übertragen werden. Dies geschieht, analog zum lesenden Zugriff, durch Umformung der Einträge in JSON-Objekte welche dann mittels HTTP-Requests an die Django-API geschickt werden.\\
 
-Hierbei ergibt sich die Schwierigkeit, dass die Einträge in der lokalen DB einen automatisch eine ID bekommen haben, die jedoch nur lokal gültig. Bei der Übertragung werden neue, dort gültige IDs für jeden Eintrag vergeben. Dies bedeutet jedoch, dass die Verweise aus der \texttt{offline\_bookings} Tabelle auf IDs in der \texttt{offline\_customers} Tabelle serverseitig nicht mehr gültig sind. Vergleiche hierzu Kapitel \ref{sec:django-und-admin-interface} Abbildung \ref{fig:django-modell}
+Hierbei ergibt sich die Schwierigkeit, dass die Einträge in der lokalen DB automatisch eine ID bekommen haben, die jedoch nur lokal gültig ist. Bei der Übertragung werden neue, dort gültige IDs für jeden Eintrag vergeben. Dies bedeutet jedoch, dass die Verweise aus der \texttt{offline\_bookings} Tabelle auf IDs in der \texttt{offline\_customers} Tabelle serverseitig nicht mehr gültig sind. Vergleiche hierzu Kapitel \ref{sec:django-und-admin-interface}, Abbildung \ref{fig:django-modell}\\
 
 Es müssen also vor dem Upload der Einträge aus der Tabelle \texttt{offline\_bookings} die Verweise auf die lokalen IDs in der Tabelle \texttt{offline\_customers} ersetzt werden durch Verweise auf die zentralen IDs in der Tabelle \texttt{customers}. Diese werden aber vom Server erst vergeben, wenn die Einträge aus der \texttt{offline\_customers} zum Server gesendet werden. Die bereits erwähnte Django-API beantwortet jeden erfolgreichen Schreibzugriff mit dem Versand des erzeugten Eintrags als JSON-Objekt. Diese Objekte enthalten die vom Server vergebene ID die somit direkt in den entsprechenden Datensatz der lokalen \texttt{offline\_customers} eingetragen werden kann.\\
 
